@@ -1,0 +1,25 @@
+{
+"data": [
+{
+"Condition": "For parts or not working"
+},
+{
+"Condition": "Manufacturer refurbished"
+},
+{
+"Condition": "Needs repairs"
+},
+{
+"Condition": "New"
+},
+{
+"Condition": "New other (see details)"
+},
+{
+"Condition": "Seller refurbished"
+},
+{
+"Condition": "Used"
+}
+]
+}

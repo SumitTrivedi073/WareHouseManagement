@@ -1,0 +1,228 @@
+{
+  "data": [
+    {
+      "OwnerGUID": "343f142b-4d8e-6aee-f5a2-dc066974b4d4",
+      "OwnerName": "Abbott - WNH - Weesp C.J van houtenlaan 36"
+    },
+    {
+      "OwnerGUID": "a0aadfa7-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Abbott Labs"
+    },
+    {
+      "OwnerGUID": "a0aae544-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Accelagen"
+    },
+    {
+      "OwnerGUID": "8c845096-904e-9e4a-45fe-8437fc2bd3d8",
+      "OwnerName": "Active Motif"
+    },
+    {
+      "OwnerGUID": "e1544dd0-a89d-11e9-851b-0a7253ee1c32",
+      "OwnerName": "Adaptimmune"
+    },
+    {
+      "OwnerGUID": "202c337b-b32b-d7e7-802d-a802dadf5136",
+      "OwnerName": "Adaptive Biotechnologies, LLC"
+    },
+    {
+      "OwnerGUID": "947db08a-73b9-4881-ea81-bac3fe1fa691",
+      "OwnerName": "Adipogen Corporation"
+    },
+    {
+      "OwnerGUID": "0dc80c37-d009-11e9-983d-0a7253ee1c32",
+      "OwnerName": "American Laboratory Traders (ALT)"
+    },
+    {
+      "OwnerGUID": "5c76ba06-5a52-11ea-b2c7-0a7253ee1c32",
+      "OwnerName": "American Reliance, Inc. (AMREL)"
+    },
+    {
+      "OwnerGUID": "d90efabd-0a5e-11e8-b191-00163c74f79d",
+      "OwnerName": "Argonaut"
+    },
+    {
+      "OwnerGUID": "a0aae694-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Arrhenius"
+    },
+    {
+      "OwnerGUID": "78b3383a-bcab-11ea-9a0f-0a7253ee1c32",
+      "OwnerName": "Axis Pharma"
+    },
+    {
+      "OwnerGUID": "6d755c6e-48df-e833-ad85-0e683a5189ca",
+      "OwnerName": "BaneBio"
+    },
+    {
+      "OwnerGUID": "5f9c62c6-3dd3-a12d-55e9-e6f04c255b5a",
+      "OwnerName": "Beaudin Bros"
+    },
+    {
+      "OwnerGUID": "ea6b4847-867f-ce9a-bff6-bc1031e06f75",
+      "OwnerName": "Beni Labs"
+    },
+    {
+      "OwnerGUID": "0f15326a-a625-11ea-9a0f-0a7253ee1c32",
+      "OwnerName": "BioMarin"
+    },
+    {
+      "OwnerGUID": "a0aae6cd-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "bioMONTR Labs"
+    },
+    {
+      "OwnerGUID": "a0aae7e5-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Bioserv"
+    },
+    {
+      "OwnerGUID": "2e7685db-787c-11e7-9476-000e8e66ee17",
+      "OwnerName": "BioSurplus"
+    },
+    {
+      "OwnerGUID": "5599c2b0-44e2-11eb-b6fa-0a7253ee1c32",
+      "OwnerName": "British Pharma Auctions (BPA)"
+    },
+    {
+      "OwnerGUID": "daa6e498-474e-e79e-6c43-38fcfaccc3cf",
+      "OwnerName": "Caire, Inc."
+    },
+    {
+      "OwnerGUID": "a0aae075-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Cedars - Sinai"
+    },
+    {
+      "OwnerGUID": "904187f6-9973-11e7-8966-00163c6a1afe",
+      "OwnerName": "Centers for Disease Control"
+    },
+    {
+      "OwnerGUID": "a0aae4af-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Combimatrix"
+    },
+    {
+      "OwnerGUID": "5df099ed-dbd9-96a9-5c57-aa7ab33db242",
+      "OwnerName": "Copia Scientific"
+    },
+    {
+      "OwnerGUID": "f4d23489-2a83-7cd3-58c8-893a022d0d0d",
+      "OwnerName": "CRC Oncology"
+    },
+    {
+      "OwnerGUID": "a0aae881-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "CSC Leasing"
+    },
+    {
+      "OwnerGUID": "a0aae0b3-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Cytori"
+    },
+    {
+      "OwnerGUID": "112c75d6-2a60-a2e4-f079-c11299fa4051",
+      "OwnerName": "Dv8"
+    },
+    {
+      "OwnerGUID": "bdc67239-c967-a55f-5203-4cdb92ee4e05",
+      "OwnerName": "EduCap Oral Exomes, LLC"
+    },
+    {
+      "OwnerGUID": "d8ab8de5-883b-5812-1a63-2ca69b3c75f4",
+      "OwnerName": "Esteban Figueroa/Kassandra Ruiz"
+    },
+    {
+      "OwnerGUID": "968fa4c3-d1cc-11ea-bcf1-0a7253ee1c32",
+      "OwnerName": "Exceltox Laboratories, LLC"
+    },
+    {
+      "OwnerGUID": "1ca34ba0-e219-11e8-85a0-0a7253ee1c32",
+      "OwnerName": "Fluores Probe"
+    },
+    {
+      "OwnerGUID": "6933001f-c90b-754d-5069-63a2822252e2",
+      "OwnerName": "Genizer, LLC"
+    },
+    {
+      "OwnerGUID": "54e09c69-de38-11e9-983d-0a7253ee1c32",
+      "OwnerName": "Gentech"
+    },
+    {
+      "OwnerGUID": "62e4a680-f437-11e9-8c67-0a7253ee1c32",
+      "OwnerName": "Gilead Sciences"
+    },
+    {
+      "OwnerGUID": "ca79da57-bf4d-11e7-a722-00163c6a1afe",
+      "OwnerName": "John Reed"
+    },
+    {
+      "OwnerGUID": "a91520bc-fd6f-11e8-85a0-0a7253ee1c32",
+      "OwnerName": "Kite Pharma"
+    },
+    {
+      "OwnerGUID": "e7ea1edf-732f-11e8-aff8-00163cf5529c",
+      "OwnerName": "Lab Fellows"
+    },
+    {
+      "OwnerGUID": "33b55134-7fe3-f749-1626-aaa16affbb36",
+      "OwnerName": "Leucadia Life Sciences"
+    },
+    {
+      "OwnerGUID": "a0aae08d-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Lobob Labs"
+    },
+    {
+      "OwnerGUID": "954f73cf-7229-07c6-6c42-4f1227cad4db",
+      "OwnerName": "LumiraDx"
+    },
+    {
+      "OwnerGUID": "a0aae8b5-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Martin Bouliane"
+    },
+    {
+      "OwnerGUID": "078cf51d-1735-f2ee-a514-97604bfd12c6",
+      "OwnerName": "Miracure Biotechnology"
+    },
+    {
+      "OwnerGUID": "5fcb6c50-d8bd-3f07-dbab-d1473523b6af",
+      "OwnerName": "Moderna"
+    },
+    {
+      "OwnerGUID": "52848f7a-5b83-11eb-b6fa-0a7253ee1c32",
+      "OwnerName": "Nathan Cole"
+    },
+    {
+      "OwnerGUID": "a0aaddbb-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "REUZEit, Inc."
+    },
+    {
+      "OwnerGUID": "a0aae7fd-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Revive Scientific "
+    },
+    {
+      "OwnerGUID": "d5e0bcb2-5e68-7439-69dd-97252edc7497",
+      "OwnerName": "Soligenix, Inc."
+    },
+    {
+      "OwnerGUID": "27032d55-d50d-26ea-c96c-3decaabf59be",
+      "OwnerName": "Stephen Harris"
+    },
+    {
+      "OwnerGUID": "a0aae4d4-716a-11e7-993b-000e8e66ee17",
+      "OwnerName": "Synthetic Biomolecules"
+    },
+    {
+      "OwnerGUID": "f89e1715-336d-60ba-b503-e4b94ca7b96e",
+      "OwnerName": "Tenova Pharmaceuticals, Inc."
+    },
+    {
+      "OwnerGUID": "dcc29f5f-e05c-11e7-987b-000e8e66ee17",
+      "OwnerName": "Thermo Fisher"
+    },
+    {
+      "OwnerGUID": "f05f22a0-1c26-ccfa-8986-26808b23e1ef",
+      "OwnerName": "Todoro Robotics, Inc."
+    },
+    {
+      "OwnerGUID": "528594f5-e6b1-fe9e-4fee-a00810b109f4",
+      "OwnerName": "Unilabs"
+    },
+    {
+      "OwnerGUID": "9d129f84-2dd6-11eb-b6fa-0a7253ee1c32",
+      "OwnerName": "Yulex"
+    }
+  ]
+}

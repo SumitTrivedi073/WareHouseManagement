@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "Class 1"
+    },
+    {
+      "id": "2",
+      "title": "Class 2"
+    },
+    {
+      "id": "3",
+      "title": "Class 3 - Service"
+    },
+    {
+      "id": "4",
+      "title": "Class 4 - As-Is"
+    },
+    {
+      "id": "5",
+      "title": "N (New)"
+    },
+    {
+      "id": "6",
+      "title": "TK (Turnkey)"
+    },
+    {
+      "id": "7",
+      "title": "E (Excellent)"
+    },
+    {
+      "id": "8",
+      "title": "VG (Very Good)"
+    },
+    {
+      "id": "9",
+      "title": "G (Good)"
+    },
+    {
+      "id": "10",
+      "title": "F (Fair)"
+    },
+    {
+      "id": "11",
+      "title": "P (Poor)"
+    },
+    {
+      "id": "12",
+      "title": "S (Salvage)"
+    },
+    {
+      "id": "13",
+      "title": "X (Scrap)"
+    }
+  ]
+}

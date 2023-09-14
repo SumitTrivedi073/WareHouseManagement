@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "Id": "1",
+      "Description": "Consignment Only"
+    },
+    {
+      "Id": "2",
+      "Description": "Redeploy Only"
+    },
+    {
+      "Id": "3",
+      "Description": "Consignment & Redeployment"
+    },
+    {
+      "Id": "4",
+      "Description": "Storage"
+    },
+    {
+      "Id": "5",
+      "Description": "To be Donated"
+    },
+    {
+      "Id": "6",
+      "Description": "To be Scrapped"
+    },
+    {
+      "Id": "7",
+      "Description": "Last Life"
+    },
+    {
+      "Id": "8",
+      "Description": "Internal Submission"
+    }
+  ]
+}
