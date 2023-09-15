@@ -33,6 +33,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         appBar: AppBar(
           title: robotoTextWidget(
               textval: addDimensions,
@@ -49,9 +50,9 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         body: Stack(children: [
           Container(
               margin: const EdgeInsets.all(10),
-              height: double.infinity,
               width: double.infinity,
               child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(children: [
                 textWidget(
                     lengthActCodeController, TextInputType.text, enterLengthAct),

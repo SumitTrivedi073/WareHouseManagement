@@ -16,12 +16,12 @@ class AddDescriptionPage extends StatefulWidget {
 class _AddDescriptionPageState extends State<AddDescriptionPage> {
 
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController descriptionHtmlController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         appBar: AppBar(
           title: robotoTextWidget(
               textval: addDescription,
@@ -38,10 +38,10 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
         body: Stack(children: [
           Container(
               margin: const EdgeInsets.all(10),
-              height: double.infinity,
               width: double.infinity,
-              child:  SingleChildScrollView(child: Column(children: [
-
+              child:  SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(children: [
                 textWidget(descriptionController, TextInputType.text, enterDescription),
                 ])
               )

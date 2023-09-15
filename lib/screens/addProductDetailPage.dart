@@ -28,6 +28,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController assetsController = TextEditingController();
   TextEditingController serialNumberCodeController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
   String selectStatus = working;
 
 
@@ -59,9 +61,9 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         body: Stack(children: [
           Container(
               margin: const EdgeInsets.all(10),
-              height: double.infinity,
               width: double.infinity,
               child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
                     categorySpinnerWidget(),
@@ -74,6 +76,10 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                         assetsController, TextInputType.text, enterAssets),
                     textWidget(serialNumberCodeController, TextInputType.text,
                         enterSerNo),
+
+                    textWidget(dateController, TextInputType.text,
+                        enterDate),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -274,7 +280,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                   fontFamily: 'Roboto'),
             ),
             keyboardType: inputType,
-            textInputAction: hintTxt == enterSerNo
+            textInputAction: hintTxt == enterDate
                 ? TextInputAction.done
                 : TextInputAction.next),
       ),
@@ -374,6 +380,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       Utility().showToast(enterAssets);
     } else if (serialNumberCodeController.text.toString().isEmpty) {
       Utility().showToast(enterSerNo);
+    } else if (dateController.text.toString().isEmpty) {
+      Utility().showToast(enterDate);
     } else {
 
       Navigator.of(context).pushAndRemoveUntil(

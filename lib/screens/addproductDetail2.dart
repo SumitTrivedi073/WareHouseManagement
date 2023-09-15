@@ -38,6 +38,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         appBar: AppBar(
           title: robotoTextWidget(
               textval: addProductDetail,
@@ -54,9 +55,9 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
         body: Stack(children: [
           Container(
               margin: const EdgeInsets.all(10),
-              height: double.infinity,
               width: double.infinity,
               child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(children: [
 
                 textWidget(barCodeController, TextInputType.text, enterBarcode),
