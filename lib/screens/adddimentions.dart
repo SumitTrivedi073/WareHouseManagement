@@ -55,15 +55,15 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                   scrollDirection: Axis.vertical,
                   child: Column(children: [
                 textWidget(
-                    lengthActCodeController, TextInputType.text, enterLengthAct),
-                textWidget(widthActController, TextInputType.text, enterWidthAct),
+                    lengthActCodeController, TextInputType.number, enterLengthAct),
+                textWidget(widthActController, TextInputType.number, enterWidthAct),
                 textWidget(
-                    heightActController, TextInputType.text, enterHeightAct),
+                    heightActController, TextInputType.number, enterHeightAct),
                 textWidget(
-                    lengthShippingController, TextInputType.text, enterLengthShipping),
-                textWidget(weightLbsActController, TextInputType.text,
+                    lengthShippingController, TextInputType.number, enterLengthShipping),
+                textWidget(weightLbsActController, TextInputType.number,
                     enterWeightLbsAct),
-                textWidget(weightLbsShippingController, TextInputType.text,
+                textWidget(weightLbsShippingController, TextInputType.number,
                     enterWeightLbsShipping),
               ]))),
           nextButtonWidget(),

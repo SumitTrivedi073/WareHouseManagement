@@ -59,7 +59,6 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
               child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(children: [
-
                 textWidget(barCodeController, TextInputType.text, enterBarcode),
                textWidget(purPrjController, TextInputType.text, enterPurPuj),
                     sellTypeSpinnerWidget(),

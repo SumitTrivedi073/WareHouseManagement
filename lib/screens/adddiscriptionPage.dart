@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warehouse_management_app/screens/addImageWidget.dart';
 
 import '../theme/color.dart';
 import '../theme/string.dart';
@@ -76,7 +77,7 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
                   fontFamily: 'Roboto'),
             ),
             keyboardType: inputType,
-            textInputAction: hintTxt == enterDescriptionHtml
+            textInputAction: hintTxt == enterDescription
                 ? TextInputAction.done
                 : TextInputAction.next),
       ),
@@ -124,7 +125,10 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
     if (descriptionController.text.toString().isEmpty) {
       Utility().showToast(enterDescription);
     } else {
-
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (BuildContext context) =>  AddImageWidgetPage()),
+              (Route<dynamic> route) => true);
     }
   }
 }

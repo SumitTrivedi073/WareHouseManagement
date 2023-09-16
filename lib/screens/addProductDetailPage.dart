@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../theme/color.dart';
 import '../theme/string.dart';
@@ -20,7 +21,7 @@ class AddProductDetailPage extends StatefulWidget {
 }
 
 class _AddProductDetailPageState extends State<AddProductDetailPage> {
-  String? SelectMakeType, SelectCategoryType, SelectSubCategoryType;
+  String? SelectMakeType, SelectCategoryType, SelectSubCategoryType,indianFromDate,selectedTargateDate;
   List<makeListPrefix.Datum> selectMakeList = [];
   List<categoryPrefix.Datum> selectCategoryList = [];
   List<subCategoryPrefix.Datum> selectSubCategoryList = [];
@@ -29,14 +30,15 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   TextEditingController assetsController = TextEditingController();
   TextEditingController serialNumberCodeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-
-  String selectStatus = working;
-
+  String selectStatus = working,dateTimeFormat = "dd/MM/yyyy";
+  DateTime? pickedDate;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedTargateDate = DateFormat(dateTimeFormat).format(DateTime.now());
+    indianFromDate = DateFormat("dd/MM/yyyy").format(DateTime.now());
 
     getList();
   }
@@ -77,8 +79,9 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                     textWidget(serialNumberCodeController, TextInputType.text,
                         enterSerNo),
 
-                    textWidget(dateController, TextInputType.text,
-                        enterDate),
+
+                    datePickerWidget(
+                        selectedTargateDate!, dateController, selectDate),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -280,11 +283,85 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                   fontFamily: 'Roboto'),
             ),
             keyboardType: inputType,
-            textInputAction: hintTxt == enterDate
+            textInputAction: hintTxt == enterSerNo
                 ? TextInputAction.done
                 : TextInputAction.next),
       ),
     );
+  }
+
+  datePickerWidget(
+      String fromTO, TextEditingController DateController, String title) {
+    return GestureDetector(
+      onTap: () {
+        _selectDate(context);
+      },
+      child:  Container(
+        margin: EdgeInsets.only(top: 10),
+              height: 55,
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColor.themeColor,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.calendar_month,
+                    color: AppColor.themeColor,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                      child: TextField(
+                        controller: DateController,
+                        maxLines: 1,
+                        showCursor: false,
+                        enabled: false,
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                            hintText: selectDate,
+                            hintStyle: const TextStyle(
+                                color: AppColor.darkGrey,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Roboto'),
+                            border: InputBorder.none),
+                        style: const TextStyle(
+                            color: AppColor.themeColor,
+                            fontSize: 12,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600),
+                        keyboardType: TextInputType.datetime,
+                        textInputAction: TextInputAction.done,
+                      ))
+                ],
+              ),
+            )
+
+    );
+  }
+  Future<void> _selectDate(BuildContext context) async {
+    pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1970),
+        //DateTime.now() - not to allow to choose before today.
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      setState(() {
+        String formattedDate = DateFormat(dateTimeFormat).format(pickedDate!);
+        selectedTargateDate = DateFormat(dateTimeFormat).format(pickedDate!);
+        dateController.text = formattedDate;
+      });
+    }
   }
 
   nextButtonWidget() {
@@ -381,8 +458,9 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     } else if (serialNumberCodeController.text.toString().isEmpty) {
       Utility().showToast(enterSerNo);
     } else if (dateController.text.toString().isEmpty) {
-      Utility().showToast(enterDate);
-    } else {
+      Utility().showToast(selectDate);
+    }
+    else {
 
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(

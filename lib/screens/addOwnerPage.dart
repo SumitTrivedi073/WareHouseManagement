@@ -185,7 +185,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
               value == null || value.isEmpty ? selectClassType : "",
           items: selectSourceLocList
               .map((ownerlist) => DropdownMenuItem(
-                  value: ownerlist.longName,
+                  value: ownerlist.locationGuid,
                   child: robotoTextWidget(
                       textval: ownerlist.longName!,
                       colorval: AppColor.themeColor,
