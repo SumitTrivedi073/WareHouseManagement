@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) =>
-                  AddOwnerPage(productModel:  addProductModel, isUpdate: isUpdate,)),
+                  AddOwnerPage(productModel:  addProductModel, isUpdate: false,)),
               (Route<dynamic> route) => true);
     }
   }
