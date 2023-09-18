@@ -58,3 +58,4 @@ var display = "Display";
 var change = "Change";
 var save = "Save";
 var attechImages = "Please attach minimum 2 images!";
+var checkInternetConnection = "Please check your internet connection and try again!";

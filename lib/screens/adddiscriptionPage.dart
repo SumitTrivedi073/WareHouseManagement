@@ -8,7 +8,10 @@ import '../utils/utility.dart';
 import 'model/addProductModel.dart';
 
 class AddDescriptionPage extends StatefulWidget {
-  AddDescriptionPage({Key? key}) : super(key: key);
+  AddDescriptionPage({Key? key,required this.addProductModel,required this.isUpdate}) : super(key: key);
+   AddProductModel addProductModel;
+   bool isUpdate;
+
 
   @override
   State<AddDescriptionPage> createState() => _AddDescriptionPageState();
@@ -17,6 +20,16 @@ class AddDescriptionPage extends StatefulWidget {
 class _AddDescriptionPageState extends State<AddDescriptionPage> {
 
   TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(widget.isUpdate){
+      descriptionController.text = widget.addProductModel.description;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +138,47 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
     if (descriptionController.text.toString().isEmpty) {
       Utility().showToast(enterDescription);
     } else {
+     AddProductModel addProductModel =  AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
+          locationGuid: widget.addProductModel.locationGuid,
+          requester: widget.addProductModel.requester,
+         locationName:  widget.addProductModel.locationName,
+         countryId:  widget.addProductModel.countryId,
+         stateId:  widget.addProductModel.stateId,
+         province:  widget.addProductModel.province,
+         address:  widget.addProductModel.address,
+         city:  widget.addProductModel.city,
+         zipCode: widget.addProductModel.zipCode,
+          categoryId: widget.addProductModel.categoryId,
+          categorySubId: widget.addProductModel.categorySubId,
+          makeGuid: widget.addProductModel.makeGuid,
+          modelNumber: widget.addProductModel.modelNumber,
+          title: widget.addProductModel.title,
+          assetDetail: widget.addProductModel.assetDetail,
+          serialNumber: widget.addProductModel.serialNumber,
+          selectedDate: widget.addProductModel.selectedDate,
+          productStatus:widget.addProductModel.productStatus,
+          barcode: widget.addProductModel.barcode,
+          purPujNo: widget.addProductModel.purPujNo,
+          sellType: widget.addProductModel.sellType,
+          classType: widget.addProductModel.classType,
+          lengthActual:widget.addProductModel.lengthActual,
+          widthActual: widget.addProductModel.widthActual,
+          heightActual: widget.addProductModel.heightActual,
+          lengthShipping: widget.addProductModel.lengthShipping,
+          weightLbsActual: widget.addProductModel.weightLbsActual,
+          weightLbsShipping:widget.addProductModel.weightLbsShipping,
+          description:descriptionController.text.toString(),
+         photo1: widget.addProductModel.photo1.toString().isNotEmpty?widget.addProductModel.photo1.toString():'',
+         photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',
+         photo3: widget.addProductModel.photo3.toString().isNotEmpty?widget.addProductModel.photo3.toString():'',
+         photo4: widget.addProductModel.photo4.toString().isNotEmpty?widget.addProductModel.photo4.toString():'',
+         photo5: widget.addProductModel.photo5.toString().isNotEmpty?widget.addProductModel.photo5.toString():'');
+
+     print('addProductMode555555==================>${addProductModel.toString()}');
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (BuildContext context) =>  AddImageWidgetPage()),
+              builder: (BuildContext context) =>  AddImageWidgetPage(addProductModel: addProductModel,
+                  isUpdate: widget.isUpdate)),
               (Route<dynamic> route) => true);
     }
   }

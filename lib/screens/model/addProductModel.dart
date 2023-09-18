@@ -1,142 +1,202 @@
+
 class AddProductModel {
-  String classes,
-      barcode,
-      title,
-      quantity,
-      purPuj,
-      retailPrice,
-      modelType,
-      makeType,
-      serialNum,
-      requester,
-      itemCondition,
-      owner,
-      sourceLoc,
-      itemLoc,
-      category,
-      subCategory,
-      lengthActCode,
-      widthAct,
-      heightAct,
-      lengthShipping,
-      weightLbsAct,
-      weightLbsShipping,
-      discription,
-      discriptionhtml;
+  String ownerGuid;
+  String locationGuid;
+  String requester;
+  String locationName;
+  String countryId;
+  String stateId;
+  String province;
+  String address;
+  String city;
+  String zipCode;
+  String categoryId;
+  String categorySubId;
+  String makeGuid;
+  String modelNumber;
+  String title;
+  String assetDetail;
+  String serialNumber;
+  String selectedDate;
+  String productStatus;
+  String barcode;
+  String purPujNo;
+  String sellType;
+  String classType;
+  String lengthActual;
+  String widthActual;
+  String heightActual;
+  String lengthShipping;
+  String weightLbsActual;
+  String weightLbsShipping;
+  String description;
+  String photo1;
+  String photo2;
+  String photo3;
+  String photo4;
+  String photo5;
 
-  AddProductModel(
-      {required this.classes,
-      required this.barcode,
-      required this.title,
-      required this.quantity,
-      required this.purPuj,
-      required this.retailPrice,
-      required this.modelType,
-      required this.makeType,
-      required this.serialNum,
-      required this.requester,
-      required this.itemCondition,
-      required this.owner,
-      required this.sourceLoc,
-      required this.itemLoc,
-      required this.category,
-      required this.subCategory,
-      required this.lengthActCode,
-      required this.widthAct,
-      required this.heightAct,
-      required this.lengthShipping,
-      required this.weightLbsAct,
-      required this.weightLbsShipping,
-      required this.discription,
-      required this.discriptionhtml});
-
+  AddProductModel({
+    required this.ownerGuid,
+    required this.locationGuid,
+    required this.requester,
+    required this.locationName,
+    required this.countryId,
+    required this.stateId,
+    required this.province,
+    required this.address,
+    required this.city,
+    required this.zipCode,
+    required this.categoryId,
+    required this.categorySubId,
+    required this.makeGuid,
+    required this.modelNumber,
+    required this.title,
+    required this.assetDetail,
+    required this.serialNumber,
+    required this.selectedDate,
+    required this.productStatus,
+    required this.barcode,
+    required this.purPujNo,
+    required this.sellType,
+    required this.classType,
+    required this.lengthActual,
+    required this.widthActual,
+    required this.heightActual,
+    required this.lengthShipping,
+    required this.weightLbsActual,
+    required this.weightLbsShipping,
+    required this.description,
+    required this.photo1,
+    required this.photo2,
+    required this.photo3,
+    required this.photo4,
+    required this.photo5,
+  });
   //to be used when inserting a row in the table
   Map<String, dynamic> toMapWithoutId() {
     final map = new Map<String, dynamic>();
-    map["classes"] = classes;
-    map["barcode"] = barcode;
-    map["title"] = title;
-    map["quantity"] = quantity;
-    map["purPuj"] = purPuj;
-    map["retailPrice"] = retailPrice;
-    map["modelType"] = modelType;
-    map["makeType"] = makeType;
-    map["serialNum"] = serialNum;
+    map["ownerGuid"] = ownerGuid;
+    map["locationGuid"] = locationGuid;
     map["requester"] = requester;
-    map["itemCondition"] = itemCondition;
-    map["owner"] = owner;
-    map["sourceLoc"] = sourceLoc;
-    map["itemLoc"] = itemLoc;
-    map["category"] = category;
-    map["subCategory"] = subCategory;
-    map["lengthActCode"] = lengthActCode;
-    map["widthAct"] = widthAct;
-    map["heightAct"] = heightAct;
+    map["locationName"] = locationName;
+    map["countryId"] = countryId;
+    map["stateId"] = stateId;
+    map["province"] = province;
+    map["address"] = address;
+    map["city"] = city;
+    map["zipCode"] = zipCode;
+    map["categoryId"] = categoryId;
+    map["categorySubId"] = categorySubId;
+    map["makeGuid"] = makeGuid;
+    map["modelNumber"] = modelNumber;
+    map["title"] = title;
+    map["assetDetail"] = assetDetail;
+    map["serialNumber"] = serialNumber;
+    map["selectedDate"] = selectedDate;
+    map["productStatus"] = productStatus;
+    map["barcode"] = barcode;
+    map["purPujNo"] = purPujNo;
+    map["sellType"] = sellType;
+    map["classType"] = classType;
+    map["lengthActual"] = lengthActual;
+    map["widthActual"] = widthActual;
+    map["heightActual"] = heightActual;
     map["lengthShipping"] = lengthShipping;
-    map["weightLbsAct"] = weightLbsAct;
+    map["weightLbsActual"] = weightLbsActual;
     map["weightLbsShipping"] = weightLbsShipping;
-    map["discription"] = discription;
-    map["discriptionhtml"] = discriptionhtml;
-
+    map["description"] = description;
+    map["photo1"] = photo1;
+    map["photo2"] = photo2;
+    map["photo3"] = photo3;
+    map["photo4"] = photo4;
+    map["photo5"] = photo5;
     return map;
   }
 
   //to be used when updating a row in the table
   Map<String, dynamic> toMap() {
     final map = new Map<String, dynamic>();
-
-    map["classes"] = classes;
-    map["barcode"] = barcode;
-    map["title"] = title;
-    map["quantity"] = quantity;
-    map["purPuj"] = purPuj;
-    map["retailPrice"] = retailPrice;
-    map["modelType"] = modelType;
-    map["makeType"] = makeType;
-    map["serialNum"] = serialNum;
+    map["ownerGuid"] = ownerGuid;
+    map["locationGuid"] = locationGuid;
     map["requester"] = requester;
-    map["itemCondition"] = itemCondition;
-    map["owner"] = owner;
-    map["sourceLoc"] = sourceLoc;
-    map["itemLoc"] = itemLoc;
-    map["category"] = category;
-    map["subCategory"] = subCategory;
-    map["lengthActCode"] = lengthActCode;
-    map["widthAct"] = widthAct;
-    map["heightAct"] = heightAct;
+    map["locationName"] = locationName;
+    map["countryId"] = countryId;
+    map["stateId"] = stateId;
+    map["province"] = province;
+    map["address"] = address;
+    map["city"] = city;
+    map["zipCode"] = zipCode;
+    map["categoryId"] = categoryId;
+    map["categorySubId"] = categorySubId;
+    map["makeGuid"] = makeGuid;
+    map["modelNumber"] = modelNumber;
+    map["title"] = title;
+    map["assetDetail"] = assetDetail;
+    map["serialNumber"] = serialNumber;
+    map["selectedDate"] = selectedDate;
+    map["productStatus"] = productStatus;
+    map["barcode"] = barcode;
+    map["purPujNo"] = purPujNo;
+    map["sellType"] = sellType;
+    map["classType"] = classType;
+    map["lengthActual"] = lengthActual;
+    map["widthActual"] = widthActual;
+    map["heightActual"] = heightActual;
     map["lengthShipping"] = lengthShipping;
-    map["weightLbsAct"] = weightLbsAct;
+    map["weightLbsActual"] = weightLbsActual;
     map["weightLbsShipping"] = weightLbsShipping;
-    map["discription"] = discription;
-    map["discriptionhtml"] = discriptionhtml;
+    map["description"] = description;
+    map["photo1"] = photo1;
+    map["photo2"] = photo2;
+    map["photo3"] = photo3;
+    map["photo4"] = photo4;
+    map["photo5"] = photo5;
     return map;
   }
 
   //to be used when converting the row into object
-  factory AddProductModel.fromMap(Map<String, dynamic> data) => AddProductModel(
-        classes: data['classes'] ?? "",
-        barcode: data['barcode'] ?? "",
-        quantity: data['quantity'] ?? "",
-        title: data['title'] ?? "",
-        purPuj: data['purPuj'] ?? "",
-        modelType: data['modelType'] ?? "",
-        makeType: data['makeType'] ?? "",
-        retailPrice: data['retailPrice'] ?? "",
-        serialNum: data['serialNum'] ?? "",
+  factory AddProductModel.fromMap(Map<String, dynamic> data) =>
+      AddProductModel(
+        ownerGuid: data['ownerGuid'] ?? 0,
+        locationGuid: data['locationGuid'] ?? "",
         requester: data['requester'] ?? "",
-        itemCondition: data['itemCondition'] ?? "",
-        owner: data['owner'] ?? "",
-        sourceLoc: data['sourceLoc'] ?? "",
-        itemLoc: data['itemLoc'] ?? "",
-        category: data['category'] ?? "",
-        subCategory: data['subCategory'] ?? "",
-        lengthActCode: data['lengthActCode'] ?? "",
-        widthAct: data['widthAct'] ?? "",
-        heightAct: data['heightAct'] ?? "",
+        locationName: data['locationName'] ?? "",
+        countryId: data['countryId'] ?? "",
+        stateId: data['stateId'] ?? "",
+        province: data['province'] ?? "",
+        address: data['address'] ?? "",
+        city: data['city'] ?? "",
+        zipCode: data['zipCode'] ?? "",
+        categoryId: data['categoryId'] ?? "",
+        categorySubId: data['categorySubId'] ?? "",
+        makeGuid: data['makeGuid'] ?? "",
+        modelNumber: data['modelNumber'] ?? "",
+        title: data['title'] ?? "",
+        assetDetail: data['assetDetail'] ?? "",
+        serialNumber: data['serialNumber'] ?? "",
+        selectedDate: data['selectedDate'] ?? "",
+        productStatus: data['productStatus'] ?? "",
+        barcode: data['barcode'] ?? "",
+        purPujNo: data['purPujNo'] ?? "",
+        sellType: data['sellType'] ?? "",
+        classType: data['classType'] ?? "",
+        lengthActual: data['lengthActual'] ?? "",
+        widthActual: data['widthActual'] ?? "",
+        heightActual: data['heightActual'] ?? "",
         lengthShipping: data['lengthShipping'] ?? "",
-        weightLbsAct: data['weightLbsAct'] ?? "",
+        weightLbsActual: data['weightLbsActual'] ?? "",
         weightLbsShipping: data['weightLbsShipping'] ?? "",
-        discription: data['discription'] ?? "",
-        discriptionhtml: data['discriptionhtml'] ?? "",
+        description: data['description'] ?? "",
+        photo1: data['photo1'] ?? "",
+        photo2: data['photo2'] ?? "",
+        photo3: data['photo3'] ?? "",
+        photo4: data['photo4'] ?? "",
+        photo5: data['photo5'] ?? "",
       );
+
+  @override
+  String toString() {
+    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, purPujNo: $purPujNo, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
+  }
 }

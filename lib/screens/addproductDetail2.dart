@@ -12,7 +12,10 @@ import '../uiwidget/robotoTextWidget.dart';
 import '../utils/utility.dart';
 
 class AddProductDetailPage2 extends StatefulWidget {
-  const AddProductDetailPage2({Key? key}) : super(key: key);
+   AddProductDetailPage2({Key? key,required this.addProductModel,required this.isUpdate}) : super(key: key);
+  
+ AddProductModel addProductModel;
+ bool isUpdate;
 
   @override
   State<AddProductDetailPage2> createState() => _AddProductDetailPage2State();
@@ -20,9 +23,8 @@ class AddProductDetailPage2 extends StatefulWidget {
 
 class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
   String? selectedClassType,selectedSellType;
-  List<classPrefix.Datum> ClassList = [];
+  List<classPrefix.Datum> classList = [];
   List<sellTypePrefix.Datum> sellTypeList = [];
-  List<AddProductModel> productList =[];
   TextEditingController barCodeController = TextEditingController();
   TextEditingController purPrjController = TextEditingController();
 
@@ -32,6 +34,10 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
     super.initState();
 
     getList();
+    if(widget.isUpdate){
+      barCodeController.text = widget.addProductModel.barcode;
+      purPrjController.text = widget.addProductModel.purPujNo;
+    }
   }
 
   @override
@@ -132,7 +138,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
           value: selectedClassType,
           validator: (value) =>
           value == null || value.isEmpty ? selectClassType : "",
-          items: ClassList
+          items: classList
               .map((classList) => DropdownMenuItem(
               value: classList.id,
               child: robotoTextWidget(
@@ -226,9 +232,13 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
     sellTypePrefix.SellTypeModel.fromJson(jsonData1);
 
     setState(() {
-      ClassList = productClassModel.data;
+      classList = productClassModel.data;
       sellTypeList = sellTypeModel.data;
-    });
+      if(widget.isUpdate) {
+        selectedClassType = widget.addProductModel.classType;
+        selectedSellType = widget.addProductModel.sellType;
+      }
+      });
 
   }
 
@@ -246,9 +256,47 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
        selectedClassType = null;
        Utility().showToast(selectClassType);
      }else{
+       AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
+           locationGuid: widget.addProductModel.locationGuid,
+           requester: widget.addProductModel.requester,
+           locationName:  widget.addProductModel.locationName,
+           countryId:  widget.addProductModel.countryId,
+           stateId:  widget.addProductModel.stateId,
+           province:  widget.addProductModel.province,
+           address:  widget.addProductModel.address,
+           city:  widget.addProductModel.city,
+           zipCode: widget.addProductModel.zipCode,
+           categoryId: widget.addProductModel.categoryId,
+           categorySubId: widget.addProductModel.categorySubId,
+           makeGuid: widget.addProductModel.makeGuid,
+           modelNumber: widget.addProductModel.modelNumber,
+           title: widget.addProductModel.title,
+           assetDetail: widget.addProductModel.assetDetail,
+           serialNumber: widget.addProductModel.serialNumber,
+           selectedDate: widget.addProductModel.selectedDate,
+           productStatus: widget.addProductModel.productStatus,
+           barcode: barCodeController.text.toString(),
+           purPujNo: purPrjController.text.toString(),
+           sellType:selectedSellType!,
+           classType: selectedClassType!,
+           lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty?widget.addProductModel.lengthActual.toString():'',
+           widthActual: widget.addProductModel.widthActual.toString().isNotEmpty?widget.addProductModel.widthActual.toString():'',
+           heightActual: widget.addProductModel.heightActual.toString().isNotEmpty?widget.addProductModel.heightActual.toString():'',
+           lengthShipping: widget.addProductModel.lengthShipping.toString().isNotEmpty?widget.addProductModel.lengthShipping.toString():'',
+           weightLbsActual: widget.addProductModel.weightLbsActual.toString().isNotEmpty?widget.addProductModel.weightLbsActual.toString():'',
+           weightLbsShipping:widget.addProductModel.weightLbsShipping.toString().isNotEmpty?widget.addProductModel.weightLbsShipping.toString(): '',
+           description: widget.addProductModel.description.toString().isNotEmpty?widget.addProductModel.description.toString():'',
+           photo1: widget.addProductModel.photo1.toString().isNotEmpty?widget.addProductModel.photo1.toString():'',
+           photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',
+           photo3: widget.addProductModel.photo3.toString().isNotEmpty?widget.addProductModel.photo3.toString():'',
+           photo4: widget.addProductModel.photo4.toString().isNotEmpty?widget.addProductModel.photo4.toString():'',
+           photo5: widget.addProductModel.photo5.toString().isNotEmpty?widget.addProductModel.photo5.toString():'');
+
+       print('addProductMode333333==================>${addProductModel.toString()}');
        Navigator.of(context).pushAndRemoveUntil(
            MaterialPageRoute(
-               builder: (BuildContext context) =>  AddDimensionsPage()),
+               builder: (BuildContext context) =>  AddDimensionsPage(addProductModel: addProductModel,
+               isUpdate: widget.isUpdate,)),
                (Route<dynamic> route) => true);
      }
   }

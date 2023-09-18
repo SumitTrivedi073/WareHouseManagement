@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 
@@ -52,6 +53,9 @@ class Utility {
     preferences.setString(key, value);
   }
 
+
+
+
   clearSharedPreference() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
@@ -88,5 +92,12 @@ class Utility {
     String fileInBase64 = base64Encode(fileInByte);
     return fileInBase64;
   }
-
+  static String convertDateFormat(String dateTimeString, String oldFormat, String
+  newFormat) {
+    print('dateTimeString$dateTimeString');
+    DateFormat newDateFormat = DateFormat(newFormat);
+    DateTime dateTime = DateFormat(oldFormat).parse(dateTimeString);
+    String selectedDate = newDateFormat.format(dateTime);
+    return selectedDate;
+  }
 }

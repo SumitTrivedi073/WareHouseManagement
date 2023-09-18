@@ -1,24 +1,31 @@
 import 'dart:convert' as convert;
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:warehouse_management_app/screens/addLocationWidget.dart';
 import 'package:warehouse_management_app/screens/addProductDetailPage.dart';
-import 'package:warehouse_management_app/screens/model/countryListModel.dart'
-    as countryPrefix;
+
 import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
     as ownerPrefix;
-import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
-    as sourceLocPrefix;
-import 'package:warehouse_management_app/screens/model/stateListModel.dart'
-    as statePrefix;
+
+
+import 'package:warehouse_management_app/utils/constant.dart';
 
 import '../theme/color.dart';
 import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
 import '../utils/utility.dart';
-
+import 'model/addProductModel.dart';
+import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
+as sourceLocPrefix;
 class AddOwnerPage extends StatefulWidget {
-  AddOwnerPage({Key? key}) : super(key: key);
+  AddOwnerPage({Key? key, required this.productModel, required this.isUpdate})
+      : super(key: key);
+
+  AddProductModel productModel;
+  bool isUpdate;
 
   @override
   State<AddOwnerPage> createState() => _AddOwnerPageState();
@@ -30,23 +37,32 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
       SelectCountryType,
       SelectStateType;
   List<ownerPrefix.Datum> selectOwnerList = [];
+
   List<sourceLocPrefix.Datum> selectSourceLocList = [];
-  List<countryPrefix.Datum> selectCountryList = [];
-  List<statePrefix.Datum> selectStateList = [];
+  List<AddProductModel> productList = [];
   TextEditingController sourceLocController = TextEditingController();
   TextEditingController requesterController = TextEditingController();
-  TextEditingController locationNameController = TextEditingController();
-  TextEditingController provinceController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController zipcodeController = TextEditingController();
   bool ischecked = false;
+  late SharedPreferences sharedPreferences;
+   AddProductModel? addProductModel1;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getList();
+    if (widget.isUpdate) {
+      setData();
+    } else {
+      getSharedPrefrence();
+    }
+  }
+
+  void setData() {
+    SelectOwnerType = widget.productModel.ownerGuid;
+    requesterController.text = widget.productModel.requester;
+    getSourceLocList(widget.isUpdate);
+    addProductModel1 = widget.productModel;
   }
 
   @override
@@ -93,11 +109,13 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
           SelectOwnerType ??= "";
 
           if (SelectOwnerType.toString().isNotEmpty) {
-            getCountryList();
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => addSourceLocPopup(context),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AddLocationWidgetPage(
+                      callback: retriveLocationData,addProductModel: widget.productModel,
+                      isUpdate: widget.isUpdate,
+                    )),
+                    (Route<dynamic> route) => true);
           } else {
             SelectOwnerType = null;
             Utility().showToast(selectOwner2);
@@ -153,7 +171,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
             setState(() {
               SelectOwnerType = value.toString();
               SelectSourceLocType = null;
-              getSourceLocList();
+              getSourceLocList(false);
             });
           },
         ));
@@ -305,7 +323,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     });
   }
 
-  Future<void> getSourceLocList() async {
+  Future<void> getSourceLocList(bool isUpdate) async {
     String data1 =
         await rootBundle.loadString('assets/api_json/sourceLocList.json');
     var jsonData1 = convert.jsonDecode(data1);
@@ -320,11 +338,21 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         }
       }
     }
+    if (isUpdate) {
+      SelectSourceLocType = widget.productModel.locationGuid;
+    } else {
+      sharedPreferences = await SharedPreferences.getInstance();
+      if (sharedPreferences.getString(selectSourceLocType) != null &&
+          sharedPreferences.getString(selectSourceLocType).toString().isNotEmpty) {
+        SelectSourceLocType = sharedPreferences.getString(selectSourceLocType).toString();
+
+      }
+    }
 
     setState(() {});
   }
 
-  void moveToNextScreen() {
+  Future<void> moveToNextScreen() async {
     SelectOwnerType ??= "";
     SelectSourceLocType ??= "";
     if (SelectOwnerType!.isEmpty) {
@@ -337,237 +365,90 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     } else if (requesterController.text.toString().isEmpty) {
       Utility().showToast(enterRequester);
     } else {
+      if (ischecked) {
+        Utility().setSharedPreference(selectOwnerType, SelectOwnerType!);
+        Utility().setSharedPreference(selectSourceLocType, SelectSourceLocType!);
+        Utility().setSharedPreference(
+            selectRequester, requesterController.text.toString());
+      }else{
+        sharedPreferences = await SharedPreferences.getInstance();
+        if (sharedPreferences.getString(selectOwnerType) != null &&
+            sharedPreferences.getString(selectOwnerType).toString().isNotEmpty) {
+          Utility().clearSharedPreference();
+        }
+      }
+
+                 AddProductModel addProductModel = AddProductModel(
+                     ownerGuid: SelectOwnerType!,
+                     locationGuid: SelectSourceLocType!,
+                     requester: requesterController.text.toString(),
+                     locationName: addProductModel1!.locationName.toString().isNotEmpty?addProductModel1!.locationName.toString():'',
+                     countryId: addProductModel1!.countryId.toString().isNotEmpty?addProductModel1!.countryId.toString():'',
+                     stateId: addProductModel1!.stateId.toString().isNotEmpty?addProductModel1!.stateId.toString():'',
+                     province: addProductModel1!.province.toString().isNotEmpty?addProductModel1!.province.toString():'',
+                     address: addProductModel1!.address.toString().isNotEmpty?addProductModel1!.address.toString():'',
+                     city: addProductModel1!.city.toString().isNotEmpty?addProductModel1!.city.toString():'',
+                     zipCode: addProductModel1!.zipCode.toString().isNotEmpty?addProductModel1!.zipCode.toString():'',
+                     categoryId: addProductModel1!.categoryId.toString().isNotEmpty?addProductModel1!.categoryId.toString():'',
+                     categorySubId: addProductModel1!.categorySubId.toString().isNotEmpty?addProductModel1!.categorySubId.toString():'',
+                     makeGuid: addProductModel1!.makeGuid.toString().isNotEmpty?addProductModel1!.makeGuid.toString():'',
+                     modelNumber: addProductModel1!.modelNumber.toString().isNotEmpty?addProductModel1!.modelNumber.toString():'',
+                     title: addProductModel1!.title.toString().isNotEmpty?addProductModel1!.title.toString():'',
+                     assetDetail: addProductModel1!.assetDetail.toString().isNotEmpty?addProductModel1!.assetDetail.toString():'',
+                     serialNumber: addProductModel1!.serialNumber.toString().isNotEmpty?addProductModel1!.serialNumber.toString():'',
+                     selectedDate: addProductModel1!.selectedDate.toString().isNotEmpty?addProductModel1!.selectedDate.toString():'',
+                     productStatus: addProductModel1!.productStatus.toString().isNotEmpty?addProductModel1!.productStatus.toString():'',
+                     barcode: addProductModel1!.barcode.toString().isNotEmpty?addProductModel1!.barcode.toString():'',
+                     purPujNo:addProductModel1!.purPujNo.toString().isNotEmpty?addProductModel1!.purPujNo.toString(): '',
+                     sellType: addProductModel1!.sellType.toString().isNotEmpty?addProductModel1!.sellType.toString():'',
+                     classType: addProductModel1!.classType.toString().isNotEmpty?addProductModel1!.classType.toString():'',
+                     lengthActual: addProductModel1!.lengthActual.toString().isNotEmpty?addProductModel1!.lengthActual.toString():'',
+                     widthActual: addProductModel1!.widthActual.toString().isNotEmpty?addProductModel1!.widthActual.toString():'',
+                     heightActual: addProductModel1!.heightActual.toString().isNotEmpty?addProductModel1!.heightActual.toString():'',
+                     lengthShipping: addProductModel1!.lengthShipping.toString().isNotEmpty?addProductModel1!.lengthShipping.toString():'',
+                     weightLbsActual: addProductModel1!.weightLbsActual.toString().isNotEmpty?addProductModel1!.weightLbsActual.toString():'',
+                     weightLbsShipping:addProductModel1!.weightLbsShipping.toString().isNotEmpty?addProductModel1!.weightLbsShipping.toString(): '',
+                     description: addProductModel1!.description.toString().isNotEmpty?addProductModel1!.description.toString():'',
+                     photo1: addProductModel1!.photo1.toString().isNotEmpty?addProductModel1!.photo1.toString():'',
+                     photo2: addProductModel1!.photo2.toString().isNotEmpty?addProductModel1!.photo2.toString():'',
+                     photo3: addProductModel1!.photo3.toString().isNotEmpty?addProductModel1!.photo3.toString():'',
+                     photo4: addProductModel1!.photo4.toString().isNotEmpty?addProductModel1!.photo4.toString():'',
+                     photo5: addProductModel1!.photo5.toString().isNotEmpty?addProductModel1!.photo5.toString():'');
+
+
+      print('addProductModel11111==================>${addProductModel.toString()}');
+
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (BuildContext context) => AddProductDetailPage()),
+              builder: (BuildContext context) => AddProductDetailPage(
+                    addProductModel: addProductModel,isUpdate: widget.isUpdate,)),
           (Route<dynamic> route) => true);
     }
   }
 
-  addSourceLocPopup(BuildContext context) {
-    return AlertDialog(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        content: Container(
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: robotoTextWidget(
-                            textval: appName,
-                            colorval: AppColor.themeColor,
-                            sizeval: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      textWidget(locationNameController, TextInputType.text,
-                          enterLocationName),
-                      countrySpinnerWidget(),
-                      stateSpinnerWidget(),
-                      textWidget(provinceController, TextInputType.text,
-                          enterProvince),
-                      textWidget(
-                          addressController, TextInputType.text, enterAddress),
-                      textWidget(cityController, TextInputType.text, enterCity),
-                      textWidget(
-                          zipcodeController, TextInputType.text, enterZipcode),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Flexible(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: AppColor.whiteColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
-                                ),
-                              ),
-                              child: robotoTextWidget(
-                                textval: cancel,
-                                colorval: AppColor.darkGrey,
-                                sizeval: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                SelectCountryType ??= "";
-                                if (locationNameController.text
-                                    .toString()
-                                    .isEmpty) {
-                                  Utility().showToast(enterLocationName);
-                                } else if (SelectCountryType.toString()
-                                    .isEmpty) {
-                                  Utility().showToast(selectCountry);
-                                } else if (provinceController.text
-                                    .toString()
-                                    .isEmpty) {
-                                  Utility().showToast(enterProvince);
-                                } else if (addressController.text
-                                    .toString()
-                                    .isEmpty) {
-                                  Utility().showToast(enterAddress);
-                                } else if (cityController.text
-                                    .toString()
-                                    .isEmpty) {
-                                  Utility().showToast(enterCity);
-                                } else if (zipcodeController.text
-                                    .toString()
-                                    .isEmpty) {
-                                  Utility().showToast(enterZipcode);
-                                } else {
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: AppColor.themeColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
-                                ),
-                              ),
-                              child: robotoTextWidget(
-                                textval: confirm,
-                                colorval: AppColor.whiteColor,
-                                sizeval: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ]))));
-  }
 
-  countrySpinnerWidget() {
-    return Container(
-        margin: const EdgeInsets.only(top: 10),
-        height: 55,
-        width: MediaQuery.of(context).size.width,
-        child: DropdownButtonFormField(
-          isExpanded: true,
-          decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.themeColor),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              hintStyle: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w600),
-              hintText: selectCountry,
-              fillColor: Colors.white),
-          value: SelectCountryType,
-          validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
-          items: selectCountryList
-              .map((CountryList) => DropdownMenuItem(
-                  value: CountryList.countryCode,
-                  child: robotoTextWidget(
-                      textval: CountryList.name,
-                      colorval: AppColor.themeColor,
-                      sizeval: 14,
-                      fontWeight: FontWeight.bold)))
-              .toList(),
-          onChanged: (Object? value) {
-            setState(() {
-              SelectCountryType = value.toString();
-              SelectStateType = null;
-              getStateList();
-            });
-          },
-        ));
-  }
 
-  stateSpinnerWidget() {
-    return Container(
-        margin: const EdgeInsets.only(top: 10),
-        height: 55,
-        width: MediaQuery.of(context).size.width,
-        child: DropdownButtonFormField(
-          isExpanded: true,
-          decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.themeColor),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              hintStyle: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w600),
-              hintText: selectState,
-              fillColor: Colors.white),
-          value: SelectStateType,
-          validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
-          items: selectStateList
-              .map((StateList) => DropdownMenuItem(
-                  value: StateList.name,
-                  child: robotoTextWidget(
-                      textval: StateList.name,
-                      colorval: AppColor.themeColor,
-                      sizeval: 14,
-                      fontWeight: FontWeight.bold)))
-              .toList(),
-          onChanged: (Object? value) {
-            setState(() {
-              SelectCountryType = value.toString();
-              SelectStateType = null;
-              getStateList();
-            });
-          },
-        ));
-  }
 
-  Future<void> getCountryList() async {
-    String data =
-        await rootBundle.loadString('assets/api_json/countrylist.json');
-    var jsonData = convert.jsonDecode(data);
-    countryPrefix.CountryListModel countryListModel =
-        countryPrefix.CountryListModel.fromJson(jsonData);
-    setState(() {
-      selectCountryList = countryListModel.data;
-    });
-  }
 
-  Future<void> getStateList() async {
-    String data1 =
-        await rootBundle.loadString('assets/api_json/sourceLocList.json');
-    var jsonData1 = convert.jsonDecode(data1);
-    sourceLocPrefix.SourceLocModel sourceLocModel =
-        sourceLocPrefix.SourceLocModel.fromJson(jsonData1);
-    List<sourceLocPrefix.Datum> initialList = [];
-    initialList = sourceLocModel.data;
-    for (sourceLocPrefix.Datum sourceLoc in initialList) {
-      if (sourceLoc.countryCode == SelectCountryType) {
-        if (sourceLoc.state!.isNotEmpty) {
-          statePrefix.Datum datum = statePrefix.Datum(name: sourceLoc.state);
-
-          selectStateList.add(datum);
-          print('sourceLoc===========>${sourceLoc.state}');
-        }
-      }
+  Future<void> getSharedPrefrence() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString(selectOwnerType) != null &&
+        sharedPreferences.getString(selectOwnerType).toString().isNotEmpty) {
+       SelectOwnerType = sharedPreferences.getString(selectOwnerType).toString();
+       requesterController.text = sharedPreferences.getString(selectRequester).toString();
+       ischecked = true;
+      getSourceLocList(widget.isUpdate);
+       setState(() {});
     }
+  }
 
-    setState(() {});
+
+
+  void retriveLocationData(AddProductModel addProductModel) {
+
+    setState(() {
+      addProductModel1 =addProductModel;
+    });
+    print('addProductModel1!===========>$addProductModel1!');
   }
 }

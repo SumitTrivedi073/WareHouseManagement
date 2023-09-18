@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:warehouse_management_app/main.dart';
+import 'package:warehouse_management_app/screens/model/addProductModel.dart';
 
 import '../theme/color.dart';
 import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
 import '../utils/utility.dart';
+import 'database/database_helper.dart';
 import 'image_view_widget.dart';
 import 'model/imageModel.dart';
 
 class AddImageWidgetPage extends StatefulWidget {
-  AddImageWidgetPage({Key? key}) : super(key: key);
+  AddImageWidgetPage(
+      {Key? key, required this.addProductModel, required this.isUpdate})
+      : super(key: key);
+
+  AddProductModel addProductModel;
+  bool isUpdate;
 
   @override
   State<AddImageWidgetPage> createState() => _AddImageWidgetPageState();
@@ -19,6 +26,7 @@ class AddImageWidgetPage extends StatefulWidget {
 
 class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
   List<ImageModel> imageList = [];
+  List<ImageModel> itemList = [];
   var imageFile;
   int? selectedIndex, selectedPassIndex, selectedVendorPosition;
   int imgCount = 0;
@@ -64,13 +72,9 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
                       width: MediaQuery.of(context).size.width,
                       child: Column(children: [
                         imageList.isNotEmpty ? imageListWidget() : Container(),
-                      ])
-                  )
-              )
-          ),
+                      ])))),
           nextButtonWidget(),
-        ])
-    );
+        ]));
   }
 
   imageListWidget() {
@@ -226,12 +230,6 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
           imageSelected: true));
       setState(() {
         imageList.setAll(selectedIndex!, imageModel);
-        if (imgCount == 0) {
-          imgCount = 1;
-        } else if (imgCount == 1) {
-          imgCount = 2;
-        }
-        print('imgCount====>$imgCount');
       });
     } else {
       print("You have not taken image");
@@ -239,16 +237,47 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
   }
 
   getAllImageData() async {
-    imageList.add(
-        ImageModel(imageName: 'Photo1', imagePath: '', imageSelected: false));
-    imageList.add(
-        ImageModel(imageName: 'Photo2', imagePath: '', imageSelected: false));
-    imageList.add(
-        ImageModel(imageName: 'Photo3', imagePath: '', imageSelected: false));
-    imageList.add(
-        ImageModel(imageName: 'Photo4', imagePath: '', imageSelected: false));
-    imageList.add(
-        ImageModel(imageName: 'Photo5', imagePath: '', imageSelected: false));
+
+      imageList.add(ImageModel(
+          imageName: 'Photo1',
+          imagePath: widget.addProductModel.photo1.isNotEmpty
+              ? widget.addProductModel.photo1
+              : '',
+          imageSelected:
+              widget.addProductModel.photo1.isNotEmpty ? true : false));
+
+      imageList.add(ImageModel(
+          imageName: 'Photo2',
+          imagePath: widget.addProductModel.photo2.isNotEmpty
+              ? widget.addProductModel.photo2
+              : '',
+          imageSelected:
+              widget.addProductModel.photo2.isNotEmpty ? true : false));
+
+          imageList.add(ImageModel(
+          imageName: 'Photo3',
+          imagePath: widget.addProductModel.photo3.isNotEmpty
+              ? widget.addProductModel.photo3
+              : '',
+          imageSelected:
+              widget.addProductModel.photo3.isNotEmpty ? true : false));
+
+      imageList.add(ImageModel(
+          imageName: 'Photo4',
+          imagePath: widget.addProductModel.photo4.isNotEmpty
+              ? widget.addProductModel.photo4
+              : '',
+          imageSelected:
+              widget.addProductModel.photo4.isNotEmpty ? true : false));
+
+          imageList.add(ImageModel(
+          imageName: 'Photo5',
+          imagePath: widget.addProductModel.photo5.isNotEmpty
+              ? widget.addProductModel.photo5
+              : '',
+          imageSelected:
+              widget.addProductModel.photo5.isNotEmpty ? true : false));
+
   }
 
   nextButtonWidget() {
@@ -267,45 +296,98 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
               color: AppColor.themeColor),
           child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  robotoTextWidget(
-                      textval: save,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-
-                ],
-              )),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              robotoTextWidget(
+                  textval: save,
+                  colorval: Colors.white,
+                  sizeval: 16,
+                  fontWeight: FontWeight.bold),
+            ],
+          )),
         ),
       ),
     );
   }
 
   void dataSavedLocally() {
+    for (var i = 0; i < imageList.length; i++) {
+     if(imageList[i].imageSelected){
+       imgCount = i+1;
+     }
+    }
+     print('imgCount=======>$imgCount');
+
     if (imgCount < 2) {
       Utility().showToast(attechImages);
     } else {
       if (imageList[0].imageSelected) {
-        img1 = Utility.getBase64FormateFile(imageList[0].imagePath);
+        img1 = imageList[0].imagePath;
       }
       if (imageList[1].imageSelected) {
-        img2 = Utility.getBase64FormateFile(imageList[1].imagePath);
+        img2 = imageList[1].imagePath;
       }
       if (imageList[2].imageSelected) {
-        img3 = Utility.getBase64FormateFile(imageList[2].imagePath);
+        img3 = imageList[2].imagePath;
       }
       if (imageList[3].imageSelected) {
-        img4 = Utility.getBase64FormateFile(imageList[3].imagePath);
+        img4 = imageList[3].imagePath;
       }
       if (imageList[4].imageSelected) {
-        img5 = Utility.getBase64FormateFile(imageList[4].imagePath);
+        img5 = imageList[4].imagePath;
       }
 
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (BuildContext context) => MyHomePage(title: appName)),
-              (Route<dynamic> route) => true);
+      InsertUpdateDataBase();
     }
+  }
+
+  void InsertUpdateDataBase() {
+    AddProductModel addProductModel = AddProductModel(
+        ownerGuid: widget.addProductModel.ownerGuid,
+        locationGuid: widget.addProductModel.locationGuid,
+        requester: widget.addProductModel.requester,
+        locationName: widget.addProductModel.locationName,
+        countryId: widget.addProductModel.countryId,
+        stateId: widget.addProductModel.stateId,
+        province: widget.addProductModel.province,
+        address: widget.addProductModel.address,
+        city: widget.addProductModel.city,
+        zipCode: widget.addProductModel.zipCode,
+        categoryId: widget.addProductModel.categoryId,
+        categorySubId: widget.addProductModel.categorySubId,
+        makeGuid: widget.addProductModel.makeGuid,
+        modelNumber: widget.addProductModel.modelNumber,
+        title: widget.addProductModel.title,
+        assetDetail: widget.addProductModel.assetDetail,
+        serialNumber: widget.addProductModel.serialNumber,
+        selectedDate: widget.addProductModel.selectedDate,
+        productStatus: widget.addProductModel.productStatus,
+        barcode: widget.addProductModel.barcode,
+        purPujNo: widget.addProductModel.purPujNo,
+        sellType: widget.addProductModel.sellType,
+        classType: widget.addProductModel.classType,
+        lengthActual: widget.addProductModel.lengthActual,
+        widthActual: widget.addProductModel.widthActual,
+        heightActual: widget.addProductModel.heightActual,
+        lengthShipping: widget.addProductModel.lengthShipping,
+        weightLbsActual: widget.addProductModel.weightLbsActual,
+        weightLbsShipping: widget.addProductModel.weightLbsShipping,
+        description: widget.addProductModel.description,
+        photo1: img1,
+        photo2: img2,
+        photo3: img3,
+        photo4: img4,
+        photo5: img5);
+
+    print('addProductModel==================>${addProductModel.toString()}');
+    if(widget.isUpdate){
+      DatabaseHelper.instance.updateData(addProductModel.toMapWithoutId());
+    }else {
+      DatabaseHelper.instance.insertData(addProductModel.toMapWithoutId());
+    }
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (BuildContext context) => MyHomePage(title: appName)),
+        (Route<dynamic> route) => false);
   }
 }
