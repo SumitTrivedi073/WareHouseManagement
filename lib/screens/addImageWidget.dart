@@ -283,30 +283,75 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
   nextButtonWidget() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: GestureDetector(
-        onTap: () {
-          dataSavedLocally();
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColor.themeColor),
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              robotoTextWidget(
-                  textval: save,
-                  colorval: Colors.white,
-                  sizeval: 16,
-                  fontWeight: FontWeight.bold),
-            ],
-          )),
-        ),
-      ),
+      child:  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      robotoTextWidget(
+                          textval: back,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                    ],
+                  )),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              dataSavedLocally();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      robotoTextWidget(
+                          textval: next,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      )
+                    ],
+                  )),
+            ),
+          ),
+
+        ],),
     );
   }
 
@@ -318,9 +363,11 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
     }
      print('imgCount=======>$imgCount');
 
+/*
     if (imgCount < 2) {
       Utility().showToast(attechImages);
     } else {
+*/
       if (imageList[0].imageSelected) {
         img1 = imageList[0].imagePath;
       }
@@ -338,7 +385,7 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
       }
 
       InsertUpdateDataBase();
-    }
+//    }
   }
 
   void InsertUpdateDataBase() {

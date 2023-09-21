@@ -113,45 +113,82 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
   nextButtonWidget() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: GestureDetector(
-        onTap: () {
-          moveToNextScreen();
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColor.themeColor),
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              robotoTextWidget(
-                  textval: next,
-                  colorval: Colors.white,
-                  sizeval: 16,
-                  fontWeight: FontWeight.bold),
-              const SizedBox(
-                width: 5,
-              ),
-              const Icon(
-                Icons.arrow_forward,
-                color: AppColor.whiteColor,
-                size: 20,
-              )
-            ],
-          )),
-        ),
-      ),
+      child:  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      robotoTextWidget(
+                          textval: back,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                    ],
+                  )),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              moveToNextScreen();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      robotoTextWidget(
+                          textval: next,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      )
+                    ],
+                  )),
+            ),
+          ),
+
+        ],),
     );
   }
 
 
 
   void moveToNextScreen() {
-  if (lengthActCodeController.text.toString().isEmpty) {
+ /* if (lengthActCodeController.text.toString().isEmpty) {
       Utility().showToast(enterLengthAct);
     } else if (widthActController.text.toString().isEmpty) {
       Utility().showToast(enterWidthAct);
@@ -164,7 +201,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
   }else if (weightLbsShippingController.text.toString().isEmpty) {
     Utility().showToast(enterWeightLbsShipping);
   } else {
-
+*/
      AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
         locationGuid: widget.addProductModel.locationGuid,
         requester: widget.addProductModel.requester,
@@ -208,5 +245,5 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
             isUpdate: widget.isUpdate)),
             (Route<dynamic> route) => true);
     }
-  }
+  //}
 }

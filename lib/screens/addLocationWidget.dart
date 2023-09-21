@@ -76,7 +76,8 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
         ),
         body: Stack(children: [
           Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              height: MediaQuery.of(context).size.height,
+              margin: const EdgeInsets.only(left: 10, right: 10),
               child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(children: [
@@ -255,131 +256,164 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
   nextButtonWidget() {
     return Align(
         alignment: Alignment.bottomCenter,
-        child: GestureDetector(
-          onTap: () {
-            SelectCountryType ??= "";
-            if (locationNameController.text.toString().isEmpty) {
-              Utility().showToast(enterLocationName);
-            } else if (SelectCountryType.toString().isEmpty) {
-              Utility().showToast(selectCountry);
-            } else if (provinceController.text.toString().isEmpty) {
-              Utility().showToast(enterProvince);
-            } else if (addressController.text.toString().isEmpty) {
-              Utility().showToast(enterAddress);
-            } else if (cityController.text.toString().isEmpty) {
-              Utility().showToast(enterCity);
-            } else if (zipcodeController.text.toString().isEmpty) {
-              Utility().showToast(enterZipcode);
-            } else {
-              if (widget.isUpdate) {
-                AddProductModel addProductModel = AddProductModel(
-                    ownerGuid: widget.addProductModel.ownerGuid,
-                    locationGuid: widget.addProductModel.locationGuid,
-                    requester: widget.addProductModel.requester,
-                    locationName: locationNameController.text.toString(),
-                    countryId: SelectCountryType.toString(),
-                    stateId: SelectStateType.toString(),
-                    province: provinceController.text.toString(),
-                    address: addressController.text.toString(),
-                    city: cityController.text.toString(),
-                    zipCode: zipcodeController.text.toString(),
-                    categoryId: widget.addProductModel.categoryId,
-                    categorySubId: widget.addProductModel.categorySubId,
-                    makeGuid: widget.addProductModel.makeGuid,
-                    modelNumber:widget.addProductModel.modelNumber,
-                    title: widget.addProductModel.title,
-                    assetDetail: widget.addProductModel.assetDetail,
-                    serialNumber: widget.addProductModel.serialNumber,
-                    selectedDate: widget.addProductModel.selectedDate,
-                    productStatus: widget.addProductModel.productStatus,
-                    barcode: widget.addProductModel.barcode,
-                    purPujNo: widget.addProductModel.purPujNo,
-                    sellType: widget.addProductModel.sellType,
-                    classType: widget.addProductModel.classType,
-                    lengthActual: widget.addProductModel.lengthActual,
-                    widthActual: widget.addProductModel.widthActual,
-                    heightActual: widget.addProductModel.heightActual,
-                    lengthShipping: widget.addProductModel.lengthShipping,
-                    weightLbsActual: widget.addProductModel.weightLbsActual,
-                    weightLbsShipping: widget.addProductModel.weightLbsShipping,
-                    description: widget.addProductModel.description,
-                    photo1: widget.addProductModel.photo1,
-                    photo2: widget.addProductModel.photo2,
-                    photo3: widget.addProductModel.photo3,
-                    photo4: widget.addProductModel.photo4,
-                    photo5: widget.addProductModel.photo5);
-                widget.callback(addProductModel);
-
-              }else{
-                AddProductModel addProductModel = AddProductModel(
-                    ownerGuid: '',
-                    locationGuid: '',
-                    requester: '',
-                    locationName: locationNameController.text.toString(),
-                    countryId: SelectCountryType.toString(),
-                    stateId: SelectStateType.toString(),
-                    province: provinceController.text.toString(),
-                    address: addressController.text.toString(),
-                    city: cityController.text.toString(),
-                    zipCode: zipcodeController.text.toString(),
-                    categoryId: '',
-                    categorySubId: '',
-                    makeGuid: '',
-                    modelNumber: '',
-                    title: '',
-                    assetDetail: '',
-                    serialNumber: '',
-                    selectedDate: '',
-                    productStatus: '',
-                    barcode: '',
-                    purPujNo: '',
-                    sellType: '',
-                    classType: '',
-                    lengthActual: '',
-                    widthActual: '',
-                    heightActual: '',
-                    lengthShipping: '',
-                    weightLbsActual: '',
-                    weightLbsShipping: '',
-                    description: '',
-                    photo1: '',
-                    photo2: '',
-                    photo3: '',
-                    photo4: '',
-                    photo5: '');
-                widget.callback(addProductModel);
-
-              }
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          GestureDetector(
+            onTap: () {
               Navigator.of(context).pop();
-            }
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: AppColor.themeColor),
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                robotoTextWidget(
-                    textval: next,
-                    colorval: Colors.white,
-                    sizeval: 16,
-                    fontWeight: FontWeight.bold),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Icon(
-                  Icons.arrow_forward,
-                  color: AppColor.whiteColor,
-                  size: 20,
-                )
-              ],
-            )),
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.arrow_back,
+                    color: AppColor.whiteColor,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  robotoTextWidget(
+                      textval: back,
+                      colorval: Colors.white,
+                      sizeval: 16,
+                      fontWeight: FontWeight.bold),
+                ],
+              )),
+            ),
           ),
-        ));
+          GestureDetector(
+            onTap: () {
+              SelectCountryType ??= "";
+              if (locationNameController.text.toString().isEmpty) {
+                Utility().showToast(enterLocationName);
+              } else if (SelectCountryType.toString().isEmpty) {
+                Utility().showToast(selectCountry);
+              } else if (provinceController.text.toString().isEmpty) {
+                Utility().showToast(enterProvince);
+              } else if (addressController.text.toString().isEmpty) {
+                Utility().showToast(enterAddress);
+              } else if (cityController.text.toString().isEmpty) {
+                Utility().showToast(enterCity);
+              } else if (zipcodeController.text.toString().isEmpty) {
+                Utility().showToast(enterZipcode);
+              } else {
+                if (widget.isUpdate) {
+                  AddProductModel addProductModel = AddProductModel(
+                      ownerGuid: widget.addProductModel.ownerGuid,
+                      locationGuid: widget.addProductModel.locationGuid,
+                      requester: widget.addProductModel.requester,
+                      locationName: locationNameController.text.toString(),
+                      countryId: SelectCountryType.toString(),
+                      stateId: SelectStateType.toString(),
+                      province: provinceController.text.toString(),
+                      address: addressController.text.toString(),
+                      city: cityController.text.toString(),
+                      zipCode: zipcodeController.text.toString(),
+                      categoryId: widget.addProductModel.categoryId,
+                      categorySubId: widget.addProductModel.categorySubId,
+                      makeGuid: widget.addProductModel.makeGuid,
+                      modelNumber: widget.addProductModel.modelNumber,
+                      title: widget.addProductModel.title,
+                      assetDetail: widget.addProductModel.assetDetail,
+                      serialNumber: widget.addProductModel.serialNumber,
+                      selectedDate: widget.addProductModel.selectedDate,
+                      productStatus: widget.addProductModel.productStatus,
+                      barcode: widget.addProductModel.barcode,
+                      purPujNo: widget.addProductModel.purPujNo,
+                      sellType: widget.addProductModel.sellType,
+                      classType: widget.addProductModel.classType,
+                      lengthActual: widget.addProductModel.lengthActual,
+                      widthActual: widget.addProductModel.widthActual,
+                      heightActual: widget.addProductModel.heightActual,
+                      lengthShipping: widget.addProductModel.lengthShipping,
+                      weightLbsActual: widget.addProductModel.weightLbsActual,
+                      weightLbsShipping:
+                          widget.addProductModel.weightLbsShipping,
+                      description: widget.addProductModel.description,
+                      photo1: widget.addProductModel.photo1,
+                      photo2: widget.addProductModel.photo2,
+                      photo3: widget.addProductModel.photo3,
+                      photo4: widget.addProductModel.photo4,
+                      photo5: widget.addProductModel.photo5);
+                  widget.callback(addProductModel);
+                } else {
+                  AddProductModel addProductModel = AddProductModel(
+                      ownerGuid: '',
+                      locationGuid: '',
+                      requester: '',
+                      locationName: locationNameController.text.toString(),
+                      countryId: SelectCountryType.toString(),
+                      stateId: SelectStateType.toString(),
+                      province: provinceController.text.toString(),
+                      address: addressController.text.toString(),
+                      city: cityController.text.toString(),
+                      zipCode: zipcodeController.text.toString(),
+                      categoryId: '',
+                      categorySubId: '',
+                      makeGuid: '',
+                      modelNumber: '',
+                      title: '',
+                      assetDetail: '',
+                      serialNumber: '',
+                      selectedDate: '',
+                      productStatus: '',
+                      barcode: '',
+                      purPujNo: '',
+                      sellType: '',
+                      classType: '',
+                      lengthActual: '',
+                      widthActual: '',
+                      heightActual: '',
+                      lengthShipping: '',
+                      weightLbsActual: '',
+                      weightLbsShipping: '',
+                      description: '',
+                      photo1: '',
+                      photo2: '',
+                      photo3: '',
+                      photo4: '',
+                      photo5: '');
+                  widget.callback(addProductModel);
+                }
+                Navigator.of(context).pop();
+              }
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  robotoTextWidget(
+                      textval: next,
+                      colorval: Colors.white,
+                      sizeval: 16,
+                      fontWeight: FontWeight.bold),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: AppColor.whiteColor,
+                    size: 20,
+                  )
+                ],
+              )),
+            ),
+          )
+        ]));
   }
 }

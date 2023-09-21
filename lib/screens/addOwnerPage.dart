@@ -276,38 +276,75 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                   ischecked = value!;
                 });
               }),
-          GestureDetector(
-            onTap: () {
-              moveToNextScreen();
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColor.themeColor),
-              child: Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  robotoTextWidget(
-                      textval: next,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Icon(
-                    Icons.arrow_forward,
-                    color: AppColor.whiteColor,
-                    size: 20,
-                  )
-                ],
-              )),
-            ),
-          )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  width: 150,
+                  height: 50,
+                  margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColor.themeColor),
+                  child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.arrow_back,
+                            color: AppColor.whiteColor,
+                            size: 20,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          robotoTextWidget(
+                              textval: back,
+                              colorval: Colors.white,
+                              sizeval: 16,
+                              fontWeight: FontWeight.bold),
+                        ],
+                      )),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  moveToNextScreen();
+                },
+                child: Container(
+                  width: 150,
+                  height: 50,
+                  margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColor.themeColor),
+                  child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          robotoTextWidget(
+                              textval: next,
+                              colorval: Colors.white,
+                              sizeval: 16,
+                              fontWeight: FontWeight.bold),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          const Icon(
+                            Icons.arrow_forward,
+                            color: AppColor.whiteColor,
+                            size: 20,
+                          )
+                        ],
+                      )),
+                ),
+              ),
+
+            ],)
         ],
       ),
     );
@@ -356,29 +393,35 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     SelectOwnerType ??= "";
     SelectSourceLocType ??= "";
     if (SelectOwnerType!.isEmpty) {
-      SelectOwnerType = null;
-      Utility().showToast(selectOwner);
+     // SelectOwnerType = null;
+     // Utility().showToast(selectOwner);
     }
     if (SelectSourceLocType!.isEmpty) {
-      SelectSourceLocType = null;
-      Utility().showToast(selectSourceLocation);
+    //  SelectSourceLocType = null;
+     // Utility().showToast(selectSourceLocation);
     } else if (requesterController.text.toString().isEmpty) {
-      Utility().showToast(enterRequester);
+    //  Utility().showToast(enterRequester);
     } else {
       if (ischecked) {
         Utility().setSharedPreference(selectOwnerType, SelectOwnerType!);
-        Utility().setSharedPreference(selectSourceLocType, SelectSourceLocType!);
+        Utility().setSharedPreference(
+            selectSourceLocType, SelectSourceLocType!);
         Utility().setSharedPreference(
             selectRequester, requesterController.text.toString());
-      }else{
+      }
+      else {
         sharedPreferences = await SharedPreferences.getInstance();
         if (sharedPreferences.getString(selectOwnerType) != null &&
-            sharedPreferences.getString(selectOwnerType).toString().isNotEmpty) {
+            sharedPreferences
+                .getString(selectOwnerType)
+                .toString()
+                .isNotEmpty) {
           Utility().clearSharedPreference();
         }
       }
+    }
 
-                 AddProductModel addProductModel = AddProductModel(
+      AddProductModel addProductModel = AddProductModel(
                      ownerGuid: SelectOwnerType!,
                      locationGuid: SelectSourceLocType!,
                      requester: requesterController.text.toString(),
@@ -415,16 +458,13 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                      photo4: addProductModel1!=null && addProductModel1!.photo4.toString().isNotEmpty?addProductModel1!.photo4.toString():'',
                      photo5: addProductModel1!=null && addProductModel1!.photo5.toString().isNotEmpty?addProductModel1!.photo5.toString():'');
 
-
-      print('addProductModel11111==================>${addProductModel.toString()}');
-
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => AddProductDetailPage(
                     addProductModel: addProductModel,isUpdate: widget.isUpdate,)),
           (Route<dynamic> route) => true);
     }
-  }
+
 
 
 

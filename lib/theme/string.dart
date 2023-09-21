@@ -1,7 +1,7 @@
 var appName = "Warehouse Management";
 var noDataAvailable = "No Data Available Please add product first!";
 var addProduct = "Add Product";
-var selectClassType = "Select Class Type";
+var selectClassType = "Select Class";
 var enterBarcode = "Please Enter Barcode";
 var enterTitle = "Please Enter Title";
 var enterQuantity = "Please Enter Quantity";
@@ -59,3 +59,4 @@ var change = "Change";
 var save = "Save";
 var attechImages = "Please attach minimum 2 images!";
 var checkInternetConnection = "Please check your internet connection and try again!";
+var search ="Search";

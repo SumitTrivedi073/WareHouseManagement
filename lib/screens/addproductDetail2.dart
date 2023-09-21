@@ -190,33 +190,75 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
   nextButtonWidget() {
     return  Align(
       alignment: Alignment.bottomCenter,
-      child: GestureDetector(
-        onTap: () {
-          moveToNextScreen();
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          margin: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColor.themeColor),
-          child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  robotoTextWidget(
-                      textval: next,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-                  const SizedBox(width: 5,),
-                  const Icon(Icons.arrow_forward,color: AppColor.whiteColor,
-                    size: 20,)
-                ],
-              )),
-        ),
-      ),
+      child:  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      robotoTextWidget(
+                          textval: back,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                    ],
+                  )),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              moveToNextScreen();
+            },
+            child: Container(
+              width: 150,
+              height: 50,
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColor.themeColor),
+              child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      robotoTextWidget(
+                          textval: next,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      )
+                    ],
+                  )),
+            ),
+          ),
+
+        ],),
     );
   }
 
@@ -243,19 +285,22 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
   }
 
   void moveToNextScreen() {
-    selectedClassType ??= "";
-    selectedSellType ??= "";
      if (barCodeController.text.toString().isEmpty) {
       Utility().showToast(enterBarcode);
-    }else if (purPrjController.text.toString().isEmpty) {
+    /*
+     selectedClassType ??= "";
+    selectedSellType ??= "";
+
+    else if (purPrjController.text.toString().isEmpty) {
       Utility().showToast(enterPurPuj);
     }else if (selectedSellType!.isEmpty) {
        selectedSellType = null;
        Utility().showToast(selectSellType);
      }else if (selectedClassType!.isEmpty) {
        selectedClassType = null;
-       Utility().showToast(selectClassType);
-     }else{
+       Utility().showToast(selectClassType);*/
+     }
+     else{
        AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
            locationGuid: widget.addProductModel.locationGuid,
            requester: widget.addProductModel.requester,
@@ -277,8 +322,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
            productStatus: widget.addProductModel.productStatus,
            barcode: barCodeController.text.toString(),
            purPujNo: purPrjController.text.toString(),
-           sellType:selectedSellType!,
-           classType: selectedClassType!,
+           sellType:selectedSellType.toString().isNotEmpty?selectedClassType.toString():'',
+           classType: selectedClassType.toString().isNotEmpty?selectedClassType.toString():'',
            lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty?widget.addProductModel.lengthActual.toString():'',
            widthActual: widget.addProductModel.widthActual.toString().isNotEmpty?widget.addProductModel.widthActual.toString():'',
            heightActual: widget.addProductModel.heightActual.toString().isNotEmpty?widget.addProductModel.heightActual.toString():'',

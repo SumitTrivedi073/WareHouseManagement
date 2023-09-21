@@ -8,15 +8,17 @@ import 'package:warehouse_management_app/screens/model/addProductModel.dart';
 import '../theme/color.dart';
 import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
-import '../utils/utility.dart';
+import 'MakeListWidget.dart';
 import 'addproductDetail2.dart';
 import 'model/categorymodel.dart' as categoryPrefix;
 import 'model/makeListModel.dart' as makeListPrefix;
 import 'model/subCategoryModel.dart' as subCategoryPrefix;
 
 class AddProductDetailPage extends StatefulWidget {
-  AddProductDetailPage({Key? key,required this.addProductModel,required this.isUpdate}) : super(key: key);
-  
+  AddProductDetailPage(
+      {Key? key, required this.addProductModel, required this.isUpdate})
+      : super(key: key);
+
   AddProductModel addProductModel;
   bool isUpdate;
 
@@ -25,8 +27,9 @@ class AddProductDetailPage extends StatefulWidget {
 }
 
 class _AddProductDetailPageState extends State<AddProductDetailPage> {
-  String? makeGuid, categoryId, categorySubId,indianFromDate,selectedDate;
+  String? makeGuid, categoryId, categorySubId, indianFromDate, selectedDate;
   List<makeListPrefix.Datum> selectMakeList = [];
+  List<makeListPrefix.Datum> glossarListOnSearch =[];
   List<categoryPrefix.Datum> selectCategoryList = [];
   List<subCategoryPrefix.Datum> selectSubCategoryList = [];
 
@@ -35,8 +38,11 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   TextEditingController assetsController = TextEditingController();
   TextEditingController serialNumberCodeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  String selectStatus = working,dateTimeFormat = "dd/MM/yyyy";
+  TextEditingController makeTypeController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+  String selectStatus = working, dateTimeFormat = "dd/MM/yyyy";
   DateTime? pickedDate;
+
 
   @override
   void initState() {
@@ -46,13 +52,12 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     indianFromDate = DateFormat(dateTimeFormat).format(DateTime.now());
 
     getList();
-    if(widget.isUpdate){
+    if (widget.isUpdate) {
       modelController.text = widget.addProductModel.modelNumber;
       titleController.text = widget.addProductModel.title;
       assetsController.text = widget.addProductModel.assetDetail;
       serialNumberCodeController.text = widget.addProductModel.serialNumber;
       dateController.text = widget.addProductModel.selectedDate;
-
     }
   }
 
@@ -83,7 +88,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                   children: [
                     categorySpinnerWidget(),
                     selectSubCategorySpinnerWidget(),
-                    makeSpinnerWidget(),
+                    makeWidget(),
                     textWidget(
                         modelController, TextInputType.text, enterModelNumber),
                     textWidget(titleController, TextInputType.text, enterTitle),
@@ -91,9 +96,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                         assetsController, TextInputType.text, enterAssets),
                     textWidget(serialNumberCodeController, TextInputType.text,
                         enterSerNo),
-                    datePickerWidget(
-                        selectedDate!, dateController, selectDate),
-
+                    datePickerWidget(selectedDate!, dateController, selectDate),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -226,45 +229,43 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         ));
   }
 
-  makeSpinnerWidget() {
-    return Container(
-        margin: const EdgeInsets.only(top: 10),
-        height: 55,
-        width: MediaQuery.of(context).size.width,
-        child: DropdownButtonFormField(
-          isExpanded: true,
-          decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.themeColor),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
+  makeWidget() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => MakeListWidget(
+                  callback: retriveMakeList,selectMakeList: selectMakeList
+                )),
+                (Route<dynamic> route) => true);
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.themeColor),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextField(
+                enabled: false,
+                controller: makeTypeController,
+                style: const TextStyle(
+                    color: AppColor.themeColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Roboto'),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: selectMakeType,
+                  hintStyle: const TextStyle(
+                      color: AppColor.darkGrey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto'),
                 ),
-              ),
-              hintStyle: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w600),
-              hintText: selectMakeType,
-              fillColor: Colors.white),
-          value: makeGuid,
-          validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
-          items: selectMakeList
-              .map((MakeList) => DropdownMenuItem(
-                  value: MakeList.makeGuid,
-                  child: robotoTextWidget(
-                      textval: MakeList.make,
-                      colorval: AppColor.themeColor,
-                      sizeval: 14,
-                      fontWeight: FontWeight.bold)))
-              .toList(),
-          onChanged: (Object? value) {
-            setState(() {
-              makeGuid = value.toString();
-            });
-          },
-        ));
+              ))),
+    );
   }
 
   textWidget(TextEditingController controller, TextInputType inputType,
@@ -304,61 +305,60 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   datePickerWidget(
       String fromTO, TextEditingController DateController, String title) {
     return GestureDetector(
-      onTap: () {
-        _selectDate(context);
-      },
-      child:  Container(
-        margin: EdgeInsets.only(top: 10),
-              height: 55,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColor.themeColor,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+        onTap: () {
+          _selectDate(context);
+        },
+        child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          height: 55,
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColor.themeColor,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.calendar_month,
+                color: AppColor.themeColor,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.calendar_month,
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                  child: TextField(
+                controller: DateController,
+                maxLines: 1,
+                showCursor: false,
+                enabled: false,
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                decoration: InputDecoration(
+                    hintText: selectDate,
+                    hintStyle: const TextStyle(
+                        color: AppColor.darkGrey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Roboto'),
+                    border: InputBorder.none),
+                style: const TextStyle(
                     color: AppColor.themeColor,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                      child: TextField(
-                        controller: DateController,
-                        maxLines: 1,
-                        showCursor: false,
-                        enabled: false,
-                        textAlign: TextAlign.start,
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: InputDecoration(
-                            hintText: selectDate,
-                            hintStyle: const TextStyle(
-                                color: AppColor.darkGrey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Roboto'),
-                            border: InputBorder.none),
-                        style: const TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: 12,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.datetime,
-                        textInputAction: TextInputAction.done,
-                      ))
-                ],
-              ),
-            )
-
-    );
+                    fontSize: 12,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w600),
+                keyboardType: TextInputType.datetime,
+                textInputAction: TextInputAction.done,
+              ))
+            ],
+          ),
+        ));
   }
+
   Future<void> _selectDate(BuildContext context) async {
     pickedDate = await showDatePicker(
         context: context,
@@ -378,37 +378,74 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   nextButtonWidget() {
     return Align(
         alignment: Alignment.bottomCenter,
-        child: GestureDetector(
-          onTap: () {
-            moveToNextScreen();
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: AppColor.themeColor),
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                robotoTextWidget(
-                    textval: next,
-                    colorval: Colors.white,
-                    sizeval: 16,
-                    fontWeight: FontWeight.bold),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Icon(
-                  Icons.arrow_forward,
-                  color: AppColor.whiteColor,
-                  size: 20,
-                )
-              ],
-            )),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                width: 150,
+                height: 50,
+                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppColor.themeColor),
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.arrow_back,
+                      color: AppColor.whiteColor,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    robotoTextWidget(
+                        textval: back,
+                        colorval: Colors.white,
+                        sizeval: 16,
+                        fontWeight: FontWeight.bold),
+                  ],
+                )),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                moveToNextScreen();
+              },
+              child: Container(
+                width: 150,
+                height: 50,
+                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppColor.themeColor),
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    robotoTextWidget(
+                        textval: next,
+                        colorval: Colors.white,
+                        sizeval: 16,
+                        fontWeight: FontWeight.bold),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: AppColor.whiteColor,
+                      size: 20,
+                    )
+                  ],
+                )),
+              ),
+            ),
+          ],
         ));
   }
 
@@ -423,17 +460,15 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     categoryPrefix.CategoryModel categoryModel =
         categoryPrefix.CategoryModel.fromJson(jsonData1);
 
-
     setState(() {
       selectMakeList = makeListModel.data;
       selectCategoryList = categoryModel.data;
-      if(widget.isUpdate){
+      if (widget.isUpdate) {
         categoryId = widget.addProductModel.categoryId;
         makeGuid = widget.addProductModel.makeGuid;
         getSubCategoryList();
       }
     });
-
   }
 
   getSubCategoryList() async {
@@ -450,15 +485,14 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         selectSubCategoryList.add(subCategory);
       }
     }
-    if(widget.isUpdate){
+    if (widget.isUpdate) {
       categorySubId = widget.addProductModel.categorySubId;
-
     }
     setState(() {});
   }
 
   void moveToNextScreen() {
-    makeGuid ??= "";
+    /*  makeGuid ??= "";
     categoryId ??= "";
     categorySubId ??= "";
     if (categoryId!.isEmpty) {
@@ -482,50 +516,90 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       Utility().showToast(selectDate);
     }
     else {
+*/
+    AddProductModel addProductModel = AddProductModel(
+        ownerGuid: widget.addProductModel.ownerGuid,
+        locationGuid: widget.addProductModel.locationGuid,
+        requester: widget.addProductModel.requester,
+        locationName: widget.addProductModel.locationName,
+        countryId: widget.addProductModel.countryId,
+        stateId: widget.addProductModel.stateId,
+        province: widget.addProductModel.province,
+        address: widget.addProductModel.address,
+        city: widget.addProductModel.city,
+        zipCode: widget.addProductModel.zipCode,
+        categoryId: categoryId.toString().isNotEmpty?categoryId.toString():'',
+        categorySubId: categorySubId.toString().isNotEmpty?categorySubId.toString():'',
+        makeGuid: makeGuid.toString().isNotEmpty?makeGuid.toString():'',
+        modelNumber: modelController.text.toString().trim(),
+        title: titleController.text.toString().trim(),
+        assetDetail: assetsController.text.toString().trim(),
+        serialNumber: serialNumberCodeController.text.toString().trim(),
+        selectedDate: dateController.text.toString().trim(),
+        productStatus: selectStatus.toString(),
+        barcode: widget.addProductModel.barcode.toString().isNotEmpty
+            ? widget.addProductModel.barcode.toString()
+            : '',
+        purPujNo: widget.addProductModel.purPujNo.toString().isNotEmpty
+            ? widget.addProductModel.purPujNo.toString()
+            : '',
+        sellType: widget.addProductModel.sellType.toString().isNotEmpty
+            ? widget.addProductModel.sellType.toString()
+            : '',
+        classType: widget.addProductModel.classType.toString().isNotEmpty
+            ? widget.addProductModel.classType.toString()
+            : '',
+        lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty
+            ? widget.addProductModel.lengthActual.toString()
+            : '',
+        widthActual: widget.addProductModel.widthActual.toString().isNotEmpty
+            ? widget.addProductModel.widthActual.toString()
+            : '',
+        heightActual: widget.addProductModel.heightActual.toString().isNotEmpty
+            ? widget.addProductModel.heightActual.toString()
+            : '',
+        lengthShipping: widget.addProductModel.lengthShipping.toString().isNotEmpty
+            ? widget.addProductModel.lengthShipping.toString()
+            : '',
+        weightLbsActual: widget.addProductModel.weightLbsActual.toString().isNotEmpty
+            ? widget.addProductModel.weightLbsActual.toString()
+            : '',
+        weightLbsShipping:
+            widget.addProductModel.weightLbsShipping.toString().isNotEmpty
+                ? widget.addProductModel.weightLbsShipping.toString()
+                : '',
+        description: widget.addProductModel.description.toString().isNotEmpty
+            ? widget.addProductModel.description.toString()
+            : '',
+        photo1: widget.addProductModel.photo1.toString().isNotEmpty
+            ? widget.addProductModel.photo1.toString()
+            : '',
+        photo2: widget.addProductModel.photo2.toString().isNotEmpty
+            ? widget.addProductModel.photo2.toString()
+            : '',
+        photo3: widget.addProductModel.photo3.toString().isNotEmpty
+            ? widget.addProductModel.photo3.toString()
+            : '',
+        photo4: widget.addProductModel.photo4.toString().isNotEmpty
+            ? widget.addProductModel.photo4.toString()
+            : '',
+        photo5: widget.addProductModel.photo5.toString().isNotEmpty ? widget.addProductModel.photo5.toString() : '');
 
-      AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
-          locationGuid: widget.addProductModel.locationGuid,
-          requester: widget.addProductModel.requester,
-          locationName:  widget.addProductModel.locationName,
-          countryId:  widget.addProductModel.countryId,
-          stateId:  widget.addProductModel.stateId,
-          province:  widget.addProductModel.province,
-          address:  widget.addProductModel.address,
-          city:  widget.addProductModel.city,
-          zipCode: widget.addProductModel.zipCode,
-          categoryId: categoryId.toString(), categorySubId: categorySubId.toString(), makeGuid: makeGuid.toString(),
-          modelNumber: modelController.text.toString().trim(),
-          title: titleController.text.toString().trim(), assetDetail: assetsController.text.toString().trim(),
-          serialNumber: serialNumberCodeController.text.toString().trim(), selectedDate: dateController.text.toString().trim(),
-          productStatus: selectStatus.toString(),
-          barcode: widget.addProductModel.barcode.toString().isNotEmpty?widget.addProductModel.barcode.toString():'',
-          purPujNo:widget.addProductModel.purPujNo.toString().isNotEmpty?widget.addProductModel.purPujNo.toString(): '',
-          sellType: widget.addProductModel.sellType.toString().isNotEmpty?widget.addProductModel.sellType.toString():'',
-          classType: widget.addProductModel.classType.toString().isNotEmpty?widget.addProductModel.classType.toString():'',
-          lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty?widget.addProductModel.lengthActual.toString():'',
-          widthActual: widget.addProductModel.widthActual.toString().isNotEmpty?widget.addProductModel.widthActual.toString():'',
-          heightActual: widget.addProductModel.heightActual.toString().isNotEmpty?widget.addProductModel.heightActual.toString():'',
-          lengthShipping: widget.addProductModel.lengthShipping.toString().isNotEmpty?widget.addProductModel.lengthShipping.toString():'',
-          weightLbsActual: widget.addProductModel.weightLbsActual.toString().isNotEmpty?widget.addProductModel.weightLbsActual.toString():'',
-          weightLbsShipping:widget.addProductModel.weightLbsShipping.toString().isNotEmpty?widget.addProductModel.weightLbsShipping.toString(): '',
-          description: widget.addProductModel.description.toString().isNotEmpty?widget.addProductModel.description.toString():'',
-          photo1: widget.addProductModel.photo1.toString().isNotEmpty?widget.addProductModel.photo1.toString():'',
-          photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',
-          photo3: widget.addProductModel.photo3.toString().isNotEmpty?widget.addProductModel.photo3.toString():'',
-          photo4: widget.addProductModel.photo4.toString().isNotEmpty?widget.addProductModel.photo4.toString():'',
-          photo5: widget.addProductModel.photo5.toString().isNotEmpty?widget.addProductModel.photo5.toString():'');
+    print('addProductModel==================>${addProductModel.toString()}');
 
-      print('addProductModel==================>${addProductModel.toString()}');
-
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (BuildContext context) =>  AddProductDetailPage2(addProductModel: addProductModel,isUpdate:widget.isUpdate)),
-              (Route<dynamic> route) => true);
-    }
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (BuildContext context) => AddProductDetailPage2(
+                addProductModel: addProductModel, isUpdate: widget.isUpdate)),
+        (Route<dynamic> route) => true);
   }
 
 
-/* TextEditingController serialNumberCodeController = TextEditingController();
-  TextEditingController requesterCodeController = TextEditingController();
-  TextEditingController itemConditionController = TextEditingController(*/
+
+  void retriveMakeList(makeListPrefix.Datum datum) {
+    setState(() {
+      makeGuid = datum.makeGuid;
+      print('makeGuid==========>$makeGuid');
+    });
+  }
 }

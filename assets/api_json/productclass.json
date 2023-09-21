@@ -1,22 +1,6 @@
 {
   "data": [
     {
-      "id": "1",
-      "title": "Class 1"
-    },
-    {
-      "id": "2",
-      "title": "Class 2"
-    },
-    {
-      "id": "3",
-      "title": "Class 3 - Service"
-    },
-    {
-      "id": "4",
-      "title": "Class 4 - As-Is"
-    },
-    {
       "id": "5",
       "title": "N (New)"
     },
