@@ -35,8 +35,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
 
     getList();
     if(widget.isUpdate){
-      barCodeController.text = widget.addProductModel.barcode;
-      purPrjController.text = widget.addProductModel.purPujNo;
+      barCodeController.text = widget.addProductModel.barcode ?? '';
+      purPrjController.text = widget.addProductModel.purPujNo ?? '';
     }
   }
 
@@ -277,8 +277,12 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
       classList = productClassModel.data;
       sellTypeList = sellTypeModel.data;
       if(widget.isUpdate) {
-        selectedClassType = widget.addProductModel.classType;
-        selectedSellType = widget.addProductModel.sellType;
+        if(widget.addProductModel.classType.isNotEmpty) {
+          selectedClassType = widget.addProductModel.classType ?? '';
+        }
+        if(widget.addProductModel.sellType.isNotEmpty) {
+          selectedSellType = widget.addProductModel.sellType ?? '';
+        }
       }
       });
 
@@ -301,29 +305,29 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
        Utility().showToast(selectClassType);*/
      }
      else{
-       AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
-           locationGuid: widget.addProductModel.locationGuid,
-           requester: widget.addProductModel.requester,
-           locationName:  widget.addProductModel.locationName,
-           countryId:  widget.addProductModel.countryId,
-           stateId:  widget.addProductModel.stateId,
-           province:  widget.addProductModel.province,
-           address:  widget.addProductModel.address,
-           city:  widget.addProductModel.city,
-           zipCode: widget.addProductModel.zipCode,
-           categoryId: widget.addProductModel.categoryId,
-           categorySubId: widget.addProductModel.categorySubId,
-           makeGuid: widget.addProductModel.makeGuid,
-           modelNumber: widget.addProductModel.modelNumber,
-           title: widget.addProductModel.title,
-           assetDetail: widget.addProductModel.assetDetail,
-           serialNumber: widget.addProductModel.serialNumber,
-           selectedDate: widget.addProductModel.selectedDate,
-           productStatus: widget.addProductModel.productStatus,
-           barcode: barCodeController.text.toString(),
-           purPujNo: purPrjController.text.toString(),
-           sellType:selectedSellType.toString().isNotEmpty?selectedClassType.toString():'',
-           classType: selectedClassType.toString().isNotEmpty?selectedClassType.toString():'',
+       AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid ?? '',
+           locationGuid: widget.addProductModel.locationGuid ?? '',
+           requester: widget.addProductModel.requester ?? '',
+           locationName:  widget.addProductModel.locationName ?? '',
+           countryId:  widget.addProductModel.countryId ?? '',
+           stateId:  widget.addProductModel.stateId ?? '',
+           province:  widget.addProductModel.province ?? '',
+           address:  widget.addProductModel.address ?? '',
+           city:  widget.addProductModel.city ?? '',
+           zipCode: widget.addProductModel.zipCode ?? '',
+           categoryId: widget.addProductModel.categoryId ?? '',
+           categorySubId: widget.addProductModel.categorySubId ?? '',
+           makeGuid: widget.addProductModel.makeGuid ?? '',
+           modelNumber: widget.addProductModel.modelNumber ?? '',
+           title: widget.addProductModel.title ?? '',
+           assetDetail: widget.addProductModel.assetDetail ?? '',
+           serialNumber: widget.addProductModel.serialNumber ?? '',
+           selectedDate: widget.addProductModel.selectedDate ?? '',
+           productStatus: widget.addProductModel.productStatus ?? '',
+           barcode: barCodeController.text.toString() ?? '',
+           purPujNo: purPrjController.text.toString() ?? '',
+           sellType:selectedSellType!=null&&selectedSellType.toString().isNotEmpty?selectedSellType.toString():'',
+           classType: selectedClassType!=null&&selectedClassType.toString().isNotEmpty?selectedClassType.toString():'',
            lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty?widget.addProductModel.lengthActual.toString():'',
            widthActual: widget.addProductModel.widthActual.toString().isNotEmpty?widget.addProductModel.widthActual.toString():'',
            heightActual: widget.addProductModel.heightActual.toString().isNotEmpty?widget.addProductModel.heightActual.toString():'',

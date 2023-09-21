@@ -59,8 +59,10 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
   }
 
   void setData() {
-    SelectOwnerType = widget.productModel.ownerGuid;
-    requesterController.text = widget.productModel.requester;
+    if(widget.productModel.ownerGuid.isNotEmpty) {
+      SelectOwnerType = widget.productModel.ownerGuid;
+    }
+    requesterController.text = widget.productModel.requester ?? '';
     getSourceLocList(widget.isUpdate);
     addProductModel1 = widget.productModel;
   }
@@ -376,13 +378,17 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
       }
     }
     if (isUpdate) {
-      SelectSourceLocType = widget.productModel.locationGuid;
+      if(widget.productModel.locationGuid.isNotEmpty) {
+        SelectSourceLocType = widget.productModel.locationGuid ?? '';
+      }
     } else {
       sharedPreferences = await SharedPreferences.getInstance();
       if (sharedPreferences.getString(selectSourceLocType) != null &&
           sharedPreferences.getString(selectSourceLocType).toString().isNotEmpty) {
         SelectSourceLocType = sharedPreferences.getString(selectSourceLocType).toString();
 
+      }else{
+        SelectSourceLocType = "eef75434-722a-a5e0-9596-a46a16ec6bff";
       }
     }
 
@@ -422,9 +428,9 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     }
 
       AddProductModel addProductModel = AddProductModel(
-                     ownerGuid: SelectOwnerType!,
-                     locationGuid: SelectSourceLocType!,
-                     requester: requesterController.text.toString(),
+                     ownerGuid: SelectOwnerType ?? '',
+                     locationGuid: SelectSourceLocType ?? '',
+                     requester: requesterController.text.toString() ?? '',
                      locationName: addProductModel1!=null && addProductModel1!.locationName.toString().isNotEmpty?addProductModel1!.locationName.toString():'',
                      countryId: addProductModel1!=null && addProductModel1!.countryId.toString().isNotEmpty?addProductModel1!.countryId.toString():'',
                      stateId: addProductModel1!=null && addProductModel1!.stateId.toString().isNotEmpty?addProductModel1!.stateId.toString():'',
@@ -457,7 +463,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                      photo3: addProductModel1!=null && addProductModel1!.photo3.toString().isNotEmpty?addProductModel1!.photo3.toString():'',
                      photo4: addProductModel1!=null && addProductModel1!.photo4.toString().isNotEmpty?addProductModel1!.photo4.toString():'',
                      photo5: addProductModel1!=null && addProductModel1!.photo5.toString().isNotEmpty?addProductModel1!.photo5.toString():'');
-
+    print('addProductModel===========>$addProductModel');
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => AddProductDetailPage(
@@ -479,6 +485,9 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
        ischecked = true;
       getSourceLocList(widget.isUpdate);
        setState(() {});
+    }else{
+      getSourceLocList(widget.isUpdate);
+      SelectOwnerType = "5fcb6c50-d8bd-3f07-dbab-d1473523b6af";
     }
   }
 

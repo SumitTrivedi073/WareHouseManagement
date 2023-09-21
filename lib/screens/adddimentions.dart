@@ -30,12 +30,12 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
     // TODO: implement initState
     super.initState();
     if(widget.isUpdate){
-      lengthActCodeController.text = widget.addProductModel.lengthActual;
-      widthActController.text = widget.addProductModel.widthActual;
-      heightActController.text = widget.addProductModel.heightActual;
-      lengthShippingController.text = widget.addProductModel.lengthShipping;
-      weightLbsActController.text = widget.addProductModel.weightLbsActual;
-      weightLbsShippingController.text = widget.addProductModel.weightLbsShipping;
+      lengthActCodeController.text = widget.addProductModel.lengthActual ?? '';
+      widthActController.text = widget.addProductModel.widthActual ?? '';
+      heightActController.text = widget.addProductModel.heightActual ?? '';
+      lengthShippingController.text = widget.addProductModel.lengthShipping ?? '';
+      weightLbsActController.text = widget.addProductModel.weightLbsActual ?? '';
+      weightLbsShippingController.text = widget.addProductModel.weightLbsShipping ?? '';
     }
   }
 
@@ -202,35 +202,35 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
     Utility().showToast(enterWeightLbsShipping);
   } else {
 */
-     AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid,
-        locationGuid: widget.addProductModel.locationGuid,
-        requester: widget.addProductModel.requester,
-         locationName:  widget.addProductModel.locationName,
-         countryId:  widget.addProductModel.countryId,
-         stateId:  widget.addProductModel.stateId,
-         province:  widget.addProductModel.province,
-         address:  widget.addProductModel.address,
-         city:  widget.addProductModel.city,
-         zipCode: widget.addProductModel.zipCode,
-        categoryId: widget.addProductModel.categoryId,
-        categorySubId: widget.addProductModel.categorySubId,
-        makeGuid: widget.addProductModel.makeGuid,
-        modelNumber: widget.addProductModel.modelNumber,
-        title: widget.addProductModel.title,
-        assetDetail: widget.addProductModel.assetDetail,
-        serialNumber: widget.addProductModel.serialNumber,
-        selectedDate: widget.addProductModel.selectedDate,
-        productStatus:widget.addProductModel.productStatus,
-        barcode: widget.addProductModel.barcode,
-        purPujNo: widget.addProductModel.purPujNo,
-        sellType: widget.addProductModel.sellType,
-        classType: widget.addProductModel.classType,
-        lengthActual: lengthActCodeController.text.toString(),
-        widthActual: widthActController.text.toString(),
-        heightActual: heightActController.text.toString(),
-        lengthShipping: lengthShippingController.text.toString(),
-         weightLbsActual: weightLbsActController.text.toString(),
-         weightLbsShipping: weightLbsShippingController.text.toString(),
+     AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid ?? '',
+        locationGuid: widget.addProductModel.locationGuid ?? '',
+        requester: widget.addProductModel.requester ?? '',
+         locationName:  widget.addProductModel.locationName ?? '',
+         countryId:  widget.addProductModel.countryId ?? '',
+         stateId:  widget.addProductModel.stateId ?? '',
+         province:  widget.addProductModel.province ?? '',
+         address:  widget.addProductModel.address ?? '',
+         city:  widget.addProductModel.city ?? '',
+         zipCode: widget.addProductModel.zipCode ?? '',
+        categoryId: widget.addProductModel.categoryId ?? '',
+        categorySubId: widget.addProductModel.categorySubId ?? '',
+        makeGuid: widget.addProductModel.makeGuid ?? '',
+        modelNumber: widget.addProductModel.modelNumber ?? '',
+        title: widget.addProductModel.title ?? '',
+        assetDetail: widget.addProductModel.assetDetail ?? '',
+        serialNumber: widget.addProductModel.serialNumber ?? '',
+        selectedDate: widget.addProductModel.selectedDate ?? '',
+        productStatus:widget.addProductModel.productStatus ?? '',
+        barcode: widget.addProductModel.barcode ?? '',
+        purPujNo: widget.addProductModel.purPujNo ?? '',
+        sellType: widget.addProductModel.sellType ?? '',
+        classType: widget.addProductModel.classType ?? '',
+        lengthActual: lengthActCodeController.text.toString() ?? '',
+        widthActual: widthActController.text.toString() ?? '',
+        heightActual: heightActController.text.toString() ?? '',
+        lengthShipping: lengthShippingController.text.toString() ?? '',
+         weightLbsActual: weightLbsActController.text.toString() ?? '',
+         weightLbsShipping: weightLbsShippingController.text.toString() ?? '',
          description: widget.addProductModel.description.toString().isNotEmpty?widget.addProductModel.description.toString():'',
          photo1: widget.addProductModel.photo1.toString().isNotEmpty?widget.addProductModel.photo1.toString():'',
          photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',

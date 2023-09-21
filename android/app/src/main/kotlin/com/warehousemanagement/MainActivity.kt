@@ -1,4 +1,4 @@
-package com.example.warehouse_management_app
+package com.warehousemanagement
 
 import io.flutter.embedding.android.FlutterActivity
 

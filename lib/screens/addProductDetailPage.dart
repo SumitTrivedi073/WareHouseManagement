@@ -53,11 +53,11 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
 
     getList();
     if (widget.isUpdate) {
-      modelController.text = widget.addProductModel.modelNumber;
-      titleController.text = widget.addProductModel.title;
-      assetsController.text = widget.addProductModel.assetDetail;
-      serialNumberCodeController.text = widget.addProductModel.serialNumber;
-      dateController.text = widget.addProductModel.selectedDate;
+      modelController.text = widget.addProductModel.modelNumber ?? '';
+      titleController.text = widget.addProductModel.title ?? '';
+      assetsController.text = widget.addProductModel.assetDetail ?? '';
+      serialNumberCodeController.text = widget.addProductModel.serialNumber ?? '';
+      dateController.text = widget.addProductModel.selectedDate ?? '';
     }
   }
 
@@ -464,8 +464,12 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       selectMakeList = makeListModel.data;
       selectCategoryList = categoryModel.data;
       if (widget.isUpdate) {
-        categoryId = widget.addProductModel.categoryId;
-        makeGuid = widget.addProductModel.makeGuid;
+        if(widget.addProductModel.categoryId.isNotEmpty) {
+          categoryId = widget.addProductModel.categoryId ?? '';
+        }
+        if(widget.addProductModel.makeGuid.isNotEmpty) {
+          makeGuid = widget.addProductModel.makeGuid ?? '';
+        }
         getSubCategoryList();
       }
     });
@@ -486,7 +490,9 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       }
     }
     if (widget.isUpdate) {
-      categorySubId = widget.addProductModel.categorySubId;
+      if(widget.addProductModel.categorySubId.isNotEmpty) {
+        categorySubId = widget.addProductModel.categorySubId ?? '';
+      }
     }
     setState(() {});
   }
@@ -518,25 +524,25 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     else {
 */
     AddProductModel addProductModel = AddProductModel(
-        ownerGuid: widget.addProductModel.ownerGuid,
-        locationGuid: widget.addProductModel.locationGuid,
-        requester: widget.addProductModel.requester,
-        locationName: widget.addProductModel.locationName,
-        countryId: widget.addProductModel.countryId,
-        stateId: widget.addProductModel.stateId,
-        province: widget.addProductModel.province,
-        address: widget.addProductModel.address,
-        city: widget.addProductModel.city,
-        zipCode: widget.addProductModel.zipCode,
-        categoryId: categoryId.toString().isNotEmpty?categoryId.toString():'',
-        categorySubId: categorySubId.toString().isNotEmpty?categorySubId.toString():'',
-        makeGuid: makeGuid.toString().isNotEmpty?makeGuid.toString():'',
-        modelNumber: modelController.text.toString().trim(),
-        title: titleController.text.toString().trim(),
-        assetDetail: assetsController.text.toString().trim(),
-        serialNumber: serialNumberCodeController.text.toString().trim(),
-        selectedDate: dateController.text.toString().trim(),
-        productStatus: selectStatus.toString(),
+        ownerGuid: widget.addProductModel.ownerGuid ?? '',
+        locationGuid: widget.addProductModel.locationGuid ?? '',
+        requester: widget.addProductModel.requester ?? '',
+        locationName: widget.addProductModel.locationName ?? '',
+        countryId: widget.addProductModel.countryId ?? '',
+        stateId: widget.addProductModel.stateId ?? '',
+        province: widget.addProductModel.province ?? '',
+        address: widget.addProductModel.address ?? '',
+        city: widget.addProductModel.city ?? '',
+        zipCode: widget.addProductModel.zipCode ?? '',
+        categoryId: categoryId!=null&&categoryId.toString().isNotEmpty?categoryId.toString():'',
+        categorySubId: categorySubId!=null&&categorySubId.toString().isNotEmpty?categorySubId.toString():'',
+        makeGuid: makeGuid!=null&&makeGuid.toString().isNotEmpty?makeGuid.toString():'',
+        modelNumber: modelController.text.toString().trim() ?? '',
+        title: titleController.text.toString().trim() ?? '',
+        assetDetail: assetsController.text.toString().trim() ?? '',
+        serialNumber: serialNumberCodeController.text.toString().trim() ?? '',
+        selectedDate: dateController.text.toString().trim() ?? '',
+        productStatus: selectStatus.toString() ?? '',
         barcode: widget.addProductModel.barcode.toString().isNotEmpty
             ? widget.addProductModel.barcode.toString()
             : '',
