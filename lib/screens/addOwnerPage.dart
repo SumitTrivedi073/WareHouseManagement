@@ -1,16 +1,14 @@
 import 'dart:convert' as convert;
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warehouse_management_app/screens/addLocationWidget.dart';
 import 'package:warehouse_management_app/screens/addProductDetailPage.dart';
-
 import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
     as ownerPrefix;
-
-
+import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
+    as sourceLocPrefix;
 import 'package:warehouse_management_app/utils/constant.dart';
 
 import '../theme/color.dart';
@@ -18,8 +16,7 @@ import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
 import '../utils/utility.dart';
 import 'model/addProductModel.dart';
-import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
-as sourceLocPrefix;
+
 class AddOwnerPage extends StatefulWidget {
   AddOwnerPage({Key? key, required this.productModel, required this.isUpdate})
       : super(key: key);
@@ -42,9 +39,10 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
   List<AddProductModel> productList = [];
   TextEditingController sourceLocController = TextEditingController();
   TextEditingController requesterController = TextEditingController();
+  TextEditingController purPrjController = TextEditingController();
   bool ischecked = false;
   late SharedPreferences sharedPreferences;
-   AddProductModel? addProductModel1;
+  AddProductModel? addProductModel1;
 
   @override
   void initState() {
@@ -59,10 +57,11 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
   }
 
   void setData() {
-    if(widget.productModel.ownerGuid.isNotEmpty) {
+    if (widget.productModel.ownerGuid.isNotEmpty) {
       SelectOwnerType = widget.productModel.ownerGuid;
     }
     requesterController.text = widget.productModel.requester ?? '';
+    purPrjController.text = widget.productModel.purPujNo ?? '';
     getSourceLocList(widget.isUpdate);
     addProductModel1 = widget.productModel;
   }
@@ -98,6 +97,8 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                     addRemoveLocManually(),
                     textWidget(requesterController, TextInputType.text,
                         enterRequester),
+                    textWidget(
+                        purPrjController, TextInputType.text, enterPurPuj),
                   ],
                 ),
               )),
@@ -114,10 +115,11 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (BuildContext context) => AddLocationWidgetPage(
-                      callback: retriveLocationData,addProductModel: widget.productModel,
-                      isUpdate: widget.isUpdate,
-                    )),
-                    (Route<dynamic> route) => true);
+                          callback: retriveLocationData,
+                          addProductModel: widget.productModel,
+                          isUpdate: widget.isUpdate,
+                        )),
+                (Route<dynamic> route) => true);
           } else {
             SelectOwnerType = null;
             Utility().showToast(selectOwner2);
@@ -248,7 +250,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
             ),
             keyboardType: inputType,
             textInputAction:
-                hintTxt == enterRequester || hintTxt == enterZipcode
+                hintTxt == enterPurPuj || hintTxt == enterZipcode
                     ? TextInputAction.done
                     : TextInputAction.next),
       ),
@@ -278,9 +280,9 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                   ischecked = value!;
                 });
               }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pop();
@@ -288,29 +290,30 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                 child: Container(
                   width: 150,
                   height: 50,
-                  margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  margin:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: AppColor.themeColor),
                   child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.arrow_back,
-                            color: AppColor.whiteColor,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          robotoTextWidget(
-                              textval: back,
-                              colorval: Colors.white,
-                              sizeval: 16,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      robotoTextWidget(
+                          textval: back,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                    ],
+                  )),
                 ),
               ),
               GestureDetector(
@@ -320,33 +323,34 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                 child: Container(
                   width: 150,
                   height: 50,
-                  margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  margin:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: AppColor.themeColor),
                   child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          robotoTextWidget(
-                              textval: next,
-                              colorval: Colors.white,
-                              sizeval: 16,
-                              fontWeight: FontWeight.bold),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.arrow_forward,
-                            color: AppColor.whiteColor,
-                            size: 20,
-                          )
-                        ],
-                      )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      robotoTextWidget(
+                          textval: next,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      )
+                    ],
+                  )),
                 ),
               ),
-
-            ],)
+            ],
+          )
         ],
       ),
     );
@@ -378,16 +382,19 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
       }
     }
     if (isUpdate) {
-      if(widget.productModel.locationGuid.isNotEmpty) {
+      if (widget.productModel.locationGuid.isNotEmpty) {
         SelectSourceLocType = widget.productModel.locationGuid ?? '';
       }
     } else {
       sharedPreferences = await SharedPreferences.getInstance();
       if (sharedPreferences.getString(selectSourceLocType) != null &&
-          sharedPreferences.getString(selectSourceLocType).toString().isNotEmpty) {
-        SelectSourceLocType = sharedPreferences.getString(selectSourceLocType).toString();
-
-      }else{
+          sharedPreferences
+              .getString(selectSourceLocType)
+              .toString()
+              .isNotEmpty) {
+        SelectSourceLocType =
+            sharedPreferences.getString(selectSourceLocType).toString();
+      } else {
         SelectSourceLocType = "eef75434-722a-a5e0-9596-a46a16ec6bff";
       }
     }
@@ -399,23 +406,22 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     SelectOwnerType ??= "";
     SelectSourceLocType ??= "";
     if (SelectOwnerType!.isEmpty) {
-     // SelectOwnerType = null;
-     // Utility().showToast(selectOwner);
+      // SelectOwnerType = null;
+      // Utility().showToast(selectOwner);
     }
     if (SelectSourceLocType!.isEmpty) {
-    //  SelectSourceLocType = null;
-     // Utility().showToast(selectSourceLocation);
+      //  SelectSourceLocType = null;
+      // Utility().showToast(selectSourceLocation);
     } else if (requesterController.text.toString().isEmpty) {
-    //  Utility().showToast(enterRequester);
+      //  Utility().showToast(enterRequester);
     } else {
       if (ischecked) {
         Utility().setSharedPreference(selectOwnerType, SelectOwnerType!);
-        Utility().setSharedPreference(
-            selectSourceLocType, SelectSourceLocType!);
+        Utility()
+            .setSharedPreference(selectSourceLocType, SelectSourceLocType!);
         Utility().setSharedPreference(
             selectRequester, requesterController.text.toString());
-      }
-      else {
+      } else {
         sharedPreferences = await SharedPreferences.getInstance();
         if (sharedPreferences.getString(selectOwnerType) != null &&
             sharedPreferences
@@ -427,76 +433,71 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
       }
     }
 
-      AddProductModel addProductModel = AddProductModel(
-                     ownerGuid: SelectOwnerType ?? '',
-                     locationGuid: SelectSourceLocType ?? '',
-                     requester: requesterController.text.toString() ?? '',
-                     locationName: addProductModel1!=null && addProductModel1!.locationName.toString().isNotEmpty?addProductModel1!.locationName.toString():'',
-                     countryId: addProductModel1!=null && addProductModel1!.countryId.toString().isNotEmpty?addProductModel1!.countryId.toString():'',
-                     stateId: addProductModel1!=null && addProductModel1!.stateId.toString().isNotEmpty?addProductModel1!.stateId.toString():'',
-                     province: addProductModel1!=null && addProductModel1!.province.toString().isNotEmpty?addProductModel1!.province.toString():'',
-                     address: addProductModel1!=null && addProductModel1!.address.toString().isNotEmpty?addProductModel1!.address.toString():'',
-                     city: addProductModel1!=null && addProductModel1!.city.toString().isNotEmpty?addProductModel1!.city.toString():'',
-                     zipCode: addProductModel1!=null && addProductModel1!.zipCode.toString().isNotEmpty?addProductModel1!.zipCode.toString():'',
-                     categoryId:addProductModel1!=null &&  addProductModel1!.categoryId.toString().isNotEmpty?addProductModel1!.categoryId.toString():'',
-                     categorySubId: addProductModel1!=null && addProductModel1!.categorySubId.toString().isNotEmpty?addProductModel1!.categorySubId.toString():'',
-                     makeGuid: addProductModel1!=null && addProductModel1!.makeGuid.toString().isNotEmpty?addProductModel1!.makeGuid.toString():'',
-                     modelNumber: addProductModel1!=null && addProductModel1!.modelNumber.toString().isNotEmpty?addProductModel1!.modelNumber.toString():'',
-                     title: addProductModel1!=null && addProductModel1!.title.toString().isNotEmpty?addProductModel1!.title.toString():'',
-                     assetDetail: addProductModel1!=null && addProductModel1!.assetDetail.toString().isNotEmpty?addProductModel1!.assetDetail.toString():'',
-                     serialNumber: addProductModel1!=null && addProductModel1!.serialNumber.toString().isNotEmpty?addProductModel1!.serialNumber.toString():'',
-                     selectedDate: addProductModel1!=null && addProductModel1!.selectedDate.toString().isNotEmpty?addProductModel1!.selectedDate.toString():'',
-                     productStatus: addProductModel1!=null && addProductModel1!.productStatus.toString().isNotEmpty?addProductModel1!.productStatus.toString():'',
-                     barcode: addProductModel1!=null && addProductModel1!.barcode.toString().isNotEmpty?addProductModel1!.barcode.toString():'',
-                     purPujNo:addProductModel1!=null && addProductModel1!.purPujNo.toString().isNotEmpty?addProductModel1!.purPujNo.toString(): '',
-                     sellType: addProductModel1!=null && addProductModel1!.sellType.toString().isNotEmpty?addProductModel1!.sellType.toString():'',
-                     classType: addProductModel1!=null && addProductModel1!.classType.toString().isNotEmpty?addProductModel1!.classType.toString():'',
-                     lengthActual: addProductModel1!=null && addProductModel1!.lengthActual.toString().isNotEmpty?addProductModel1!.lengthActual.toString():'',
-                     widthActual: addProductModel1!=null && addProductModel1!.widthActual.toString().isNotEmpty?addProductModel1!.widthActual.toString():'',
-                     heightActual:addProductModel1!=null &&  addProductModel1!.heightActual.toString().isNotEmpty?addProductModel1!.heightActual.toString():'',
-                     lengthShipping: addProductModel1!=null && addProductModel1!.lengthShipping.toString().isNotEmpty?addProductModel1!.lengthShipping.toString():'',
-                     weightLbsActual: addProductModel1!=null && addProductModel1!.weightLbsActual.toString().isNotEmpty?addProductModel1!.weightLbsActual.toString():'',
-                     weightLbsShipping:addProductModel1!=null && addProductModel1!.weightLbsShipping.toString().isNotEmpty?addProductModel1!.weightLbsShipping.toString(): '',
-                     description: addProductModel1!=null && addProductModel1!.description.toString().isNotEmpty?addProductModel1!.description.toString():'',
-                     photo1: addProductModel1!=null && addProductModel1!.photo1.toString().isNotEmpty?addProductModel1!.photo1.toString():'',
-                     photo2: addProductModel1!=null && addProductModel1!.photo2.toString().isNotEmpty?addProductModel1!.photo2.toString():'',
-                     photo3: addProductModel1!=null && addProductModel1!.photo3.toString().isNotEmpty?addProductModel1!.photo3.toString():'',
-                     photo4: addProductModel1!=null && addProductModel1!.photo4.toString().isNotEmpty?addProductModel1!.photo4.toString():'',
-                     photo5: addProductModel1!=null && addProductModel1!.photo5.toString().isNotEmpty?addProductModel1!.photo5.toString():'');
+    AddProductModel addProductModel = AddProductModel(
+        ownerGuid: SelectOwnerType ?? '',
+        locationGuid: SelectSourceLocType ?? '',
+        requester: requesterController.text.toString() ?? '',
+        purPujNo: purPrjController.text.toString() ?? '',
+        locationName: addProductModel1 != null && addProductModel1!.locationName.toString().isNotEmpty ? addProductModel1!.locationName.toString() : '',
+        countryId: addProductModel1 != null && addProductModel1!.countryId.toString().isNotEmpty ? addProductModel1!.countryId.toString() : '',
+        stateId: addProductModel1 != null && addProductModel1!.stateId.toString().isNotEmpty ? addProductModel1!.stateId.toString() : '',
+        province: addProductModel1 != null && addProductModel1!.province.toString().isNotEmpty ? addProductModel1!.province.toString() : '',
+        address: addProductModel1 != null && addProductModel1!.address.toString().isNotEmpty ? addProductModel1!.address.toString() : '',
+        city: addProductModel1 != null && addProductModel1!.city.toString().isNotEmpty ? addProductModel1!.city.toString() : '',
+        zipCode: addProductModel1 != null && addProductModel1!.zipCode.toString().isNotEmpty ? addProductModel1!.zipCode.toString() : '',
+        categoryId: addProductModel1 != null && addProductModel1!.categoryId.toString().isNotEmpty ? addProductModel1!.categoryId.toString() : '',
+        categorySubId: addProductModel1 != null && addProductModel1!.categorySubId.toString().isNotEmpty ? addProductModel1!.categorySubId.toString() : '',
+        makeGuid: addProductModel1 != null && addProductModel1!.makeGuid.toString().isNotEmpty ? addProductModel1!.makeGuid.toString() : '',
+        modelNumber: addProductModel1 != null && addProductModel1!.modelNumber.toString().isNotEmpty ? addProductModel1!.modelNumber.toString() : '',
+        title: addProductModel1 != null && addProductModel1!.title.toString().isNotEmpty ? addProductModel1!.title.toString() : '',
+        assetDetail: addProductModel1 != null && addProductModel1!.assetDetail.toString().isNotEmpty ? addProductModel1!.assetDetail.toString() : '',
+        serialNumber: addProductModel1 != null && addProductModel1!.serialNumber.toString().isNotEmpty ? addProductModel1!.serialNumber.toString() : '',
+        selectedDate: addProductModel1 != null && addProductModel1!.selectedDate.toString().isNotEmpty ? addProductModel1!.selectedDate.toString() : '',
+        productStatus: addProductModel1 != null && addProductModel1!.productStatus.toString().isNotEmpty ? addProductModel1!.productStatus.toString() : '',
+        barcode: addProductModel1 != null && addProductModel1!.barcode.toString().isNotEmpty ? addProductModel1!.barcode.toString() : '',
+        sellType: addProductModel1 != null && addProductModel1!.sellType.toString().isNotEmpty ? addProductModel1!.sellType.toString() : '',
+        classType: addProductModel1 != null && addProductModel1!.classType.toString().isNotEmpty ? addProductModel1!.classType.toString() : '',
+        lengthActual: addProductModel1 != null && addProductModel1!.lengthActual.toString().isNotEmpty ? addProductModel1!.lengthActual.toString() : '',
+        widthActual: addProductModel1 != null && addProductModel1!.widthActual.toString().isNotEmpty ? addProductModel1!.widthActual.toString() : '',
+        heightActual: addProductModel1 != null && addProductModel1!.heightActual.toString().isNotEmpty ? addProductModel1!.heightActual.toString() : '',
+        lengthShipping: addProductModel1 != null && addProductModel1!.lengthShipping.toString().isNotEmpty ? addProductModel1!.lengthShipping.toString() : '',
+        weightLbsActual: addProductModel1 != null && addProductModel1!.weightLbsActual.toString().isNotEmpty ? addProductModel1!.weightLbsActual.toString() : '',
+        weightLbsShipping: addProductModel1 != null && addProductModel1!.weightLbsShipping.toString().isNotEmpty ? addProductModel1!.weightLbsShipping.toString() : '',
+        description: addProductModel1 != null && addProductModel1!.description.toString().isNotEmpty ? addProductModel1!.description.toString() : '',
+        photo1: addProductModel1 != null && addProductModel1!.photo1.toString().isNotEmpty ? addProductModel1!.photo1.toString() : '',
+        photo2: addProductModel1 != null && addProductModel1!.photo2.toString().isNotEmpty ? addProductModel1!.photo2.toString() : '',
+        photo3: addProductModel1 != null && addProductModel1!.photo3.toString().isNotEmpty ? addProductModel1!.photo3.toString() : '',
+        photo4: addProductModel1 != null && addProductModel1!.photo4.toString().isNotEmpty ? addProductModel1!.photo4.toString() : '',
+        photo5: addProductModel1 != null && addProductModel1!.photo5.toString().isNotEmpty ? addProductModel1!.photo5.toString() : '');
     print('addProductModel===========>$addProductModel');
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (BuildContext context) => AddProductDetailPage(
-                    addProductModel: addProductModel,isUpdate: widget.isUpdate,)),
-          (Route<dynamic> route) => true);
-    }
-
-
-
-
-
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (BuildContext context) => AddProductDetailPage(
+                  addProductModel: addProductModel,
+                  isUpdate: widget.isUpdate,
+                )),
+        (Route<dynamic> route) => true);
+  }
 
   Future<void> getSharedPrefrence() async {
     sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString(selectOwnerType) != null &&
         sharedPreferences.getString(selectOwnerType).toString().isNotEmpty) {
-       SelectOwnerType = sharedPreferences.getString(selectOwnerType).toString();
-       requesterController.text = sharedPreferences.getString(selectRequester).toString();
-       ischecked = true;
+      SelectOwnerType = sharedPreferences.getString(selectOwnerType).toString();
+      requesterController.text =
+          sharedPreferences.getString(selectRequester).toString();
+      ischecked = true;
       getSourceLocList(widget.isUpdate);
-       setState(() {});
-    }else{
+      setState(() {});
+    } else {
       getSourceLocList(widget.isUpdate);
       SelectOwnerType = "5fcb6c50-d8bd-3f07-dbab-d1473523b6af";
     }
   }
 
-
-
   void retriveLocationData(AddProductModel addProductModel) {
-
     setState(() {
-      addProductModel1 =addProductModel;
+      addProductModel1 = addProductModel;
     });
     print('addProductModel1!===========>$addProductModel1!');
   }

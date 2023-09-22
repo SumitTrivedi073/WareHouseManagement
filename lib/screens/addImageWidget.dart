@@ -7,7 +7,6 @@ import 'package:warehouse_management_app/screens/model/addProductModel.dart';
 import '../theme/color.dart';
 import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
-import '../utils/utility.dart';
 import 'database/database_helper.dart';
 import 'image_view_widget.dart';
 import 'model/imageModel.dart';
@@ -237,53 +236,51 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
   }
 
   getAllImageData() async {
+    imageList.add(ImageModel(
+        imageName: 'Photo1',
+        imagePath: widget.addProductModel.photo1.isNotEmpty
+            ? widget.addProductModel.photo1
+            : '',
+        imageSelected:
+            widget.addProductModel.photo1.isNotEmpty ? true : false));
 
-      imageList.add(ImageModel(
-          imageName: 'Photo1',
-          imagePath: widget.addProductModel.photo1.isNotEmpty
-              ? widget.addProductModel.photo1
-              : '',
-          imageSelected:
-              widget.addProductModel.photo1.isNotEmpty ? true : false));
+    imageList.add(ImageModel(
+        imageName: 'Photo2',
+        imagePath: widget.addProductModel.photo2.isNotEmpty
+            ? widget.addProductModel.photo2
+            : '',
+        imageSelected:
+            widget.addProductModel.photo2.isNotEmpty ? true : false));
 
-      imageList.add(ImageModel(
-          imageName: 'Photo2',
-          imagePath: widget.addProductModel.photo2.isNotEmpty
-              ? widget.addProductModel.photo2
-              : '',
-          imageSelected:
-              widget.addProductModel.photo2.isNotEmpty ? true : false));
+    imageList.add(ImageModel(
+        imageName: 'Photo3',
+        imagePath: widget.addProductModel.photo3.isNotEmpty
+            ? widget.addProductModel.photo3
+            : '',
+        imageSelected:
+            widget.addProductModel.photo3.isNotEmpty ? true : false));
 
-          imageList.add(ImageModel(
-          imageName: 'Photo3',
-          imagePath: widget.addProductModel.photo3.isNotEmpty
-              ? widget.addProductModel.photo3
-              : '',
-          imageSelected:
-              widget.addProductModel.photo3.isNotEmpty ? true : false));
+    imageList.add(ImageModel(
+        imageName: 'Photo4',
+        imagePath: widget.addProductModel.photo4.isNotEmpty
+            ? widget.addProductModel.photo4
+            : '',
+        imageSelected:
+            widget.addProductModel.photo4.isNotEmpty ? true : false));
 
-      imageList.add(ImageModel(
-          imageName: 'Photo4',
-          imagePath: widget.addProductModel.photo4.isNotEmpty
-              ? widget.addProductModel.photo4
-              : '',
-          imageSelected:
-              widget.addProductModel.photo4.isNotEmpty ? true : false));
-
-          imageList.add(ImageModel(
-          imageName: 'Photo5',
-          imagePath: widget.addProductModel.photo5.isNotEmpty
-              ? widget.addProductModel.photo5
-              : '',
-          imageSelected:
-              widget.addProductModel.photo5.isNotEmpty ? true : false));
-
+    imageList.add(ImageModel(
+        imageName: 'Photo5',
+        imagePath: widget.addProductModel.photo5.isNotEmpty
+            ? widget.addProductModel.photo5
+            : '',
+        imageSelected:
+            widget.addProductModel.photo5.isNotEmpty ? true : false));
   }
 
   nextButtonWidget() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child:  Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           GestureDetector(
@@ -299,23 +296,23 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
                   color: AppColor.themeColor),
               child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.arrow_back,
-                        color: AppColor.whiteColor,
-                        size: 20,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      robotoTextWidget(
-                          textval: back,
-                          colorval: Colors.white,
-                          sizeval: 16,
-                          fontWeight: FontWeight.bold),
-                    ],
-                  )),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.arrow_back,
+                    color: AppColor.whiteColor,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  robotoTextWidget(
+                      textval: back,
+                      colorval: Colors.white,
+                      sizeval: 16,
+                      fontWeight: FontWeight.bold),
+                ],
+              )),
             ),
           ),
           GestureDetector(
@@ -331,60 +328,60 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
                   color: AppColor.themeColor),
               child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      robotoTextWidget(
-                          textval: next,
-                          colorval: Colors.white,
-                          sizeval: 16,
-                          fontWeight: FontWeight.bold),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Icon(
-                        Icons.arrow_forward,
-                        color: AppColor.whiteColor,
-                        size: 20,
-                      )
-                    ],
-                  )),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  robotoTextWidget(
+                      textval: next,
+                      colorval: Colors.white,
+                      sizeval: 16,
+                      fontWeight: FontWeight.bold),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: AppColor.whiteColor,
+                    size: 20,
+                  )
+                ],
+              )),
             ),
           ),
-
-        ],),
+        ],
+      ),
     );
   }
 
   void dataSavedLocally() {
     for (var i = 0; i < imageList.length; i++) {
-     if(imageList[i].imageSelected){
-       imgCount = i+1;
-     }
+      if (imageList[i].imageSelected) {
+        imgCount = i + 1;
+      }
     }
-     print('imgCount=======>$imgCount');
+    print('imgCount=======>$imgCount');
 
 /*
     if (imgCount < 2) {
       Utility().showToast(attechImages);
     } else {
 */
-      if (imageList[0].imageSelected) {
-        img1 = imageList[0].imagePath;
-      }
-      if (imageList[1].imageSelected) {
-        img2 = imageList[1].imagePath;
-      }
-      if (imageList[2].imageSelected) {
-        img3 = imageList[2].imagePath;
-      }
-      if (imageList[3].imageSelected) {
-        img4 = imageList[3].imagePath;
-      }
-      if (imageList[4].imageSelected) {
-        img5 = imageList[4].imagePath;
-      }
+    if (imageList[0].imageSelected) {
+      img1 = imageList[0].imagePath;
+    }
+    if (imageList[1].imageSelected) {
+      img2 = imageList[1].imagePath;
+    }
+    if (imageList[2].imageSelected) {
+      img3 = imageList[2].imagePath;
+    }
+    if (imageList[3].imageSelected) {
+      img4 = imageList[3].imagePath;
+    }
+    if (imageList[4].imageSelected) {
+      img5 = imageList[4].imagePath;
+    }
 
-      InsertUpdateDataBase();
+    InsertUpdateDataBase();
 //    }
   }
 
@@ -393,12 +390,13 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
         ownerGuid: widget.addProductModel.ownerGuid ?? '',
         locationGuid: widget.addProductModel.locationGuid ?? '',
         requester: widget.addProductModel.requester ?? '',
-        locationName:  widget.addProductModel.locationName ?? '',
-        countryId:  widget.addProductModel.countryId ?? '',
-        stateId:  widget.addProductModel.stateId ?? '',
-        province:  widget.addProductModel.province ?? '',
-        address:  widget.addProductModel.address ?? '',
-        city:  widget.addProductModel.city ?? '',
+        purPujNo: widget.addProductModel.purPujNo ?? '',
+        locationName: widget.addProductModel.locationName ?? '',
+        countryId: widget.addProductModel.countryId ?? '',
+        stateId: widget.addProductModel.stateId ?? '',
+        province: widget.addProductModel.province ?? '',
+        address: widget.addProductModel.address ?? '',
+        city: widget.addProductModel.city ?? '',
         zipCode: widget.addProductModel.zipCode ?? '',
         categoryId: widget.addProductModel.categoryId ?? '',
         categorySubId: widget.addProductModel.categorySubId ?? '',
@@ -408,18 +406,17 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
         assetDetail: widget.addProductModel.assetDetail ?? '',
         serialNumber: widget.addProductModel.serialNumber ?? '',
         selectedDate: widget.addProductModel.selectedDate ?? '',
-        productStatus:widget.addProductModel.productStatus ?? '',
+        productStatus: widget.addProductModel.productStatus ?? '',
         barcode: widget.addProductModel.barcode ?? '',
-        purPujNo: widget.addProductModel.purPujNo ?? '',
         sellType: widget.addProductModel.sellType ?? '',
         classType: widget.addProductModel.classType ?? '',
-        lengthActual:widget.addProductModel.lengthActual ?? '',
+        lengthActual: widget.addProductModel.lengthActual ?? '',
         widthActual: widget.addProductModel.widthActual ?? '',
         heightActual: widget.addProductModel.heightActual ?? '',
         lengthShipping: widget.addProductModel.lengthShipping ?? '',
         weightLbsActual: widget.addProductModel.weightLbsActual ?? '',
-        weightLbsShipping:widget.addProductModel.weightLbsShipping ?? '',
-        description: widget.addProductModel.description,
+        weightLbsShipping: widget.addProductModel.weightLbsShipping ?? '',
+        description: widget.addProductModel.description ?? '',
         photo1: img1,
         photo2: img2,
         photo3: img3,
@@ -427,9 +424,9 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
         photo5: img5);
 
     print('addProductModel==================>${addProductModel.toString()}');
-    if(widget.isUpdate){
+    if (widget.isUpdate) {
       DatabaseHelper.instance.updateData(addProductModel.toMapWithoutId());
-    }else {
+    } else {
       DatabaseHelper.instance.insertData(addProductModel.toMapWithoutId());
     }
     Navigator.of(context).pushAndRemoveUntil(

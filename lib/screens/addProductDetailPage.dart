@@ -527,6 +527,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         ownerGuid: widget.addProductModel.ownerGuid ?? '',
         locationGuid: widget.addProductModel.locationGuid ?? '',
         requester: widget.addProductModel.requester ?? '',
+        purPujNo: widget.addProductModel.purPujNo?? '',
         locationName: widget.addProductModel.locationName ?? '',
         countryId: widget.addProductModel.countryId ?? '',
         stateId: widget.addProductModel.stateId ?? '',
@@ -545,9 +546,6 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         productStatus: selectStatus.toString() ?? '',
         barcode: widget.addProductModel.barcode.toString().isNotEmpty
             ? widget.addProductModel.barcode.toString()
-            : '',
-        purPujNo: widget.addProductModel.purPujNo.toString().isNotEmpty
-            ? widget.addProductModel.purPujNo.toString()
             : '',
         sellType: widget.addProductModel.sellType.toString().isNotEmpty
             ? widget.addProductModel.sellType.toString()

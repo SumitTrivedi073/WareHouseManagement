@@ -3,9 +3,9 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:warehouse_management_app/screens/model/countryListModel.dart'
-    as countryPrefix;
+as countryPrefix;
 import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
-    as sourceLocPrefix;
+as sourceLocPrefix;
 import 'package:warehouse_management_app/theme/string.dart';
 
 import '../theme/color.dart';
@@ -14,11 +14,10 @@ import '../utils/utility.dart';
 import 'model/addProductModel.dart';
 
 class AddLocationWidgetPage extends StatefulWidget {
-  AddLocationWidgetPage(
-      {Key? key,
-      required this.callback,
-      required this.addProductModel,
-      required this.isUpdate})
+  AddLocationWidgetPage({Key? key,
+    required this.callback,
+    required this.addProductModel,
+    required this.isUpdate})
       : super(key: key);
 
   AddProductModel addProductModel;
@@ -46,13 +45,16 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
     super.initState();
     getCountryList();
     if (widget.isUpdate) {
-      SelectCountryType = widget.addProductModel.countryId;
-      locationNameController.text = widget.addProductModel.locationName;
-      provinceController.text = widget.addProductModel.province;
-      addressController.text = widget.addProductModel.address;
-      cityController.text = widget.addProductModel.city;
-      zipcodeController.text = widget.addProductModel.zipCode;
-      getStateList();
+    if(widget.addProductModel.countryId.isNotEmpty){
+    SelectCountryType = widget.addProductModel.countryId;
+    }
+
+    locationNameController.text = widget.addProductModel.locationName;
+    provinceController.text = widget.addProductModel.province;
+    addressController.text = widget.addProductModel.address;
+    cityController.text = widget.addProductModel.city;
+    zipcodeController.text = widget.addProductModel.zipCode;
+    getStateList();
     }
   }
 
@@ -76,7 +78,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
         ),
         body: Stack(children: [
           Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
               margin: const EdgeInsets.only(left: 10, right: 10),
               child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
@@ -101,7 +106,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
     return Container(
         margin: const EdgeInsets.only(top: 10),
         height: 55,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         child: DropdownButtonFormField(
           isExpanded: true,
           decoration: InputDecoration(
@@ -120,9 +128,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
               fillColor: Colors.white),
           value: SelectCountryType,
           validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
+          value == null || value.isEmpty ? selectClassType : "",
           items: selectCountryList
-              .map((CountryList) => DropdownMenuItem(
+              .map((CountryList) =>
+              DropdownMenuItem(
                   value: CountryList.countryCode,
                   child: robotoTextWidget(
                       textval: CountryList.name,
@@ -145,7 +154,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
     return Container(
         margin: const EdgeInsets.only(top: 10),
         height: 55,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         child: DropdownButtonFormField(
           isExpanded: true,
           decoration: InputDecoration(
@@ -164,9 +176,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
               fillColor: Colors.white),
           value: SelectStateType,
           validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
+          value == null || value.isEmpty ? selectClassType : "",
           items: selectStateList
-              .map((StateList) => DropdownMenuItem(
+              .map((StateList) =>
+              DropdownMenuItem(
                   value: StateList,
                   child: robotoTextWidget(
                       textval: StateList,
@@ -184,10 +197,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
 
   Future<void> getCountryList() async {
     String data =
-        await rootBundle.loadString('assets/api_json/countrylist.json');
+    await rootBundle.loadString('assets/api_json/countrylist.json');
     var jsonData = convert.jsonDecode(data);
     countryPrefix.CountryListModel countryListModel =
-        countryPrefix.CountryListModel.fromJson(jsonData);
+    countryPrefix.CountryListModel.fromJson(jsonData);
     setState(() {
       selectCountryList = countryListModel.data;
     });
@@ -195,10 +208,10 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
 
   Future<void> getStateList() async {
     String data1 =
-        await rootBundle.loadString('assets/api_json/sourceLocList.json');
+    await rootBundle.loadString('assets/api_json/sourceLocList.json');
     var jsonData1 = convert.jsonDecode(data1);
     sourceLocPrefix.SourceLocModel sourceLocModel =
-        sourceLocPrefix.SourceLocModel.fromJson(jsonData1);
+    sourceLocPrefix.SourceLocModel.fromJson(jsonData1);
     List<sourceLocPrefix.Datum> initialList = [];
     initialList = sourceLocModel.data;
     for (sourceLocPrefix.Datum sourceLoc in initialList) {
@@ -214,7 +227,9 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
       }
     }
     if (widget.isUpdate) {
-      SelectStateType = widget.addProductModel.stateId;
+      if(widget.addProductModel.stateId.isNotEmpty) {
+        SelectStateType = widget.addProductModel.stateId;
+      }
     }
   }
 
@@ -246,9 +261,9 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
             ),
             keyboardType: inputType,
             textInputAction:
-                hintTxt == enterRequester || hintTxt == enterZipcode
-                    ? TextInputAction.done
-                    : TextInputAction.next),
+            hintTxt == enterRequester || hintTxt == enterZipcode
+                ? TextInputAction.done
+                : TextInputAction.next),
       ),
     );
   }
@@ -270,79 +285,97 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                   color: AppColor.themeColor),
               child: Center(
                   child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.arrow_back,
-                    color: AppColor.whiteColor,
-                    size: 20,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  robotoTextWidget(
-                      textval: back,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-                ],
-              )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      robotoTextWidget(
+                          textval: back,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                    ],
+                  )),
             ),
           ),
           GestureDetector(
             onTap: () {
-              SelectCountryType ??= "";
-              if (locationNameController.text.toString().isEmpty) {
+              /*SelectCountryType ??= "";
+              if (locationNameController.text
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(enterLocationName);
-              } else if (SelectCountryType.toString().isEmpty) {
+              } else if (SelectCountryType
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(selectCountry);
-              } else if (provinceController.text.toString().isEmpty) {
+              } else if (provinceController.text
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(enterProvince);
-              } else if (addressController.text.toString().isEmpty) {
+              } else if (addressController.text
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(enterAddress);
-              } else if (cityController.text.toString().isEmpty) {
+              } else if (cityController.text
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(enterCity);
-              } else if (zipcodeController.text.toString().isEmpty) {
+              } else if (zipcodeController.text
+                  .toString()
+                  .isEmpty) {
                 Utility().showToast(enterZipcode);
-              } else {
+              } else {*/
                 if (widget.isUpdate) {
                   AddProductModel addProductModel = AddProductModel(
-                      ownerGuid: widget.addProductModel.ownerGuid,
-                      locationGuid: widget.addProductModel.locationGuid,
-                      requester: widget.addProductModel.requester,
+                      ownerGuid: widget.addProductModel.ownerGuid ?? '',
+                      locationGuid: widget.addProductModel.locationGuid ?? '',
+                      requester: widget.addProductModel.requester ?? '',
+                      purPujNo: widget.addProductModel.purPujNo ?? '',
                       locationName: locationNameController.text.toString(),
-                      countryId: SelectCountryType.toString(),
-                      stateId: SelectStateType.toString(),
+                      countryId: SelectCountryType != null && SelectCountryType
+                          .toString()
+                          .isNotEmpty ? SelectCountryType.toString() : '',
+                      stateId: SelectStateType != null && SelectStateType
+                          .toString()
+                          .isNotEmpty ? SelectStateType.toString() : '',
                       province: provinceController.text.toString(),
                       address: addressController.text.toString(),
                       city: cityController.text.toString(),
                       zipCode: zipcodeController.text.toString(),
-                      categoryId: widget.addProductModel.categoryId,
-                      categorySubId: widget.addProductModel.categorySubId,
-                      makeGuid: widget.addProductModel.makeGuid,
-                      modelNumber: widget.addProductModel.modelNumber,
-                      title: widget.addProductModel.title,
-                      assetDetail: widget.addProductModel.assetDetail,
-                      serialNumber: widget.addProductModel.serialNumber,
-                      selectedDate: widget.addProductModel.selectedDate,
-                      productStatus: widget.addProductModel.productStatus,
-                      barcode: widget.addProductModel.barcode,
-                      purPujNo: widget.addProductModel.purPujNo,
-                      sellType: widget.addProductModel.sellType,
-                      classType: widget.addProductModel.classType,
-                      lengthActual: widget.addProductModel.lengthActual,
-                      widthActual: widget.addProductModel.widthActual,
-                      heightActual: widget.addProductModel.heightActual,
-                      lengthShipping: widget.addProductModel.lengthShipping,
-                      weightLbsActual: widget.addProductModel.weightLbsActual,
-                      weightLbsShipping:
-                          widget.addProductModel.weightLbsShipping,
-                      description: widget.addProductModel.description,
-                      photo1: widget.addProductModel.photo1,
-                      photo2: widget.addProductModel.photo2,
-                      photo3: widget.addProductModel.photo3,
-                      photo4: widget.addProductModel.photo4,
-                      photo5: widget.addProductModel.photo5);
+                      categoryId: widget.addProductModel.categoryId ?? '',
+                      categorySubId: widget.addProductModel.categorySubId ?? '',
+                      makeGuid: widget.addProductModel.makeGuid ?? '',
+                      modelNumber: widget.addProductModel.modelNumber ?? '',
+                      title: widget.addProductModel.title ?? '',
+                      assetDetail: widget.addProductModel.assetDetail ?? '',
+                      serialNumber: widget.addProductModel.serialNumber ?? '',
+                      selectedDate: widget.addProductModel.selectedDate ?? '',
+                      productStatus: widget.addProductModel.productStatus ?? '',
+                      barcode: widget.addProductModel.barcode ?? '',
+                      sellType: widget.addProductModel.sellType ?? '',
+                      classType: widget.addProductModel.classType ?? '',
+                      lengthActual: widget.addProductModel.lengthActual ?? '',
+                      widthActual: widget.addProductModel.widthActual ?? '',
+                      heightActual: widget.addProductModel.heightActual ?? '',
+                      lengthShipping: widget.addProductModel.lengthShipping ??
+                          '',
+                      weightLbsActual: widget.addProductModel.weightLbsActual ??
+                          '',
+                      weightLbsShipping: widget.addProductModel
+                          .weightLbsShipping ?? '',
+                      description: widget.addProductModel.description ?? '',
+                      photo1: widget.addProductModel.photo1 ?? '',
+                      photo2: widget.addProductModel.photo2 ?? '',
+                      photo3: widget.addProductModel.photo3 ?? '',
+                      photo4: widget.addProductModel.photo4 ?? '',
+                      photo5: widget.addProductModel.photo5 ?? '');
                   widget.callback(addProductModel);
                 } else {
                   AddProductModel addProductModel = AddProductModel(
@@ -350,8 +383,12 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                       locationGuid: '',
                       requester: '',
                       locationName: locationNameController.text.toString(),
-                      countryId: SelectCountryType.toString(),
-                      stateId: SelectStateType.toString(),
+                      countryId: SelectCountryType != null && SelectCountryType
+                          .toString()
+                          .isNotEmpty ? SelectCountryType.toString() : '',
+                      stateId: SelectStateType!= null && SelectStateType
+                          .toString()
+                          .isNotEmpty ? SelectStateType.toString() : '',
                       province: provinceController.text.toString(),
                       address: addressController.text.toString(),
                       city: cityController.text.toString(),
@@ -384,7 +421,7 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                   widget.callback(addProductModel);
                 }
                 Navigator.of(context).pop();
-              }
+
             },
             child: Container(
               width: 150,
@@ -395,23 +432,23 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                   color: AppColor.themeColor),
               child: Center(
                   child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  robotoTextWidget(
-                      textval: next,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Icon(
-                    Icons.arrow_forward,
-                    color: AppColor.whiteColor,
-                    size: 20,
-                  )
-                ],
-              )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      robotoTextWidget(
+                          textval: next,
+                          colorval: Colors.white,
+                          sizeval: 16,
+                          fontWeight: FontWeight.bold),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColor.whiteColor,
+                        size: 20,
+                      )
+                    ],
+                  )),
             ),
           )
         ]));

@@ -26,7 +26,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
   List<classPrefix.Datum> classList = [];
   List<sellTypePrefix.Datum> sellTypeList = [];
   TextEditingController barCodeController = TextEditingController();
-  TextEditingController purPrjController = TextEditingController();
+
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
     getList();
     if(widget.isUpdate){
       barCodeController.text = widget.addProductModel.barcode ?? '';
-      purPrjController.text = widget.addProductModel.purPujNo ?? '';
+
     }
   }
 
@@ -66,7 +66,6 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
                   scrollDirection: Axis.vertical,
                   child: Column(children: [
                 textWidget(barCodeController, TextInputType.text, enterBarcode),
-               textWidget(purPrjController, TextInputType.text, enterPurPuj),
                     sellTypeSpinnerWidget(),
                     classSpinnerWidget(),
                     ]))),
@@ -180,7 +179,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
                   fontFamily: 'Roboto'),
             ),
             keyboardType: inputType,
-            textInputAction: hintTxt == enterPurPuj
+            textInputAction: hintTxt == enterBarcode
                 ? TextInputAction.done
                 : TextInputAction.next),
       ),
@@ -283,6 +282,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
         if(widget.addProductModel.sellType.isNotEmpty) {
           selectedSellType = widget.addProductModel.sellType ?? '';
         }
+      }else{
+        selectedSellType = "2";
       }
       });
 
@@ -308,6 +309,7 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
        AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid ?? '',
            locationGuid: widget.addProductModel.locationGuid ?? '',
            requester: widget.addProductModel.requester ?? '',
+           purPujNo: widget.addProductModel.purPujNo?? '',
            locationName:  widget.addProductModel.locationName ?? '',
            countryId:  widget.addProductModel.countryId ?? '',
            stateId:  widget.addProductModel.stateId ?? '',
@@ -325,7 +327,6 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
            selectedDate: widget.addProductModel.selectedDate ?? '',
            productStatus: widget.addProductModel.productStatus ?? '',
            barcode: barCodeController.text.toString() ?? '',
-           purPujNo: purPrjController.text.toString() ?? '',
            sellType:selectedSellType!=null&&selectedSellType.toString().isNotEmpty?selectedSellType.toString():'',
            classType: selectedClassType!=null&&selectedClassType.toString().isNotEmpty?selectedClassType.toString():'',
            lengthActual: widget.addProductModel.lengthActual.toString().isNotEmpty?widget.addProductModel.lengthActual.toString():'',

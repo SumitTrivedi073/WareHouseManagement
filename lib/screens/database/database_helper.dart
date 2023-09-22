@@ -15,6 +15,7 @@ class DatabaseHelper {
   static final ownerGuid = 'ownerGuid';
   static final locationGuid = 'locationGuid';
   static final requester = 'requester';
+  static final purPujNo = 'purPujNo';
   static final categoryId = 'categoryId';
   static final categorySubId = 'categorySubId';
   static final makeGuid = 'makeGuid';
@@ -25,7 +26,7 @@ class DatabaseHelper {
   static final selectedDate = 'selectedDate';
   static final productStatus = 'productStatus';
   static final barcode = 'barcode';
-  static final purPujNo = 'purPujNo';
+
   static final sellType = 'sellType';
   static final classType = 'classType';
   static final lengthActual = 'lengthActual';
@@ -77,6 +78,7 @@ class DatabaseHelper {
             $ownerGuid TEXT NOT NULL,
             $locationGuid TEXT NOT NULL,
             $requester TEXT NOT NULL,
+            $purPujNo TEXT NOT NULL,
             $locationName TEXT NOT NULL,
             $countryId TEXT NOT NULL,
             $stateId TEXT NOT NULL,
@@ -93,8 +95,7 @@ class DatabaseHelper {
             $serialNumber TEXT NOT NULL,
             $selectedDate TEXT NOT NULL,
             $productStatus TEXT NOT NULL,
-            $barcode TEXT NOT NULL,
-            $purPujNo TEXT NOT NULL,
+            $barcode TEXT NOT NULL,      
             $sellType TEXT NOT NULL,
             $classType TEXT NOT NULL,
             $lengthActual TEXT NOT NULL,

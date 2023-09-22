@@ -3,6 +3,7 @@ class AddProductModel {
   String ownerGuid;
   String locationGuid;
   String requester;
+  String purPujNo;
   String locationName;
   String countryId;
   String stateId;
@@ -20,7 +21,6 @@ class AddProductModel {
   String selectedDate;
   String productStatus;
   String barcode;
-  String purPujNo;
   String sellType;
   String classType;
   String lengthActual;
@@ -40,6 +40,7 @@ class AddProductModel {
     required this.ownerGuid,
     required this.locationGuid,
     required this.requester,
+    required this.purPujNo,
     required this.locationName,
     required this.countryId,
     required this.stateId,
@@ -57,7 +58,7 @@ class AddProductModel {
     required this.selectedDate,
     required this.productStatus,
     required this.barcode,
-    required this.purPujNo,
+
     required this.sellType,
     required this.classType,
     required this.lengthActual,
@@ -79,6 +80,7 @@ class AddProductModel {
     map["ownerGuid"] = ownerGuid;
     map["locationGuid"] = locationGuid;
     map["requester"] = requester;
+    map["purPujNo"] = purPujNo;
     map["locationName"] = locationName;
     map["countryId"] = countryId;
     map["stateId"] = stateId;
@@ -96,7 +98,6 @@ class AddProductModel {
     map["selectedDate"] = selectedDate;
     map["productStatus"] = productStatus;
     map["barcode"] = barcode;
-    map["purPujNo"] = purPujNo;
     map["sellType"] = sellType;
     map["classType"] = classType;
     map["lengthActual"] = lengthActual;
@@ -120,6 +121,7 @@ class AddProductModel {
     map["ownerGuid"] = ownerGuid;
     map["locationGuid"] = locationGuid;
     map["requester"] = requester;
+    map["purPujNo"] = purPujNo;
     map["locationName"] = locationName;
     map["countryId"] = countryId;
     map["stateId"] = stateId;
@@ -137,7 +139,6 @@ class AddProductModel {
     map["selectedDate"] = selectedDate;
     map["productStatus"] = productStatus;
     map["barcode"] = barcode;
-    map["purPujNo"] = purPujNo;
     map["sellType"] = sellType;
     map["classType"] = classType;
     map["lengthActual"] = lengthActual;
@@ -161,6 +162,7 @@ class AddProductModel {
         ownerGuid: data['ownerGuid'] ?? 0,
         locationGuid: data['locationGuid'] ?? "",
         requester: data['requester'] ?? "",
+        purPujNo: data['purPujNo'] ?? "",
         locationName: data['locationName'] ?? "",
         countryId: data['countryId'] ?? "",
         stateId: data['stateId'] ?? "",
@@ -178,7 +180,6 @@ class AddProductModel {
         selectedDate: data['selectedDate'] ?? "",
         productStatus: data['productStatus'] ?? "",
         barcode: data['barcode'] ?? "",
-        purPujNo: data['purPujNo'] ?? "",
         sellType: data['sellType'] ?? "",
         classType: data['classType'] ?? "",
         lengthActual: data['lengthActual'] ?? "",
@@ -197,6 +198,6 @@ class AddProductModel {
 
   @override
   String toString() {
-    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, purPujNo: $purPujNo, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
+    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
   }
 }
