@@ -603,7 +603,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   void retriveMakeList(makeListPrefix.Datum datum) {
     setState(() {
       makeGuid = datum.makeGuid;
-      print('makeGuid==========>$makeGuid');
+      makeTypeController.text = datum.make;
     });
   }
 }
