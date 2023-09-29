@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,30 +12,29 @@ import 'dart:convert' as convert;
 class Utility {
 
   bool isActiveConnection = false;
-   Future<bool> checkInternetConnection() async {
 
+  Future<bool> checkInternetConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isActiveConnection = true;
-      return  Future<bool>.value(isActiveConnection);
+        return Future<bool>.value(isActiveConnection);
       }
     } on SocketException catch (_) {
       isActiveConnection = false;
-      return  Future<bool>.value(isActiveConnection);
+      return Future<bool>.value(isActiveConnection);
     }
-    return  Future<bool>.value(isActiveConnection);
+    return Future<bool>.value(isActiveConnection);
   }
 
- void showInSnackBar({required String value,required context}) {
-   ScaffoldMessenger.of(context).showSnackBar(
-     SnackBar(
-       content: Text(value),
-       duration: const Duration(milliseconds: 3000),
-     ),
-   );
- }
-
+  void showInSnackBar({required String value, required context}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(value),
+        duration: const Duration(milliseconds: 3000),
+      ),
+    );
+  }
 
 
   void showToast(String toast_msg) {
@@ -46,14 +46,10 @@ class Utility {
   }
 
 
-
-
   setSharedPreference(String key, String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(key, value);
   }
-
-
 
 
   clearSharedPreference() async {
@@ -84,7 +80,6 @@ class Utility {
   }
 
 
-
   static String getBase64FormateFile(String path) {
     File file = File(path);
     print('File is = ' + file.toString());
@@ -92,12 +87,17 @@ class Utility {
     String fileInBase64 = base64Encode(fileInByte);
     return fileInBase64;
   }
-  static String convertDateFormat(String dateTimeString, String oldFormat, String
-  newFormat) {
+
+  static String convertDateFormat(String dateTimeString, String oldFormat,
+      String
+      newFormat) {
     print('dateTimeString$dateTimeString');
     DateFormat newDateFormat = DateFormat(newFormat);
     DateTime dateTime = DateFormat(oldFormat).parse(dateTimeString);
     String selectedDate = newDateFormat.format(dateTime);
     return selectedDate;
   }
+
+  static String convertbase64ToMd5(String base64) =>
+      md5.convert(utf8.encode(base64)).toString();
 }

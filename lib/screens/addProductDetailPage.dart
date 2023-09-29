@@ -58,6 +58,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       assetsController.text = widget.addProductModel.assetDetail ?? '';
       serialNumberCodeController.text = widget.addProductModel.serialNumber ?? '';
       dateController.text = widget.addProductModel.selectedDate ?? '';
+
     }
   }
 
@@ -82,6 +83,7 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
           Container(
               margin: const EdgeInsets.all(10),
               width: double.infinity,
+              height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -93,8 +95,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                         modelController, TextInputType.text, enterModelNumber),
                     textWidget(titleController, TextInputType.text, enterTitle),
                     textWidget(
-                        assetsController, TextInputType.text, enterAssets),
-                    textWidget(serialNumberCodeController, TextInputType.text,
+                        assetsController, TextInputType.number, enterAssets),
+                    textWidget(serialNumberCodeController, TextInputType.number,
                         enterSerNo),
                     datePickerWidget(selectedDate!, dateController, selectDate),
                     Row(
@@ -469,6 +471,11 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         }
         if(widget.addProductModel.makeGuid.isNotEmpty) {
           makeGuid = widget.addProductModel.makeGuid ?? '';
+          for (var i = 0; i < selectMakeList.length; i++) {
+           if(widget.addProductModel.makeGuid==selectMakeList[i].makeGuid){
+             makeTypeController.text= selectMakeList[i].make;
+           }
+          }
         }
         getSubCategoryList();
       }

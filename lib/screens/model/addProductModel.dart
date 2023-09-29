@@ -159,7 +159,7 @@ class AddProductModel {
   //to be used when converting the row into object
   factory AddProductModel.fromMap(Map<String, dynamic> data) =>
       AddProductModel(
-        ownerGuid: data['ownerGuid'] ?? 0,
+        ownerGuid: data['ownerGuid'] ?? "",
         locationGuid: data['locationGuid'] ?? "",
         requester: data['requester'] ?? "",
         purPujNo: data['purPujNo'] ?? "",
@@ -198,6 +198,6 @@ class AddProductModel {
 
   @override
   String toString() {
-    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
+    return '{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
   }
 }
