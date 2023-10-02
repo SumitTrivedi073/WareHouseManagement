@@ -352,10 +352,13 @@ class _MyHomePageState extends State<MyHomePage> {
       "txtaction": 'AppNewUpload',
     };
     print('finalData============>${finalData}');
+    print('Checksum============>${Checksum}');
     var jsonData = null;
     try {
       var response = await http.post(submitData(),body: finalData);
       var body = jsonDecode(response.body);
+      print(response.body.toString());
+
       print(body);
       if (body['Result'] == "Success") {
         print('posted successfully!');
@@ -378,7 +381,6 @@ class _MyHomePageState extends State<MyHomePage> {
         isLoading = false;
       });
     }
-   
     }
 
   void deleteFromDatabase() {

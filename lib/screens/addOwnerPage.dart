@@ -98,7 +98,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                     textWidget(requesterController, TextInputType.text,
                         enterRequester),
                     textWidget(
-                        purPrjController, TextInputType.number, enterPurPuj),
+                        purPrjController, TextInputType.text, enterPurPuj),
                   ],
                 ),
               )),
