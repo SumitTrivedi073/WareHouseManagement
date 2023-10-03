@@ -60,5 +60,5 @@ var save = "Save";
 var attechImages = "Please attach minimum 2 images!";
 var checkInternetConnection = "Please check your internet connection and try again!";
 var search ="Search";
-var submit = "Submit";
+var submit = "Send To ERP";
 var wantToDelete = "Are you sure want to delete this product?";

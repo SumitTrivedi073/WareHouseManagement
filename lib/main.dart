@@ -117,13 +117,16 @@ class _MyHomePageState extends State<MyHomePage> {
         allProductList.isNotEmpty
             ? nextButtonWidget():Container(),
       ]),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:  Padding(
+      padding: const EdgeInsets.only(bottom: 70.0,right: 10),
+    child: FloatingActionButton(
         tooltip: addProduct,
+
         child: const Icon(Icons.add),
         onPressed: () {
           moveToNextScreen(allProductList, false, 0);
         },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      )), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
@@ -249,7 +252,6 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         child: Container(
-          width: 150,
           height: 50,
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           decoration: BoxDecoration(
