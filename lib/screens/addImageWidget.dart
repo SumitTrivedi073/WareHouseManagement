@@ -421,7 +421,8 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
         photo2: img2,
         photo3: img3,
         photo4: img4,
-        photo5: img5);
+        photo5: img5,
+        isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ? widget.addProductModel.isSelected.toString() : 'false');
 
     print('addProductModel==================>${addProductModel.toString()}');
     if (widget.isUpdate) {

@@ -256,7 +256,8 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
             : '',
         photo5: widget.addProductModel.photo5.toString().isNotEmpty
             ? widget.addProductModel.photo5.toString()
-            : '');
+            : '',
+        isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ? widget.addProductModel.isSelected.toString() : 'false');
 
     print(
         'addProductMode444444==================>${addProductModel.toString()}');

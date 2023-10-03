@@ -306,7 +306,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
        Utility().showToast(selectClassType);*/
      }
      else{
-       AddProductModel addProductModel = AddProductModel(ownerGuid: widget.addProductModel.ownerGuid ?? '',
+       AddProductModel addProductModel = AddProductModel(
+           ownerGuid: widget.addProductModel.ownerGuid ?? '',
            locationGuid: widget.addProductModel.locationGuid ?? '',
            requester: widget.addProductModel.requester ?? '',
            purPujNo: widget.addProductModel.purPujNo?? '',
@@ -340,7 +341,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
            photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',
            photo3: widget.addProductModel.photo3.toString().isNotEmpty?widget.addProductModel.photo3.toString():'',
            photo4: widget.addProductModel.photo4.toString().isNotEmpty?widget.addProductModel.photo4.toString():'',
-           photo5: widget.addProductModel.photo5.toString().isNotEmpty?widget.addProductModel.photo5.toString():'');
+           photo5: widget.addProductModel.photo5.toString().isNotEmpty?widget.addProductModel.photo5.toString():'',
+           isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ? widget.addProductModel.isSelected.toString() : 'false');
 
        print('addProductMode333333==================>${addProductModel.toString()}');
        Navigator.of(context).pushAndRemoveUntil(

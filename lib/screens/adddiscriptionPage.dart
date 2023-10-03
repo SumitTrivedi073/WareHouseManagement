@@ -222,7 +222,11 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
             : '',
         photo5: widget.addProductModel.photo5.toString().isNotEmpty
             ? widget.addProductModel.photo5.toString()
-            : '');
+            : '',
+      isSelected: widget.addProductModel.isSelected.toString().isNotEmpty
+          ? widget.addProductModel.isSelected.toString()
+          : 'false',
+    );
 
     print(
         'addProductMode555555==================>${addProductModel.toString()}');

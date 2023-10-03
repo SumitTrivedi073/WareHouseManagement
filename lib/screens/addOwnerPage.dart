@@ -468,7 +468,8 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         photo2: addProductModel1 != null && addProductModel1!.photo2.toString().isNotEmpty ? addProductModel1!.photo2.toString() : '',
         photo3: addProductModel1 != null && addProductModel1!.photo3.toString().isNotEmpty ? addProductModel1!.photo3.toString() : '',
         photo4: addProductModel1 != null && addProductModel1!.photo4.toString().isNotEmpty ? addProductModel1!.photo4.toString() : '',
-        photo5: addProductModel1 != null && addProductModel1!.photo5.toString().isNotEmpty ? addProductModel1!.photo5.toString() : '');
+        photo5: addProductModel1 != null && addProductModel1!.photo5.toString().isNotEmpty ? addProductModel1!.photo5.toString() : '',
+        isSelected: addProductModel1 != null && addProductModel1!.isSelected.toString().isNotEmpty ? addProductModel1!.isSelected.toString() : 'false');
     print('addProductModel===========>$addProductModel');
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

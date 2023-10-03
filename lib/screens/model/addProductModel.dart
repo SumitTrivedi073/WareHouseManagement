@@ -35,6 +35,7 @@ class AddProductModel {
   String photo3;
   String photo4;
   String photo5;
+  String isSelected;
 
   AddProductModel({
     required this.ownerGuid,
@@ -58,7 +59,6 @@ class AddProductModel {
     required this.selectedDate,
     required this.productStatus,
     required this.barcode,
-
     required this.sellType,
     required this.classType,
     required this.lengthActual,
@@ -73,6 +73,7 @@ class AddProductModel {
     required this.photo3,
     required this.photo4,
     required this.photo5,
+    required this.isSelected,
   });
   //to be used when inserting a row in the table
   Map<String, dynamic> toMapWithoutId() {
@@ -112,6 +113,7 @@ class AddProductModel {
     map["photo3"] = photo3;
     map["photo4"] = photo4;
     map["photo5"] = photo5;
+    map["isSelected"] = isSelected;
     return map;
   }
 
@@ -153,6 +155,8 @@ class AddProductModel {
     map["photo3"] = photo3;
     map["photo4"] = photo4;
     map["photo5"] = photo5;
+    map["isSelected"] = isSelected;
+
     return map;
   }
 
@@ -194,10 +198,11 @@ class AddProductModel {
         photo3: data['photo3'] ?? "",
         photo4: data['photo4'] ?? "",
         photo5: data['photo5'] ?? "",
+        isSelected: data['isSelected'] ?? 'false',
       );
 
   @override
   String toString() {
-    return '{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5}';
+    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5, isSelected: $isSelected}';
   }
 }

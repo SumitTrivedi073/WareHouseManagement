@@ -83,7 +83,6 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
           Container(
               margin: const EdgeInsets.all(10),
               width: double.infinity,
-              height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -138,12 +137,15 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                               sizeval: 14,
                               fontWeight: FontWeight.bold),
                         )),
+
                       ],
-                    )
+                    ),
+                    SizedBox(height: 20,),
+                    nextButtonWidget()
+
                   ],
                 ),
               )),
-          nextButtonWidget()
         ]));
   }
 
@@ -594,7 +596,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         photo4: widget.addProductModel.photo4.toString().isNotEmpty
             ? widget.addProductModel.photo4.toString()
             : '',
-        photo5: widget.addProductModel.photo5.toString().isNotEmpty ? widget.addProductModel.photo5.toString() : '');
+        photo5: widget.addProductModel.photo5.toString().isNotEmpty ? widget.addProductModel.photo5.toString() : '',
+        isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ?  widget.addProductModel.isSelected.toString() : 'false');
 
     print('addProductModel==================>${addProductModel.toString()}');
 

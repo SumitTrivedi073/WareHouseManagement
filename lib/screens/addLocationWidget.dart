@@ -375,7 +375,8 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                       photo2: widget.addProductModel.photo2 ?? '',
                       photo3: widget.addProductModel.photo3 ?? '',
                       photo4: widget.addProductModel.photo4 ?? '',
-                      photo5: widget.addProductModel.photo5 ?? '');
+                      photo5: widget.addProductModel.photo5 ?? '',
+                      isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ? widget.addProductModel.isSelected.toString() : 'false');
                   widget.callback(addProductModel);
                 } else {
                   AddProductModel addProductModel = AddProductModel(
@@ -417,7 +418,8 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                       photo2: '',
                       photo3: '',
                       photo4: '',
-                      photo5: '');
+                      photo5: '',
+                      isSelected: 'false');
                   widget.callback(addProductModel);
                 }
                 Navigator.of(context).pop();

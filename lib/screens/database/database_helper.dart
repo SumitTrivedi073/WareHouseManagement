@@ -50,6 +50,7 @@ class DatabaseHelper {
   static final address = "address";
   static final city = "city";
   static final zipCode = "zipCode";
+  static final isSelected = "isSelected";
 
 
   DatabaseHelper._privateConstructor();
@@ -109,7 +110,8 @@ class DatabaseHelper {
             $photo2 TEXT NOT NULL,
             $photo3 TEXT NOT NULL,
             $photo4 TEXT NOT NULL,
-            $photo5 TEXT NOT NULL
+            $photo5 TEXT NOT NULL,
+            $isSelected TEXT NOT NULL 
           )
           ''');
   }
