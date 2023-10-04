@@ -1,4 +1,4 @@
-var appName = "Warehouse Management";
+var appName = "RPM (remote processing module)";
 var noDataAvailable = "No Data Available Please add product first!";
 var addProduct = "Add Product";
 var selectClassType = "Select Class";

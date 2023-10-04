@@ -9,6 +9,7 @@ import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
     as ownerPrefix;
 import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
     as sourceLocPrefix;
+import 'package:warehouse_management_app/screens/ownerListWidget.dart';
 import 'package:warehouse_management_app/utils/constant.dart';
 
 import '../theme/color.dart';
@@ -40,7 +41,8 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
   TextEditingController sourceLocController = TextEditingController();
   TextEditingController requesterController = TextEditingController();
   TextEditingController purPrjController = TextEditingController();
-  bool ischecked = false;
+  TextEditingController ownerTypeController = TextEditingController();
+  bool ischecked = false,isChangeSubLoc = false;
   late SharedPreferences sharedPreferences;
   AddProductModel? addProductModel1;
 
@@ -49,21 +51,30 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     // TODO: implement initState
     super.initState();
     getList();
-    if (widget.isUpdate) {
-      setData();
-    } else {
-      getSharedPrefrence();
-    }
+
   }
 
-  void setData() {
-    if (widget.productModel.ownerGuid.isNotEmpty) {
-      SelectOwnerType = widget.productModel.ownerGuid;
+  Future<void> setData() async {
+    if (widget.isUpdate) {
+      requesterController.text = widget.productModel.requester ?? '';
+      purPrjController.text = widget.productModel.purPujNo ?? '';
+      getSourceLocList(widget.isUpdate);
+      addProductModel1 = widget.productModel;
+    }else{
+      sharedPreferences = await SharedPreferences.getInstance();
+      if (sharedPreferences.getString(selectRequester) != null &&
+          sharedPreferences.getString(selectRequester).toString().isNotEmpty) {
+         requesterController.text = sharedPreferences.getString(selectRequester).toString();
+      }
+
+      if (sharedPreferences.getString(selectPurPuj) != null &&
+          sharedPreferences.getString(selectPurPuj).toString().isNotEmpty) {
+        purPrjController.text = sharedPreferences.getString(selectPurPuj).toString();
+      }
+      ischecked = true;
+      getSourceLocList(false);
     }
-    requesterController.text = widget.productModel.requester ?? '';
-    purPrjController.text = widget.productModel.purPujNo ?? '';
-    getSourceLocList(widget.isUpdate);
-    addProductModel1 = widget.productModel;
+
   }
 
   @override
@@ -87,12 +98,12 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         body: Stack(children: [
           Container(
               margin: const EdgeInsets.all(10),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
+              width: double.infinity,
               child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    ownerSpinnerWidget(),
+                   ownerWidget(),
                     sourceLocSpinnerWidget(),
                     addRemoveLocManually(),
                     textWidget(requesterController, TextInputType.text,
@@ -138,7 +149,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         ));
   }
 
-  ownerSpinnerWidget() {
+  /*ownerSpinnerWidget() {
     return Container(
         margin: const EdgeInsets.only(top: 10),
         height: 55,
@@ -173,12 +184,63 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
               .toList(),
           onChanged: (Object? value) {
             setState(() {
+              isChangeSubLoc = true;
               SelectOwnerType = value.toString();
               SelectSourceLocType = null;
+              selectSourceLocList = [];
               getSourceLocList(false);
             });
           },
         ));
+  }*/
+
+  ownerWidget() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => OwnerListWidget(
+                    callback: retrieveOwnerList,selectOwnerList: selectOwnerList,)),
+                (Route<dynamic> route) => true);
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.themeColor),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextField(
+                enabled: false,
+                controller: ownerTypeController,
+                style: const TextStyle(
+                    color: AppColor.themeColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Roboto'),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: selectOwnerType,
+                  hintStyle: const TextStyle(
+                      color: AppColor.darkGrey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto'),
+                ),
+              ))),
+    );
+  }
+
+  void retrieveOwnerList(ownerPrefix.Datum datum) {
+    setState(() {
+      isChangeSubLoc = true;
+      SelectOwnerType = datum.ownerGuid.toString();
+      ownerTypeController.text = datum.ownerName.toString();
+      SelectSourceLocType = null;
+      selectSourceLocList = [];
+      getSourceLocList(false);
+    });
   }
 
   sourceLocSpinnerWidget() {
@@ -361,9 +423,38 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
     var jsonData = convert.jsonDecode(data);
     ownerPrefix.OwnerListModel ownerListModel =
         ownerPrefix.OwnerListModel.fromJson(jsonData);
+
+    selectOwnerList = ownerListModel.data;
+    if (widget.isUpdate) {
+      if (widget.productModel.ownerGuid.isNotEmpty) {
+        SelectOwnerType = widget.productModel.ownerGuid;
+        setOwnerValue();
+      }
+      requesterController.text = widget.productModel.requester ?? '';
+      purPrjController.text = widget.productModel.purPujNo ?? '';
+      addProductModel1 = widget.productModel;
+    }else{
+      sharedPreferences = await SharedPreferences.getInstance();
+      if (sharedPreferences.getString(selectOwnerType) != null &&
+          sharedPreferences
+              .getString(selectOwnerType)
+              .toString()
+              .isNotEmpty) {
+        SelectOwnerType =
+            sharedPreferences.getString(selectOwnerType).toString();
+        setOwnerValue();
+      } else {
+        SelectOwnerType = "5fcb6c50-d8bd-3f07-dbab-d1473523b6af";
+        setOwnerValue();
+      }
+    }
+    setData();
     setState(() {
-      selectOwnerList = ownerListModel.data;
+
     });
+
+
+
   }
 
   Future<void> getSourceLocList(bool isUpdate) async {
@@ -386,16 +477,18 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         SelectSourceLocType = widget.productModel.locationGuid ?? '';
       }
     } else {
-      sharedPreferences = await SharedPreferences.getInstance();
-      if (sharedPreferences.getString(selectSourceLocType) != null &&
-          sharedPreferences
-              .getString(selectSourceLocType)
-              .toString()
-              .isNotEmpty) {
-        SelectSourceLocType =
-            sharedPreferences.getString(selectSourceLocType).toString();
-      } else {
-        SelectSourceLocType = "eef75434-722a-a5e0-9596-a46a16ec6bff";
+      if(!isChangeSubLoc){
+        sharedPreferences = await SharedPreferences.getInstance();
+        if (sharedPreferences.getString(selectSourceLocType) != null &&
+            sharedPreferences
+                .getString(selectSourceLocType)
+                .toString()
+                .isNotEmpty) {
+          SelectSourceLocType =
+              sharedPreferences.getString(selectSourceLocType).toString();
+        } else {
+          SelectSourceLocType = "eef75434-722a-a5e0-9596-a46a16ec6bff";
+        }
       }
     }
 
@@ -421,15 +514,12 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
             .setSharedPreference(selectSourceLocType, SelectSourceLocType!);
         Utility().setSharedPreference(
             selectRequester, requesterController.text.toString());
+        Utility().setSharedPreference(
+            selectPurPuj, purPrjController.text.toString());
       } else {
         sharedPreferences = await SharedPreferences.getInstance();
-        if (sharedPreferences.getString(selectOwnerType) != null &&
-            sharedPreferences
-                .getString(selectOwnerType)
-                .toString()
-                .isNotEmpty) {
-          Utility().clearSharedPreference();
-        }
+        Utility().clearSharedPreference();
+
       }
     }
 
@@ -480,26 +570,21 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         (Route<dynamic> route) => true);
   }
 
-  Future<void> getSharedPrefrence() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    if (sharedPreferences.getString(selectOwnerType) != null &&
-        sharedPreferences.getString(selectOwnerType).toString().isNotEmpty) {
-      SelectOwnerType = sharedPreferences.getString(selectOwnerType).toString();
-      requesterController.text =
-          sharedPreferences.getString(selectRequester).toString();
-      ischecked = true;
-      getSourceLocList(widget.isUpdate);
-      setState(() {});
-    } else {
-      getSourceLocList(widget.isUpdate);
-      SelectOwnerType = "5fcb6c50-d8bd-3f07-dbab-d1473523b6af";
-    }
-  }
+
 
   void retriveLocationData(AddProductModel addProductModel) {
     setState(() {
       addProductModel1 = addProductModel;
     });
     print('addProductModel1!===========>$addProductModel1!');
+  }
+
+  void setOwnerValue() {
+    for (var i = 0; i < selectOwnerList.length; i++) {
+      if (SelectOwnerType == selectOwnerList[i].ownerGuid) {
+        ownerTypeController.text = selectOwnerList[i].ownerName;
+         SelectOwnerType = selectOwnerList[i].ownerGuid;
+      }
+    }
   }
 }

@@ -241,9 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Utility().checkInternetConnection().then((connectionResult) {
             if (connectionResult) {
-                 setState(() {
-                    isLoading = true;
-                  });
+
                SubmitDataValidation();
             } else {
               Utility().showInSnackBar(
@@ -338,39 +336,16 @@ class _MyHomePageState extends State<MyHomePage> {
   void SubmitDataValidation() {
     productList = [];
     var resBody = {};
-
-/*
-    if (productModel.photo1.isNotEmpty) {
-      imageArrayList
-          .add(json.encode(Utility.getBase64FormateFile(productModel.photo1)));
-    }
-    if (productModel.photo2.isNotEmpty) {
-      imageArrayList
-          .add(json.encode(Utility.getBase64FormateFile(productModel.photo2)));
-    }
-    if (productModel.photo3.isNotEmpty) {
-      imageArrayList
-          .add(json.encode(Utility.getBase64FormateFile(productModel.photo3)));
-    }
-    if (productModel.photo4.isNotEmpty) {
-      imageArrayList
-          .add(json.encode(Utility.getBase64FormateFile(productModel.photo4)));
-    }
-    if (productModel.photo5.isNotEmpty) {
-      imageArrayList
-          .add(json.encode(Utility.getBase64FormateFile(productModel.photo5)));
-    }
-*/
     imageArrayList = [];
     for (var i = 0; i < allProductList.length; i++) {
       if (allProductList[i].isSelected == 'true') {
-        print('barcode_selected==========>${allProductList[i].barcode}');
+
         AddProductModel productModel = allProductList[i];
         if (productModel.photo1.isNotEmpty) {
           imageArrayList.add(
               json.encode(Utility.getBase64FormateFile(productModel.photo1)));
         }
-        if (productModel.photo2.isNotEmpty) {
+     if (productModel.photo2.isNotEmpty) {
           imageArrayList.add(
               json.encode(Utility.getBase64FormateFile(productModel.photo2)));
         }
@@ -414,8 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
             productModel.weightLbsShipping.toString();
         resBody["WeightlbsActual"] = productModel.weightLbsActual.toString();
         resBody["Description"] = productModel.description.toString();
-        resBody["images"] =
-        imageArrayList.isNotEmpty ? imageArrayList : imageArrayList;
+        resBody["images"] = [];
 
         String value = json.encode(resBody);
 
@@ -424,7 +398,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     print('value============>${productList.toString()}');
-    SubmitData(productList.toString());
+    if (productList.length>0) {
+      setState(() {
+        isLoading = true;
+      });
+      SubmitData(productList.toString());
+    }else{
+      Utility().showToast('Please Select any item first!');
+    }
   }
 
   void SubmitData(String value) async {
@@ -443,7 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print('finalData============>${finalData}');
     print('Checksum============>${Checksum}');
     var jsonData = null;
-    try {
+   try {
       var response = await http.post(submitData(), body: finalData);
       var body = jsonDecode(response.body);
       print(response.body.toString());
