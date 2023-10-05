@@ -389,7 +389,8 @@ class _MyHomePageState extends State<MyHomePage> {
             productModel.weightLbsShipping.toString();
         resBody["WeightlbsActual"] = productModel.weightLbsActual.toString();
         resBody["Description"] = productModel.description.toString();
-        resBody["images"] = [];
+        resBody["images"] =
+        imageArrayList.isNotEmpty ? imageArrayList : imageArrayList;
 
         String value = json.encode(resBody);
 
