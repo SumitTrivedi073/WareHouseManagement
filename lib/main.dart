@@ -241,7 +241,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Utility().checkInternetConnection().then((connectionResult) {
             if (connectionResult) {
-
+              setState(() {
+                isLoading = true;
+              });
                SubmitDataValidation();
             } else {
               Utility().showInSnackBar(
@@ -400,11 +402,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print('value============>${productList.toString()}');
     if (productList.length>0) {
-      setState(() {
-        isLoading = true;
-      });
+
       SubmitData(productList.toString());
     }else{
+      setState(() {
+        isLoading = false;
+      });
       Utility().showToast('Please Select any item first!');
     }
   }
@@ -430,7 +433,7 @@ class _MyHomePageState extends State<MyHomePage> {
       var body = jsonDecode(response.body);
       print(response.body.toString());
 
-      print(body);
+      print(body.toString());
       if (body['Result'] == "Success") {
         print('posted successfully!');
         deleteFromDatabase();
