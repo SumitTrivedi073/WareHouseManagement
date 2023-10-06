@@ -114,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
               : const SizedBox(),
         ),
 
-        allProductList.isNotEmpty
-            ? nextButtonWidget():Container(),
+       /* allProductList.isNotEmpty
+            ? nextButtonWidget():Container(),*/
       ]),
       floatingActionButton:  Padding(
       padding: const EdgeInsets.only(bottom: 70.0,right: 10),
@@ -132,7 +132,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Widget listItem(AddProductModel productModel, int position) {
-    return Card(
+    return GestureDetector(
+        onTap: () {
+      Utility().checkInternetConnection().then((connectionResult) {
+        if (connectionResult) {
+          setState(() {
+            isLoading= true;
+          });
+          updateDatabase(productModel, position, true);
+
+        } else {
+          Utility().showInSnackBar(
+              value: checkInternetConnection, context: context);
+        }
+      });
+    },
+    child: Card(
         color: AppColor.whiteColor,
         elevation: 10,
         semanticContainer: true,
@@ -216,20 +231,20 @@ class _MyHomePageState extends State<MyHomePage> {
                               size: 25,
                               color: Colors.red,
                             )),
-                        Checkbox(
+                        /*Checkbox(
                           value: productModel.isSelected == 'true'
                               ? true
                               : false,
                           onChanged: (bool? value) {
                             updateDatabase(productModel, position, value);
                           },
-                        )
+                        )*/
                       ],
                     ),
                   )
                 ],
               ),
-            ])));
+            ]))));
   }
 
 
@@ -433,6 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print(body);
       if (body['Result'] == "Success") {
         print('posted successfully!');
+        Utility().showToast(body['Message']);
         deleteFromDatabase();
         setState(() {
           isLoading = false;
@@ -511,6 +527,7 @@ class _MyHomePageState extends State<MyHomePage> {
       allProductList.setAll(position, updateProductList);
       //DatabaseHelper.instance.updateData(addProductModel.toMapWithoutId());
     });
+    SubmitDataValidation();
   }
 
 
