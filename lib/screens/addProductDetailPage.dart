@@ -284,6 +284,10 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         padding: const EdgeInsets.all(5),
         child: TextField(
             controller: controller,
+            onSubmitted: (value) async {
+              FocusScope.of(context).unfocus();
+            },
+
             style: const TextStyle(
                 color: AppColor.themeColor,
                 fontSize: 14,

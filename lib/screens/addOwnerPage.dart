@@ -108,8 +108,7 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
                     addRemoveLocManually(),
                     textWidget(requesterController, TextInputType.text,
                         enterRequester),
-                    textWidget(
-                        purPrjController, TextInputType.text, enterPurPuj),
+                    textWidget(purPrjController, TextInputType.text, enterPurPuj),
                   ],
                 ),
               )),

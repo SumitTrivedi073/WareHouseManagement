@@ -97,6 +97,9 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         padding: const EdgeInsets.all(5),
         child: TextField(
             controller: controller,
+            onSubmitted: (value) async {
+              FocusScope.of(context).unfocus();
+            },
             style: const TextStyle(
                 color: AppColor.themeColor,
                 fontSize: 12,
@@ -115,6 +118,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
             textInputAction: hintTxt == enterWeightLbsShipping
                 ? TextInputAction.done
                 : TextInputAction.next),
+
       ),
     );
   }

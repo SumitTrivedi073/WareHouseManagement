@@ -75,6 +75,9 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
         padding: const EdgeInsets.all(5),
         child: TextField(
             controller: controller,
+            onSubmitted: (value) async {
+              FocusScope.of(context).unfocus();
+            },
             style: const TextStyle(
                 color: AppColor.themeColor,
                 fontSize: 12,

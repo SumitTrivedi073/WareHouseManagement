@@ -166,6 +166,9 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
         padding: const EdgeInsets.all(5),
         child: TextField(
             controller: Controller,
+            onSubmitted: (value) async {
+              FocusScope.of(context).unfocus();
+            },
             style: const TextStyle(color: AppColor.themeColor, fontSize: 12,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'Roboto'),
