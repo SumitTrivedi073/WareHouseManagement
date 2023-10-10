@@ -25,6 +25,9 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
   TextEditingController weightLbsActController = TextEditingController();
   TextEditingController weightLbsShippingController = TextEditingController();
   List<AddProductModel> productList1 = [];
+  String selectStatus = actualDimensions,
+      heightShipping = "",
+      widthShipping = "";
 
   @override
   void initState() {
@@ -40,6 +43,11 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
           widget.addProductModel.weightLbsActual ?? '';
       weightLbsShippingController.text =
           widget.addProductModel.weightLbsShipping ?? '';
+      heightShipping = widget.addProductModel.heightShipping ??'';
+      widthShipping = widget.addProductModel.widthShipping ??'';
+    } else {
+      lengthShippingController.text = "0";
+      weightLbsShippingController.text = "0";
     }
   }
 
@@ -68,24 +76,69 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
               child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(children: [
-                    textWidget(lengthActCodeController, TextInputType.number,
-                        enterLengthAct),
-                    textWidget(widthActController, TextInputType.number,
+                    radioWidget(),
+                    editTextWidget(lengthActCodeController,
+                        TextInputType.number, enterLengthAct),
+                    editTextWidget(widthActController, TextInputType.number,
                         enterWidthAct),
-                    textWidget(heightActController, TextInputType.number,
+                    editTextWidget(heightActController, TextInputType.number,
                         enterHeightAct),
-                    textWidget(lengthShippingController, TextInputType.number,
-                        enterLengthShipping),
-                    textWidget(weightLbsActController, TextInputType.number,
+                    editTextWidget(weightLbsActController, TextInputType.number,
                         enterWeightLbsAct),
-                    textWidget(weightLbsShippingController,
-                        TextInputType.number, enterWeightLbsShipping),
+                    textWidget(lengthShippingController),
+                    textWidget(weightLbsShippingController),
                   ]))),
           nextButtonWidget(),
         ]));
   }
 
-  textWidget(TextEditingController controller, TextInputType inputType,
+  radioWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+            child: ListTile(
+          leading: Radio<String>(
+            activeColor: AppColor.themeColor,
+            value: actualDimensions,
+            groupValue: selectStatus,
+            onChanged: (value) {
+              setState(() {
+                selectStatus = value!;
+                calculateDimentions("0");
+              });
+            },
+          ),
+          title: robotoTextWidget(
+              textval: actualDimensions,
+              colorval: AppColor.themeColor,
+              sizeval: 14,
+              fontWeight: FontWeight.bold),
+        )),
+        Expanded(
+            child: ListTile(
+          leading: Radio<String>(
+            activeColor: AppColor.themeColor,
+            value: shippingDimensions,
+            groupValue: selectStatus,
+            onChanged: (value) {
+              setState(() {
+                selectStatus = value!;
+                calculateDimentions("0");
+              });
+            },
+          ),
+          title: robotoTextWidget(
+              textval: shippingDimensions,
+              colorval: AppColor.themeColor,
+              sizeval: 14,
+              fontWeight: FontWeight.bold),
+        )),
+      ],
+    );
+  }
+
+  editTextWidget(TextEditingController controller, TextInputType inputType,
       String hintTxt) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -111,12 +164,79 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Roboto'),
             ),
+            onChanged: (value) {
+              if (value.toString().isNotEmpty &&
+                  value.toString() != "0" &&
+                  value.toString() != "0.0") {
+                if (selectStatus == actualDimensions) {
+                  if (hintTxt == enterLengthAct) {
+                    lengthShippingController.text =
+                        (int.parse(value.toString()) * 1.25).toString();
+                  }
+                  if (hintTxt == enterWeightLbsAct) {
+                    weightLbsShippingController.text =
+                        (int.parse(value.toString()) * 1.25).toString();
+                  }
+
+                  if (hintTxt == enterWidthAct) {
+                    widthShipping =
+                        (int.parse(value.toString()) * 1.25).toString();
+                  }
+                  if (hintTxt == enterHeightAct) {
+                    heightShipping =
+                        (int.parse(value.toString()) * 1.25).toString();
+                  }
+                }else{
+                  if (hintTxt == enterLengthAct) {
+                    lengthShippingController.text =
+                        (int.parse(value.toString()) * 0.75).toString();
+                  }
+                  if (hintTxt == enterWeightLbsAct) {
+                    weightLbsShippingController.text =
+                        (int.parse(value.toString()) * 0.75).toString();
+                  }
+
+                  if (hintTxt == enterWidthAct) {
+                    widthShipping =
+                        (int.parse(value.toString()) * 0.75).toString();
+                  }
+                  if (hintTxt == enterHeightAct) {
+                    heightShipping =
+                        (int.parse(value.toString()) * 0.75).toString();
+                  }
+                }
+
+                setState(() {});
+              }else{
+                lengthShippingController.text = "0";
+                weightLbsShippingController.text = "0";
+                setState(() {});
+              }
+            },
             keyboardType: inputType,
             textInputAction: hintTxt == enterWeightLbsShipping
                 ? TextInputAction.done
                 : TextInputAction.next),
       ),
     );
+  }
+
+  textWidget(TextEditingController Controller) {
+    return Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.themeColor),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: robotoTextWidget(
+                textval: Controller.text,
+                colorval: AppColor.themeColor,
+                sizeval: 12,
+                fontWeight: FontWeight.w600)));
   }
 
   nextButtonWidget() {
@@ -159,7 +279,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
           ),
           GestureDetector(
             onTap: () {
-              moveToNextScreen();
+              calculateDimentions("1");
             },
             child: Container(
               width: 150,
@@ -209,6 +329,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
     Utility().showToast(enterWeightLbsShipping);
   } else {
 */
+
     AddProductModel addProductModel = AddProductModel(
         ownerGuid: widget.addProductModel.ownerGuid ?? '',
         locationGuid: widget.addProductModel.locationGuid ?? '',
@@ -239,6 +360,8 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         lengthShipping: lengthShippingController.text.toString() ?? '',
         weightLbsActual: weightLbsActController.text.toString() ?? '',
         weightLbsShipping: weightLbsShippingController.text.toString() ?? '',
+        heightShipping: heightShipping??'',
+        widthShipping: widthShipping??'',
         description: widget.addProductModel.description.toString().isNotEmpty
             ? widget.addProductModel.description.toString()
             : '',
@@ -257,7 +380,9 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         photo5: widget.addProductModel.photo5.toString().isNotEmpty
             ? widget.addProductModel.photo5.toString()
             : '',
-        isSelected: widget.addProductModel.isSelected.toString().isNotEmpty ? widget.addProductModel.isSelected.toString() : 'false');
+        isSelected: widget.addProductModel.isSelected.toString().isNotEmpty
+            ? widget.addProductModel.isSelected.toString()
+            : 'false');
 
     print(
         'addProductMode444444==================>${addProductModel.toString()}');
@@ -267,5 +392,67 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                 addProductModel: addProductModel, isUpdate: widget.isUpdate)),
         (Route<dynamic> route) => true);
   }
+
+  void calculateDimentions(String value) {
+    if (selectStatus == actualDimensions) {
+      if (lengthActCodeController.text.isNotEmpty &&
+          lengthActCodeController.text != "0" &&
+          lengthActCodeController.text != "0.0") {
+        lengthShippingController.text =
+            (int.parse(lengthActCodeController.text) * 1.25).toString();
+      }
+      if (weightLbsActController.text.isNotEmpty &&
+          weightLbsActController.text != "0" &&
+          weightLbsActController.text != "0.0") {
+        weightLbsShippingController.text =
+            (int.parse(weightLbsActController.text) * 1.25).toString();
+      }
+
+      if (heightActController.text.isNotEmpty &&
+          heightActController.text != "0" &&
+          heightActController.text != "0.0") {
+        heightShipping =
+            (int.parse(heightActController.text) * 1.25).toString();
+      }
+
+      if (widthActController.text.isNotEmpty &&
+          widthActController.text != "0" &&
+          widthActController.text != "0.0") {
+        widthShipping = (int.parse(widthActController.text) * 1.25).toString();
+      }
+    } else {
+      if (lengthActCodeController.text.isNotEmpty &&
+          lengthActCodeController.text != "0" &&
+          lengthActCodeController.text != "0.0") {
+        lengthShippingController.text =
+            (int.parse(lengthActCodeController.text) * 0.75).toString();
+      }
+      if (weightLbsActController.text.isNotEmpty &&
+          weightLbsActController.text != "0" &&
+          weightLbsActController.text != "0.0") {
+        weightLbsShippingController.text =
+            (int.parse(weightLbsActController.text) * 0.75).toString();
+      }
+
+      if (heightActController.text.isNotEmpty &&
+          heightActController.text != "0" &&
+          heightActController.text != "0.0") {
+        heightShipping =
+            (int.parse(heightActController.text) * 0.75).toString();
+      }
+
+      if (widthActController.text.isNotEmpty &&
+          widthActController.text != "0" &&
+          widthActController.text != "0.0") {
+        widthShipping = (int.parse(widthActController.text) * 0.75).toString();
+      }
+    }
+    setState(() {
+      if (value == "1") {
+        moveToNextScreen();
+      }
+    });
+  }
+
 //}
 }

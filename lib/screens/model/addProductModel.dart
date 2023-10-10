@@ -29,6 +29,8 @@ class AddProductModel {
   String lengthShipping;
   String weightLbsActual;
   String weightLbsShipping;
+  String heightShipping;
+  String widthShipping;
   String description;
   String photo1;
   String photo2;
@@ -67,6 +69,8 @@ class AddProductModel {
     required this.lengthShipping,
     required this.weightLbsActual,
     required this.weightLbsShipping,
+    required this.heightShipping,
+    required this.widthShipping,
     required this.description,
     required this.photo1,
     required this.photo2,
@@ -107,6 +111,8 @@ class AddProductModel {
     map["lengthShipping"] = lengthShipping;
     map["weightLbsActual"] = weightLbsActual;
     map["weightLbsShipping"] = weightLbsShipping;
+    map["heightShipping"] = heightShipping;
+    map["widthShipping"] = widthShipping;
     map["description"] = description;
     map["photo1"] = photo1;
     map["photo2"] = photo2;
@@ -149,6 +155,8 @@ class AddProductModel {
     map["lengthShipping"] = lengthShipping;
     map["weightLbsActual"] = weightLbsActual;
     map["weightLbsShipping"] = weightLbsShipping;
+    map["heightShipping"] = heightShipping;
+    map["widthShipping"] = widthShipping;
     map["description"] = description;
     map["photo1"] = photo1;
     map["photo2"] = photo2;
@@ -192,6 +200,8 @@ class AddProductModel {
         lengthShipping: data['lengthShipping'] ?? "",
         weightLbsActual: data['weightLbsActual'] ?? "",
         weightLbsShipping: data['weightLbsShipping'] ?? "",
+        heightShipping: data['heightShipping'] ?? "",
+        widthShipping: data['widthShipping'] ?? "",
         description: data['description'] ?? "",
         photo1: data['photo1'] ?? "",
         photo2: data['photo2'] ?? "",
@@ -203,6 +213,6 @@ class AddProductModel {
 
   @override
   String toString() {
-    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5, isSelected: $isSelected}';
+    return 'AddProductModel{ownerGuid: $ownerGuid, locationGuid: $locationGuid, requester: $requester, purPujNo: $purPujNo, locationName: $locationName, countryId: $countryId, stateId: $stateId, province: $province, address: $address, city: $city, zipCode: $zipCode, categoryId: $categoryId, categorySubId: $categorySubId, makeGuid: $makeGuid, modelNumber: $modelNumber, title: $title, assetDetail: $assetDetail, serialNumber: $serialNumber, selectedDate: $selectedDate, productStatus: $productStatus, barcode: $barcode, sellType: $sellType, classType: $classType, lengthActual: $lengthActual, widthActual: $widthActual, heightActual: $heightActual, lengthShipping: $lengthShipping, weightLbsActual: $weightLbsActual, weightLbsShipping: $weightLbsShipping, heightShipping: $heightShipping, widthShipping: $widthShipping, description: $description, photo1: $photo1, photo2: $photo2, photo3: $photo3, photo4: $photo4, photo5: $photo5, isSelected: $isSelected}';
   }
 }

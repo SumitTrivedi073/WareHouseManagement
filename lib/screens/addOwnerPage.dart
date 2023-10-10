@@ -553,6 +553,8 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         lengthShipping: addProductModel1 != null && addProductModel1!.lengthShipping.toString().isNotEmpty ? addProductModel1!.lengthShipping.toString() : '',
         weightLbsActual: addProductModel1 != null && addProductModel1!.weightLbsActual.toString().isNotEmpty ? addProductModel1!.weightLbsActual.toString() : '',
         weightLbsShipping: addProductModel1 != null && addProductModel1!.weightLbsShipping.toString().isNotEmpty ? addProductModel1!.weightLbsShipping.toString() : '',
+        heightShipping: addProductModel1 != null && addProductModel1!.heightShipping.toString().isNotEmpty ? addProductModel1!.heightShipping.toString() : '',
+        widthShipping: addProductModel1 != null && addProductModel1!.widthShipping.toString().isNotEmpty ? addProductModel1!.widthShipping.toString() : '',
         description: addProductModel1 != null && addProductModel1!.description.toString().isNotEmpty ? addProductModel1!.description.toString() : '',
         photo1: addProductModel1 != null && addProductModel1!.photo1.toString().isNotEmpty ? addProductModel1!.photo1.toString() : '',
         photo2: addProductModel1 != null && addProductModel1!.photo2.toString().isNotEmpty ? addProductModel1!.photo2.toString() : '',

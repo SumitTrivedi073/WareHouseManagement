@@ -416,6 +416,8 @@ class _AddImageWidgetPageState extends State<AddImageWidgetPage> {
         lengthShipping: widget.addProductModel.lengthShipping ?? '',
         weightLbsActual: widget.addProductModel.weightLbsActual ?? '',
         weightLbsShipping: widget.addProductModel.weightLbsShipping ?? '',
+        heightShipping: widget.addProductModel.heightShipping ?? '',
+        widthShipping: widget.addProductModel.widthShipping ?? '',
         description: widget.addProductModel.description ?? '',
         photo1: img1,
         photo2: img2,

@@ -370,6 +370,8 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                           '',
                       weightLbsShipping: widget.addProductModel
                           .weightLbsShipping ?? '',
+                      heightShipping: widget.addProductModel.heightShipping ?? '',
+                      widthShipping: widget.addProductModel.widthShipping ?? '',
                       description: widget.addProductModel.description ?? '',
                       photo1: widget.addProductModel.photo1 ?? '',
                       photo2: widget.addProductModel.photo2 ?? '',
@@ -413,6 +415,8 @@ class _AddLocationWidgetPageState extends State<AddLocationWidgetPage> {
                       lengthShipping: '',
                       weightLbsActual: '',
                       weightLbsShipping: '',
+                      heightShipping: '',
+                      widthShipping: '',
                       description: '',
                       photo1: '',
                       photo2: '',
