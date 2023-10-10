@@ -216,8 +216,13 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                 setState(() {});
               }
             },
+            onTapOutside: (event) {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }},
             keyboardType: inputType,
-            textInputAction: hintTxt == enterWeightLbsShipping
+            textInputAction: hintTxt == enterWeightLbsAct
                 ? TextInputAction.done
                 : TextInputAction.next),
 
@@ -335,7 +340,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
 */
 
     AddProductModel addProductModel = AddProductModel(
-        ownerGuid: widget.addProductModel.ownerGuid ?? '',
+        ownerGuid: widget.addProductModel.ownerGuid ??  '',
         locationGuid: widget.addProductModel.locationGuid ?? '',
         requester: widget.addProductModel.requester ?? '',
         purPujNo: widget.addProductModel.purPujNo ?? '',
