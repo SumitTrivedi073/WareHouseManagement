@@ -247,45 +247,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ]))));
   }
 
-
-  nextButtonWidget() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child:
-      GestureDetector(
-        onTap: () {
-          Utility().checkInternetConnection().then((connectionResult) {
-            if (connectionResult) {
-
-               SubmitDataValidation();
-            } else {
-              Utility().showInSnackBar(
-                  value: checkInternetConnection, context: context);
-            }
-          });
-        },
-        child: Container(
-          height: 50,
-          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColor.themeColor),
-          child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  robotoTextWidget(
-                      textval: submit,
-                      colorval: Colors.white,
-                      sizeval: 16,
-                      fontWeight: FontWeight.bold),
-                ],
-              )),
-        ),
-      ),
-    );
-  }
-
   void moveToNextScreen(List<AddProductModel> allProductList, bool isUpdate,
       int position) {
     if (allProductList.isNotEmpty && isUpdate) {
@@ -328,6 +289,8 @@ class _MyHomePageState extends State<MyHomePage> {
           lengthShipping: '',
           weightLbsActual: '',
           weightLbsShipping: '',
+          heightShipping: '',
+          widthShipping: '',
           description: '',
           photo1: '',
           photo2: '',
@@ -397,9 +360,9 @@ class _MyHomePageState extends State<MyHomePage> {
         resBody["LengthActual"] = productModel.lengthActual.toString();
         resBody["LengthShipping"] = productModel.lengthShipping.toString();
         resBody["HeightActual"] = productModel.heightActual.toString();
-        resBody["HeightShipping"] = "0";
+        resBody["HeightShipping"] =  productModel.heightShipping.toString();
         resBody["WidthActual"] = productModel.widthActual.toString();
-        resBody["WidthShipping"] = "0";
+        resBody["WidthShipping"] =  productModel.widthShipping.toString();
         resBody["WeightlbsShipping"] =
             productModel.weightLbsShipping.toString();
         resBody["WeightlbsActual"] = productModel.weightLbsActual.toString();
@@ -514,6 +477,8 @@ class _MyHomePageState extends State<MyHomePage> {
         lengthShipping: productModel.lengthShipping ?? '',
         weightLbsActual: productModel.weightLbsActual ?? '',
         weightLbsShipping: productModel.weightLbsShipping ?? '',
+        heightShipping: productModel.heightShipping ?? '',
+        widthShipping: productModel.widthShipping ?? '',
         description: productModel.description ?? '',
         photo1: productModel.photo1 ?? '',
         photo2: productModel.photo2 ?? '',

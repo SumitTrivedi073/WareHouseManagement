@@ -339,6 +339,8 @@ class _AddProductDetailPage2State extends State<AddProductDetailPage2> {
            lengthShipping: widget.addProductModel.lengthShipping.toString().isNotEmpty?widget.addProductModel.lengthShipping.toString():'',
            weightLbsActual: widget.addProductModel.weightLbsActual.toString().isNotEmpty?widget.addProductModel.weightLbsActual.toString():'',
            weightLbsShipping:widget.addProductModel.weightLbsShipping.toString().isNotEmpty?widget.addProductModel.weightLbsShipping.toString(): '',
+           heightShipping: widget.addProductModel.heightShipping.toString().isNotEmpty ? widget.addProductModel.heightShipping.toString() : '',
+           widthShipping: widget.addProductModel.widthShipping.toString().isNotEmpty ? widget.addProductModel.widthShipping.toString() : '',
            description: widget.addProductModel.description.toString().isNotEmpty?widget.addProductModel.description.toString():'',
            photo1: widget.addProductModel.photo1.toString().isNotEmpty?widget.addProductModel.photo1.toString():'',
            photo2: widget.addProductModel.photo2.toString().isNotEmpty?widget.addProductModel.photo2.toString():'',

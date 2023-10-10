@@ -35,6 +35,9 @@ class DatabaseHelper {
   static final lengthShipping = 'lengthShipping';
   static final weightLbsActual = 'weightLbsActual';
   static final weightLbsShipping = 'weightLbsShipping';
+  static final heightShipping = 'heightShipping';
+  static final widthShipping = 'widthShipping';
+
   static final description = 'description';
   static final photo1 = 'photo1';
   static final photo2 = 'photo2';
@@ -105,6 +108,8 @@ class DatabaseHelper {
             $lengthShipping TEXT NOT NULL,
             $weightLbsActual TEXT NOT NULL,
             $weightLbsShipping TEXT NOT NULL,
+            $heightShipping TEXT NOT NULL,
+            $widthShipping TEXT NOT NULL,
             $description TEXT NOT NULL,
             $photo1 TEXT NOT NULL,
             $photo2 TEXT NOT NULL,

@@ -585,6 +585,14 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
             widget.addProductModel.weightLbsShipping.toString().isNotEmpty
                 ? widget.addProductModel.weightLbsShipping.toString()
                 : '',
+        heightShipping:
+        widget.addProductModel.heightShipping.toString().isNotEmpty
+            ? widget.addProductModel.heightShipping.toString()
+            : '',
+        widthShipping:
+        widget.addProductModel.widthShipping.toString().isNotEmpty
+            ? widget.addProductModel.widthShipping.toString()
+            : '',
         description: widget.addProductModel.description.toString().isNotEmpty
             ? widget.addProductModel.description.toString()
             : '',

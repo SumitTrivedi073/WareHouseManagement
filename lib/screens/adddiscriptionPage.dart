@@ -210,6 +210,8 @@ class _AddDescriptionPageState extends State<AddDescriptionPage> {
         lengthShipping: widget.addProductModel.lengthShipping ?? '',
         weightLbsActual: widget.addProductModel.weightLbsActual ?? '',
         weightLbsShipping: widget.addProductModel.weightLbsShipping ?? '',
+      heightShipping: widget.addProductModel.heightShipping ?? '',
+      widthShipping: widget.addProductModel.widthShipping ?? '',
         description: descriptionController.text.toString() ?? '',
         photo1: widget.addProductModel.photo1.toString().isNotEmpty
             ? widget.addProductModel.photo1.toString()

@@ -62,3 +62,5 @@ var checkInternetConnection = "Please check your internet connection and try aga
 var search ="Search";
 var submit = "Send To ERP";
 var wantToDelete = "Are you sure want to delete this product?";
+var actualDimensions = "Actual Dimensions";
+var shippingDimensions = "Shipping Dimensions";
