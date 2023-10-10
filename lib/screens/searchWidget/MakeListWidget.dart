@@ -2,35 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:warehouse_management_app/theme/string.dart';
 import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
 
-import '../theme/color.dart';
-import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
-as ownerPrefix;
+import '../../theme/color.dart';
+import '../model/makeListModel.dart' as makeListPrefix;
 
-class OwnerListWidget extends StatefulWidget {
-  OwnerListWidget({
+class MakeListWidget extends StatefulWidget {
+  MakeListWidget({
     Key? key,
     required this.callback,
-    required this.selectOwnerList,
+    required this.selectMakeList,
   }) : super(key: key);
 
-  List<ownerPrefix.Datum> selectOwnerList;
-  final void Function(ownerPrefix.Datum) callback;
+  List<makeListPrefix.Datum> selectMakeList;
+  final void Function(makeListPrefix.Datum) callback;
 
   @override
   _SearchNameState createState() => _SearchNameState();
 }
 
-class _SearchNameState extends State<OwnerListWidget> {
+class _SearchNameState extends State<MakeListWidget> {
   // All names
-  List<ownerPrefix.Datum> allNames = [];
-  List<ownerPrefix.Datum> searchedNames = [];
+  List<makeListPrefix.Datum> allNames = [];
+  List<makeListPrefix.Datum> searchedNames = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchedNames = widget.selectOwnerList;
-    allNames = widget.selectOwnerList;
+    searchedNames = widget.selectMakeList;
+    allNames = widget.selectMakeList;
   }
 
   // changes the filtered name based on search text and sets state.
@@ -38,7 +37,7 @@ class _SearchNameState extends State<OwnerListWidget> {
     if (searchText != null && searchText.isNotEmpty) {
       setState(() {
         searchedNames =
-            List.from(allNames.where((name) => name.ownerName.toLowerCase().contains(searchText.toLowerCase())));
+            List.from(allNames.where((name) => name.make.toLowerCase().contains(searchText.toLowerCase())));
       });
     } else {
       setState(() {
@@ -94,7 +93,7 @@ class _SearchNameState extends State<OwnerListWidget> {
                       ),
                       child: Padding(padding: EdgeInsets.all(15),
                       child: robotoTextWidget(
-                          textval: searchedNames[index].ownerName,
+                          textval: searchedNames[index].make,
                           colorval: AppColor.themeColor,
                           sizeval: 12,
                           fontWeight: FontWeight.bold),)),

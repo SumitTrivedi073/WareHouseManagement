@@ -1,4 +1,4 @@
-var appName = "RPM (remote processing module)";
+var appName = "RPM (Remote Processing Module)";
 var noDataAvailable = "No Data Available Please add product first!";
 var addProduct = "Add Product";
 var selectClassType = "Select Class";

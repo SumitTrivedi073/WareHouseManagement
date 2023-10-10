@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:warehouse_management_app/screens/model/addProductModel.dart';
+import 'package:warehouse_management_app/screens/searchWidget/CategoryListWidget.dart';
+import 'package:warehouse_management_app/screens/searchWidget/subCategoryListWidget.dart';
 
 import '../theme/color.dart';
 import '../theme/string.dart';
 import '../uiwidget/robotoTextWidget.dart';
-import 'MakeListWidget.dart';
+import 'searchWidget/MakeListWidget.dart';
 import 'addproductDetail2.dart';
 import 'model/categorymodel.dart' as categoryPrefix;
 import 'model/makeListModel.dart' as makeListPrefix;
@@ -39,6 +41,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
   TextEditingController serialNumberCodeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController makeTypeController = TextEditingController();
+  TextEditingController categoryTypeController = TextEditingController();
+  TextEditingController subCategoryTypeController = TextEditingController();
   TextEditingController searchController = TextEditingController();
   String selectStatus = working, dateTimeFormat = "dd/MM/yyyy";
   DateTime? pickedDate;
@@ -87,8 +91,10 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    categorySpinnerWidget(),
-                    selectSubCategorySpinnerWidget(),
+                   // categorySpinnerWidget(),
+                    categoryWidget(),
+                    subCategoryWidget(),
+                   // selectSubCategorySpinnerWidget(),
                     makeWidget(),
                     textWidget(
                         modelController, TextInputType.text, enterModelNumber),
@@ -149,51 +155,6 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
         ]));
   }
 
-  categorySpinnerWidget() {
-    return Container(
-        margin: const EdgeInsets.only(top: 10),
-        height: 55,
-        width: MediaQuery.of(context).size.width,
-        child: DropdownButtonFormField(
-          isExpanded: true,
-          decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.themeColor),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              hintStyle: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w600),
-              hintText: selectCategory,
-              fillColor: Colors.white),
-          value: categoryId,
-          validator: (value) =>
-              value == null || value.isEmpty ? selectClassType : "",
-          items: selectCategoryList
-              .map((CategoryList) => DropdownMenuItem(
-                  value: CategoryList.categoryId,
-                  child: robotoTextWidget(
-                      textval: CategoryList.category,
-                      colorval: AppColor.themeColor,
-                      sizeval: 14,
-                      fontWeight: FontWeight.bold)))
-              .toList(),
-          onChanged: (Object? value) {
-            setState(() {
-              categoryId = value.toString();
-              categorySubId = null;
-              selectSubCategoryList = [];
-
-              getSubCategoryList();
-            });
-          },
-        ));
-  }
-
   selectSubCategorySpinnerWidget() {
     return Container(
         margin: const EdgeInsets.only(top: 10),
@@ -233,6 +194,84 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
             });
           },
         ));
+  }
+
+  categoryWidget() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => CategoryListWidget(
+                    callback: retrieveCategoryList,selectCategoryList: selectCategoryList
+                )),
+                (Route<dynamic> route) => true);
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.themeColor),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextField(
+                enabled: false,
+                controller: categoryTypeController,
+                style: const TextStyle(
+                    color: AppColor.themeColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Roboto'),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: selectCategory,
+                  hintStyle: const TextStyle(
+                      color: AppColor.darkGrey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto'),
+                ),
+              ))),
+    );
+  }
+
+  subCategoryWidget() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => SubCategoryListWidget(
+                    callback: retrieveSubCategoryList,selectSubCategoryList: selectSubCategoryList
+                )),
+                (Route<dynamic> route) => true);
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.themeColor),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextField(
+                enabled: false,
+                controller: subCategoryTypeController,
+                style: const TextStyle(
+                    color: AppColor.themeColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Roboto'),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: selectSubCategory,
+                  hintStyle: const TextStyle(
+                      color: AppColor.darkGrey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Roboto'),
+                ),
+              ))),
+    );
   }
 
   makeWidget() {
@@ -476,6 +515,11 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
       if (widget.isUpdate) {
         if(widget.addProductModel.categoryId.isNotEmpty) {
           categoryId = widget.addProductModel.categoryId ?? '';
+          for (var i = 0; i < selectCategoryList.length; i++) {
+            if(widget.addProductModel.categoryId==selectCategoryList[i].categoryId){
+              categoryTypeController.text= selectCategoryList[i].category;
+            }
+          }
         }
         if(widget.addProductModel.makeGuid.isNotEmpty) {
           makeGuid = widget.addProductModel.makeGuid ?? '';
@@ -507,6 +551,11 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     if (widget.isUpdate) {
       if(widget.addProductModel.categorySubId.isNotEmpty) {
         categorySubId = widget.addProductModel.categorySubId ?? '';
+        for (var i = 0; i < selectSubCategoryList.length; i++) {
+          if(widget.addProductModel.categorySubId==selectSubCategoryList[i].categorySubId){
+            subCategoryTypeController.text= selectSubCategoryList[i].subCategory;
+          }
+        }
       }
     }
     setState(() {});
@@ -628,6 +677,24 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
     setState(() {
       makeGuid = datum.makeGuid;
       makeTypeController.text = datum.make;
+    });
+  }
+  void retrieveCategoryList(categoryPrefix.Datum datum) {
+    setState(() {
+      categoryId = datum.categoryId;
+      categoryTypeController.text = datum.category;
+      categorySubId = null;
+      selectSubCategoryList = [];
+      subCategoryTypeController.clear();
+      getSubCategoryList();
+
+    });
+  }
+
+  void retrieveSubCategoryList(subCategoryPrefix.Datum datum) {
+    setState(() {
+      categorySubId = datum.categorySubId;
+      subCategoryTypeController.text = datum.subCategory;
     });
   }
 }

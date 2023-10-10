@@ -21,13 +21,12 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
   TextEditingController lengthActCodeController = TextEditingController();
   TextEditingController widthActController = TextEditingController();
   TextEditingController heightActController = TextEditingController();
-  TextEditingController lengthShippingController = TextEditingController();
   TextEditingController weightLbsActController = TextEditingController();
-  TextEditingController weightLbsShippingController = TextEditingController();
+  
   List<AddProductModel> productList1 = [];
   String selectStatus = actualDimensions,
       heightShipping = "",
-      widthShipping = "";
+      widthShipping = "",lengthShipping="",weightLbsShipping="";
 
   @override
   void initState() {
@@ -37,17 +36,17 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
       lengthActCodeController.text = widget.addProductModel.lengthActual ?? '';
       widthActController.text = widget.addProductModel.widthActual ?? '';
       heightActController.text = widget.addProductModel.heightActual ?? '';
-      lengthShippingController.text =
+      lengthShipping =
           widget.addProductModel.lengthShipping ?? '';
       weightLbsActController.text =
           widget.addProductModel.weightLbsActual ?? '';
-      weightLbsShippingController.text =
+      weightLbsShipping =
           widget.addProductModel.weightLbsShipping ?? '';
       heightShipping = widget.addProductModel.heightShipping ??'';
       widthShipping = widget.addProductModel.widthShipping ??'';
     } else {
-      lengthShippingController.text = "0";
-      weightLbsShippingController.text = "0";
+      lengthShipping = "0";
+      weightLbsShipping = "0";
     }
   }
 
@@ -85,8 +84,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                         enterHeightAct),
                     editTextWidget(weightLbsActController, TextInputType.number,
                         enterWeightLbsAct),
-                    textWidget(lengthShippingController),
-                    textWidget(weightLbsShippingController),
+                   
                   ]))),
           nextButtonWidget(),
         ]));
@@ -150,9 +148,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         padding: const EdgeInsets.all(5),
         child: TextField(
             controller: controller,
-            onSubmitted: (value) async {
-              FocusScope.of(context).unfocus();
-            },
+
             style: const TextStyle(
                 color: AppColor.themeColor,
                 fontSize: 12,
@@ -173,11 +169,11 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                   value.toString() != "0.0") {
                 if (selectStatus == actualDimensions) {
                   if (hintTxt == enterLengthAct) {
-                    lengthShippingController.text =
+                    lengthShipping =
                         (int.parse(value.toString()) * 1.25).toString();
                   }
                   if (hintTxt == enterWeightLbsAct) {
-                    weightLbsShippingController.text =
+                    weightLbsShipping =
                         (int.parse(value.toString()) * 1.25).toString();
                   }
 
@@ -191,11 +187,11 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
                   }
                 }else{
                   if (hintTxt == enterLengthAct) {
-                    lengthShippingController.text =
+                    lengthShipping =
                         (int.parse(value.toString()) * 0.75).toString();
                   }
                   if (hintTxt == enterWeightLbsAct) {
-                    weightLbsShippingController.text =
+                    weightLbsShipping =
                         (int.parse(value.toString()) * 0.75).toString();
                   }
 
@@ -211,8 +207,8 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
 
                 setState(() {});
               }else{
-                lengthShippingController.text = "0";
-                weightLbsShippingController.text = "0";
+                lengthShipping = "0";
+                weightLbsShipping = "0";
                 setState(() {});
               }
             },
@@ -330,11 +326,11 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
       Utility().showToast(enterWidthAct);
     } else if (heightActController.text.toString().isEmpty) {
       Utility().showToast(enterHeightAct);
-    } else if (lengthShippingController.text.toString().isEmpty) {
+    } else if (lengthShipping.toString().isEmpty) {
       Utility().showToast(enterLengthShipping);
     }else if (weightLbsActController.text.toString().isEmpty) {
     Utility().showToast(enterWeightLbsAct);
-  }else if (weightLbsShippingController.text.toString().isEmpty) {
+  }else if (weightLbsShipping.toString().isEmpty) {
     Utility().showToast(enterWeightLbsShipping);
   } else {
 */
@@ -366,9 +362,9 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
         lengthActual: lengthActCodeController.text.toString() ?? '',
         widthActual: widthActController.text.toString() ?? '',
         heightActual: heightActController.text.toString() ?? '',
-        lengthShipping: lengthShippingController.text.toString() ?? '',
+        lengthShipping: lengthShipping.toString() ?? '',
         weightLbsActual: weightLbsActController.text.toString() ?? '',
-        weightLbsShipping: weightLbsShippingController.text.toString() ?? '',
+        weightLbsShipping: weightLbsShipping.toString() ?? '',
         heightShipping: heightShipping??'',
         widthShipping: widthShipping??'',
         description: widget.addProductModel.description.toString().isNotEmpty
@@ -393,8 +389,6 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
             ? widget.addProductModel.isSelected.toString()
             : 'false');
 
-    print(
-        'addProductMode444444==================>${addProductModel.toString()}');
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (BuildContext context) => AddDescriptionPage(
@@ -407,13 +401,13 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
       if (lengthActCodeController.text.isNotEmpty &&
           lengthActCodeController.text != "0" &&
           lengthActCodeController.text != "0.0") {
-        lengthShippingController.text =
+        lengthShipping =
             (int.parse(lengthActCodeController.text) * 1.25).toString();
       }
       if (weightLbsActController.text.isNotEmpty &&
           weightLbsActController.text != "0" &&
           weightLbsActController.text != "0.0") {
-        weightLbsShippingController.text =
+        weightLbsShipping =
             (int.parse(weightLbsActController.text) * 1.25).toString();
       }
 
@@ -433,13 +427,13 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
       if (lengthActCodeController.text.isNotEmpty &&
           lengthActCodeController.text != "0" &&
           lengthActCodeController.text != "0.0") {
-        lengthShippingController.text =
+        lengthShipping =
             (int.parse(lengthActCodeController.text) * 0.75).toString();
       }
       if (weightLbsActController.text.isNotEmpty &&
           weightLbsActController.text != "0" &&
           weightLbsActController.text != "0.0") {
-        weightLbsShippingController.text =
+        weightLbsShipping =
             (int.parse(weightLbsActController.text) * 0.75).toString();
       }
 

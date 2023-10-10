@@ -9,7 +9,7 @@ import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
     as ownerPrefix;
 import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
     as sourceLocPrefix;
-import 'package:warehouse_management_app/screens/ownerListWidget.dart';
+import 'package:warehouse_management_app/screens/searchWidget//ownerListWidget.dart';
 import 'package:warehouse_management_app/utils/constant.dart';
 
 import '../theme/color.dart';

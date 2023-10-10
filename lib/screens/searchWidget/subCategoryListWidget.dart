@@ -2,34 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:warehouse_management_app/theme/string.dart';
 import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
 
-import '../theme/color.dart';
-import 'model/makeListModel.dart' as makeListPrefix;
+import '../../theme/color.dart';
+import '../model/subCategoryModel.dart'as subCategoryPrefix;
 
-class MakeListWidget extends StatefulWidget {
-  MakeListWidget({
+class SubCategoryListWidget extends StatefulWidget {
+  SubCategoryListWidget({
     Key? key,
     required this.callback,
-    required this.selectMakeList,
+    required this.selectSubCategoryList,
   }) : super(key: key);
 
-  List<makeListPrefix.Datum> selectMakeList;
-  final void Function(makeListPrefix.Datum) callback;
+  List<subCategoryPrefix.Datum> selectSubCategoryList;
+  final void Function(subCategoryPrefix.Datum) callback;
 
   @override
   _SearchNameState createState() => _SearchNameState();
 }
 
-class _SearchNameState extends State<MakeListWidget> {
+class _SearchNameState extends State<SubCategoryListWidget> {
   // All names
-  List<makeListPrefix.Datum> allNames = [];
-  List<makeListPrefix.Datum> searchedNames = [];
+  List<subCategoryPrefix.Datum> allNames = [];
+  List<subCategoryPrefix.Datum> searchedNames = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchedNames = widget.selectMakeList;
-    allNames = widget.selectMakeList;
+    searchedNames = widget.selectSubCategoryList;
+    allNames = widget.selectSubCategoryList;
   }
 
   // changes the filtered name based on search text and sets state.
@@ -37,7 +37,7 @@ class _SearchNameState extends State<MakeListWidget> {
     if (searchText != null && searchText.isNotEmpty) {
       setState(() {
         searchedNames =
-            List.from(allNames.where((name) => name.make.toLowerCase().contains(searchText.toLowerCase())));
+            List.from(allNames.where((name) => name.subCategory.toLowerCase().contains(searchText.toLowerCase())));
       });
     } else {
       setState(() {
@@ -93,7 +93,7 @@ class _SearchNameState extends State<MakeListWidget> {
                       ),
                       child: Padding(padding: EdgeInsets.all(15),
                       child: robotoTextWidget(
-                          textval: searchedNames[index].make,
+                          textval: searchedNames[index].subCategory,
                           colorval: AppColor.themeColor,
                           sizeval: 12,
                           fontWeight: FontWeight.bold),)),

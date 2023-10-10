@@ -551,6 +551,18 @@
       "eBayDECategoryId": "0",
       "WooCommerceId": "248",
       "WooCommerceNLId": "248"
+    },
+    {
+      "CategoryId": "48",
+      "Category": "TBD",
+      "SafeName": "TBD",
+      "FeaturedProductGUID": "",
+      "eBayCategoryId": "0",
+      "eBayUKCategoryId": "0",
+      "eBayNLCategoryId": "0",
+      "eBayDECategoryId": "0",
+      "WooCommerceId": "0",
+      "WooCommerceNLId": "0"
     }
   ]
 }
