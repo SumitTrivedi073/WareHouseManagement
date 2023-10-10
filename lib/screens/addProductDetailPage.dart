@@ -186,6 +186,8 @@ class _AddProductDetailPageState extends State<AddProductDetailPage> {
             setState(() {
               categoryId = value.toString();
               categorySubId = null;
+              selectSubCategoryList = [];
+
               getSubCategoryList();
             });
           },

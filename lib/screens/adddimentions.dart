@@ -234,7 +234,7 @@ class _AddDimensionsPageState extends State<AddDimensionsPage> {
     return Container(
         width: double.infinity,
         margin: const EdgeInsets.only(top: 10),
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.only(top: 15,bottom: 15),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.themeColor),
           borderRadius: const BorderRadius.all(Radius.circular(10)),

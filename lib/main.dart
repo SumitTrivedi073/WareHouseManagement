@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // TODO: implement initStatef
     super.initState();
     getAllData();
   }
@@ -138,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if (connectionResult) {
           setState(() {
             isLoading= true;
+            selectedIndex = position;
           });
           updateDatabase(productModel, position, true);
 
@@ -220,10 +221,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             )),
                         IconButton(
                             onPressed: () {
+
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) =>
-                                    deleteDialogue(context),
+
+                                    deleteDialogue(context,position),
                               );
                             },
                             icon: const Icon(
@@ -412,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (body['Result'] == "Success") {
         print('posted successfully!');
         Utility().showToast(body['Message']);
-        deleteFromDatabase();
+        deleteFromDatabase(selectedIndex);
         setState(() {
           isLoading = false;
         });
@@ -433,15 +436,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void deleteFromDatabase() {
-    for (var i = 0; i < allProductList.length; i++) {
-      if (allProductList[i].isSelected == 'true') {
+  void deleteFromDatabase(int position) {
         DatabaseHelper.instance
-            .deletedata(allProductList[i].toMapWithoutId());
-        allProductList.removeAt(i);
-      }
+            .deletedata(allProductList[position].toMapWithoutId());
+        allProductList.removeAt(position);
       setState(() {});
-    }
+
   }
 
   void updateDatabase(AddProductModel productModel, int position, bool? value) {
@@ -496,7 +496,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  deleteDialogue(BuildContext context) {
+  deleteDialogue(BuildContext context, int position) {
     return AlertDialog(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -539,7 +539,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 Flexible(
                   child: ElevatedButton(
                     onPressed: () {
-                      deleteFromDatabase();
+                      Navigator.of(context).pop();
+
+                      deleteFromDatabase(position);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: AppColor.themeColor,
