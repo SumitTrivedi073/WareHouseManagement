@@ -3,19 +3,19 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warehouse_management_app/screens/addLocationWidget.dart';
-import 'package:warehouse_management_app/screens/addProductDetailPage.dart';
-import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
+import 'package:REUZEIT/screens/addproduct/addLocationWidget.dart';
+import 'package:REUZEIT/screens/addproduct/addProductDetailPage.dart';
+import 'package:REUZEIT/screens/addproduct/model/ownerListModel.dart'
     as ownerPrefix;
-import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
+import 'package:REUZEIT/screens/addproduct/model/sourceLocModel.dart'
     as sourceLocPrefix;
-import 'package:warehouse_management_app/screens/searchWidget//ownerListWidget.dart';
-import 'package:warehouse_management_app/utils/constant.dart';
+import 'package:REUZEIT/screens/addproduct/searchWidget//ownerListWidget.dart';
+import 'package:REUZEIT/utils/constant.dart';
 
-import '../theme/color.dart';
-import '../theme/string.dart';
-import '../uiwidget/robotoTextWidget.dart';
-import '../utils/utility.dart';
+import '../../theme/color.dart';
+import '../../theme/string.dart';
+import '../../uiwidget/robotoTextWidget.dart';
+import '../../utils/utility.dart';
 import 'model/addProductModel.dart';
 
 class AddOwnerPage extends StatefulWidget {

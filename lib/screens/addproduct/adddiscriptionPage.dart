@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/screens/addImageWidget.dart';
+import 'package:REUZEIT/screens/addproduct/addImageWidget.dart';
 
-import '../theme/color.dart';
-import '../theme/string.dart';
-import '../uiwidget/robotoTextWidget.dart';
+import '../../theme/color.dart';
+import '../../theme/string.dart';
+import '../../uiwidget/robotoTextWidget.dart';
 import 'model/addProductModel.dart';
 
 class AddDescriptionPage extends StatefulWidget {

@@ -2,16 +2,16 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:warehouse_management_app/screens/model/countryListModel.dart'
+import 'package:REUZEIT/screens/addproduct/model/countryListModel.dart'
 as countryPrefix;
-import 'package:warehouse_management_app/screens/model/sourceLocModel.dart'
+import 'package:REUZEIT/screens/addproduct/model/sourceLocModel.dart'
 as sourceLocPrefix;
-import 'package:warehouse_management_app/theme/string.dart';
+import 'package:REUZEIT/theme/string.dart';
 
-import '../theme/color.dart';
-import '../uiwidget/robotoTextWidget.dart';
-import '../utils/utility.dart';
-import 'model/addProductModel.dart';
+import '../../theme/color.dart';
+import '../../uiwidget/robotoTextWidget.dart';
+import '../../utils/utility.dart';
+import '../addproduct/model/addProductModel.dart';
 
 class AddLocationWidgetPage extends StatefulWidget {
   AddLocationWidgetPage({Key? key,

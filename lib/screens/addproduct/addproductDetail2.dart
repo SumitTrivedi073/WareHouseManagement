@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:warehouse_management_app/screens/adddimentions.dart';
-import 'package:warehouse_management_app/screens/model/addProductModel.dart';
+import 'package:REUZEIT/screens/addproduct/adddimentions.dart';
+import 'package:REUZEIT/screens/addproduct/model/addProductModel.dart';
 
-import 'package:warehouse_management_app/screens/model/productClassModel.dart'as classPrefix;
-import 'package:warehouse_management_app/screens/model/sellTypeModel.dart'as sellTypePrefix;
+import 'package:REUZEIT/screens/addproduct/model/productClassModel.dart'as classPrefix;
+import 'package:REUZEIT/screens/addproduct/model/sellTypeModel.dart'as sellTypePrefix;
 import 'dart:convert' as convert;
-import '../theme/color.dart';
-import '../theme/string.dart';
-import '../uiwidget/robotoTextWidget.dart';
-import '../utils/utility.dart';
+import '../../theme/color.dart';
+import '../../theme/string.dart';
+import '../../uiwidget/robotoTextWidget.dart';
+import '../../utils/utility.dart';
 
 class AddProductDetailPage2 extends StatefulWidget {
    AddProductDetailPage2({Key? key,required this.addProductModel,required this.isUpdate}) : super(key: key);

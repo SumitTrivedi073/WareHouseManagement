@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/theme/color.dart';
-import 'package:warehouse_management_app/theme/string.dart';
-import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
+import 'package:REUZEIT/theme/string.dart';
+import 'package:REUZEIT/uiwidget/robotoTextWidget.dart';
 
-import 'package:warehouse_management_app/screens/model/ownerListModel.dart'
-as ownerPrefix;
+import '../../../theme/color.dart';
+import '../model/subCategoryModel.dart'as subCategoryPrefix;
 
-
-class OwnerListWidget extends StatefulWidget {
-  OwnerListWidget({
+class SubCategoryListWidget extends StatefulWidget {
+  SubCategoryListWidget({
     Key? key,
     required this.callback,
-    required this.selectOwnerList,
+    required this.selectSubCategoryList,
   }) : super(key: key);
 
-  List<ownerPrefix.Datum> selectOwnerList;
-  final void Function(ownerPrefix.Datum) callback;
+  List<subCategoryPrefix.Datum> selectSubCategoryList;
+  final void Function(subCategoryPrefix.Datum) callback;
 
   @override
   _SearchNameState createState() => _SearchNameState();
 }
 
-class _SearchNameState extends State<OwnerListWidget> {
+class _SearchNameState extends State<SubCategoryListWidget> {
   // All names
-  List<ownerPrefix.Datum> allNames = [];
-  List<ownerPrefix.Datum> searchedNames = [];
+  List<subCategoryPrefix.Datum> allNames = [];
+  List<subCategoryPrefix.Datum> searchedNames = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchedNames = widget.selectOwnerList;
-    allNames = widget.selectOwnerList;
+    searchedNames = widget.selectSubCategoryList;
+    allNames = widget.selectSubCategoryList;
   }
 
   // changes the filtered name based on search text and sets state.
@@ -39,7 +37,7 @@ class _SearchNameState extends State<OwnerListWidget> {
     if (searchText != null && searchText.isNotEmpty) {
       setState(() {
         searchedNames =
-            List.from(allNames.where((name) => name.ownerName.toLowerCase().contains(searchText.toLowerCase())));
+            List.from(allNames.where((name) => name.subCategory.toLowerCase().contains(searchText.toLowerCase())));
       });
     } else {
       setState(() {
@@ -95,7 +93,7 @@ class _SearchNameState extends State<OwnerListWidget> {
                       ),
                       child: Padding(padding: EdgeInsets.all(15),
                       child: robotoTextWidget(
-                          textval: searchedNames[index].ownerName,
+                          textval: searchedNames[index].subCategory,
                           colorval: AppColor.themeColor,
                           sizeval: 12,
                           fontWeight: FontWeight.bold),)),

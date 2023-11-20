@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/theme/string.dart';
-import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
+import 'package:REUZEIT/theme/color.dart';
+import 'package:REUZEIT/theme/string.dart';
+import 'package:REUZEIT/uiwidget/robotoTextWidget.dart';
 
-import '../../theme/color.dart';
-import '../model/makeListModel.dart' as makeListPrefix;
+import 'package:REUZEIT/screens/addproduct/model/ownerListModel.dart'
+as ownerPrefix;
 
-class MakeListWidget extends StatefulWidget {
-  MakeListWidget({
+
+class OwnerListWidget extends StatefulWidget {
+  OwnerListWidget({
     Key? key,
     required this.callback,
-    required this.selectMakeList,
+    required this.selectOwnerList,
   }) : super(key: key);
 
-  List<makeListPrefix.Datum> selectMakeList;
-  final void Function(makeListPrefix.Datum) callback;
+  List<ownerPrefix.Datum> selectOwnerList;
+  final void Function(ownerPrefix.Datum) callback;
 
   @override
   _SearchNameState createState() => _SearchNameState();
 }
 
-class _SearchNameState extends State<MakeListWidget> {
+class _SearchNameState extends State<OwnerListWidget> {
   // All names
-  List<makeListPrefix.Datum> allNames = [];
-  List<makeListPrefix.Datum> searchedNames = [];
+  List<ownerPrefix.Datum> allNames = [];
+  List<ownerPrefix.Datum> searchedNames = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchedNames = widget.selectMakeList;
-    allNames = widget.selectMakeList;
+    searchedNames = widget.selectOwnerList;
+    allNames = widget.selectOwnerList;
   }
 
   // changes the filtered name based on search text and sets state.
@@ -37,7 +39,7 @@ class _SearchNameState extends State<MakeListWidget> {
     if (searchText != null && searchText.isNotEmpty) {
       setState(() {
         searchedNames =
-            List.from(allNames.where((name) => name.make.toLowerCase().contains(searchText.toLowerCase())));
+            List.from(allNames.where((name) => name.ownerName.toLowerCase().contains(searchText.toLowerCase())));
       });
     } else {
       setState(() {
@@ -93,7 +95,7 @@ class _SearchNameState extends State<MakeListWidget> {
                       ),
                       child: Padding(padding: EdgeInsets.all(15),
                       child: robotoTextWidget(
-                          textval: searchedNames[index].make,
+                          textval: searchedNames[index].ownerName,
                           colorval: AppColor.themeColor,
                           sizeval: 12,
                           fontWeight: FontWeight.bold),)),

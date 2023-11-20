@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/screens/model/addProductModel.dart';
+import 'package:REUZEIT/screens/addproduct/model/addProductModel.dart';
 
-import '../theme/color.dart';
-import '../theme/string.dart';
-import '../uiwidget/robotoTextWidget.dart';
-import 'adddiscriptionPage.dart';
+import '../../theme/color.dart';
+import '../../theme/string.dart';
+import '../../uiwidget/robotoTextWidget.dart';
+import '../addproduct/adddiscriptionPage.dart';
 
 class AddDimensionsPage extends StatefulWidget {
   AddDimensionsPage(

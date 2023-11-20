@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:warehouse_management_app/main.dart';
-import 'package:warehouse_management_app/screens/model/addProductModel.dart';
+import 'package:REUZEIT/screens/addproduct/model/addProductModel.dart';
 
-import '../theme/color.dart';
-import '../theme/string.dart';
-import '../uiwidget/robotoTextWidget.dart';
-import 'database/database_helper.dart';
+import '../../theme/color.dart';
+import '../../theme/string.dart';
+import '../../uiwidget/robotoTextWidget.dart';
+import '../database/database_helper.dart';
+import 'homePage.dart';
 import 'image_view_widget.dart';
 import 'model/imageModel.dart';
 

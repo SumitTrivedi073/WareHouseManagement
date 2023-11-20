@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert' as convert;
+
 
 class Utility {
 
   bool isActiveConnection = false;
+
 
   Future<bool> checkInternetConnection() async {
     try {
@@ -100,4 +100,5 @@ class Utility {
 
   static String convertbase64ToMd5(String base64) =>
       md5.convert(utf8.encode(base64)).toString();
+
 }

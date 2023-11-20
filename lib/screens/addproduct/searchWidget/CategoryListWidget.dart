@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/theme/string.dart';
-import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
-
-import '../../theme/color.dart';
+import 'package:REUZEIT/theme/string.dart';
+import 'package:REUZEIT/uiwidget/robotoTextWidget.dart';
+import '../../../theme/color.dart';
 import '../model/categorymodel.dart'as categoryPrefix;
 
 class CategoryListWidget extends StatefulWidget {

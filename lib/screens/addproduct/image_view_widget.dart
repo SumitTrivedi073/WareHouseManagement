@@ -2,8 +2,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import '../theme/color.dart';
-import '../uiwidget/robotoTextWidget.dart';
+import '../../theme/color.dart';
+import '../../uiwidget/robotoTextWidget.dart';
 
 class ImageView extends StatefulWidget {
    ImageView({Key? key,required this.imagepath}) : super(key: key);

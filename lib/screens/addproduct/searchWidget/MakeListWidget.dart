@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_management_app/theme/string.dart';
-import 'package:warehouse_management_app/uiwidget/robotoTextWidget.dart';
+import 'package:REUZEIT/theme/string.dart';
+import 'package:REUZEIT/uiwidget/robotoTextWidget.dart';
+import '../../../theme/color.dart';
+import '../model/makeListModel.dart' as makeListPrefix;
 
-import '../../theme/color.dart';
-import '../model/subCategoryModel.dart'as subCategoryPrefix;
-
-class SubCategoryListWidget extends StatefulWidget {
-  SubCategoryListWidget({
+class MakeListWidget extends StatefulWidget {
+  MakeListWidget({
     Key? key,
     required this.callback,
-    required this.selectSubCategoryList,
+    required this.selectMakeList,
   }) : super(key: key);
 
-  List<subCategoryPrefix.Datum> selectSubCategoryList;
-  final void Function(subCategoryPrefix.Datum) callback;
+  List<makeListPrefix.Datum> selectMakeList;
+  final void Function(makeListPrefix.Datum) callback;
 
   @override
   _SearchNameState createState() => _SearchNameState();
 }
 
-class _SearchNameState extends State<SubCategoryListWidget> {
+class _SearchNameState extends State<MakeListWidget> {
   // All names
-  List<subCategoryPrefix.Datum> allNames = [];
-  List<subCategoryPrefix.Datum> searchedNames = [];
+  List<makeListPrefix.Datum> allNames = [];
+  List<makeListPrefix.Datum> searchedNames = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchedNames = widget.selectSubCategoryList;
-    allNames = widget.selectSubCategoryList;
+    searchedNames = widget.selectMakeList;
+    allNames = widget.selectMakeList;
   }
 
   // changes the filtered name based on search text and sets state.
@@ -37,7 +36,7 @@ class _SearchNameState extends State<SubCategoryListWidget> {
     if (searchText != null && searchText.isNotEmpty) {
       setState(() {
         searchedNames =
-            List.from(allNames.where((name) => name.subCategory.toLowerCase().contains(searchText.toLowerCase())));
+            List.from(allNames.where((name) => name.make.toLowerCase().contains(searchText.toLowerCase())));
       });
     } else {
       setState(() {
@@ -93,7 +92,7 @@ class _SearchNameState extends State<SubCategoryListWidget> {
                       ),
                       child: Padding(padding: EdgeInsets.all(15),
                       child: robotoTextWidget(
-                          textval: searchedNames[index].subCategory,
+                          textval: searchedNames[index].make,
                           colorval: AppColor.themeColor,
                           sizeval: 12,
                           fontWeight: FontWeight.bold),)),

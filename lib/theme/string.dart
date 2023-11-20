@@ -64,3 +64,7 @@ var submit = "Send To ERP";
 var wantToDelete = "Are you sure want to delete this product?";
 var actualDimensions = "Actual Dimensions";
 var shippingDimensions = "Shipping Dimensions";
+var enterEmail = "Please Enter Email Address";
+var enterPassword = "Please Enter Password";
+var login = "Login";
+var wantToLogout = "Are you sure want to logout?";

@@ -154,5 +154,11 @@ class DatabaseHelper {
     whereArgs: [OwnerGuid],);
   }
 
+  Future<int> deleteTable() async {
+    Database db = await instance.database;
+    return await db.delete(table);
+  }
+
+
 
 }
